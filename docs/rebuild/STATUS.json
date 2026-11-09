@@ -109,16 +109,21 @@
         "R07"
       ],
       "evidence": [
-        "T020"
+        "T020",
+        "T022"
       ],
       "steps": [
         {
           "id": "R08-M01",
           "title": "Stock-lens matrices, receipts, balances and reversal",
-          "status": "in_progress",
+          "status": "done",
           "evidence": [
-            "T020"
-          ]
+            "T020",
+            "T022"
+          ],
+          "ci_run": "https://github.com/Elhussin/osm/actions/runs/42673309187/attempts/2",
+          "ci_attempt": 2,
+          "verified_code_commit": "868263deea0839c0e3844a7f787c5eb16d23e403"
         },
         {
           "id": "R08-M02",
@@ -193,5 +198,6 @@
       ],
       "evidence": []
     }
-  ]
+  ],
+  "next_step": "R08-M02"
 }
