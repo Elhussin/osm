@@ -4,8 +4,7 @@
   "next_task": "R08",
   "blockers": [
     "R13: supplied Waseel v2 docs reviewed locally; resolve W01-W07 in docs/rebuild/waseel/REVIEW.md, including claims/customer endpoints, auth response and sandbox activation. Sample credentials have not been used or validated.",
-    "R10: device choices Q03-Q04 deferred by user; cash shift requirements Q05 remain open. First release is online-only.",
-    "R08-M02: local verification T024 passed; auto-review rejected GitHub push pending explicit current user authorization for Elhussin/osm, branch codex/r03-foundation. CI has not run; see T025."
+    "R10: device choices Q03-Q04 deferred by user; cash shift requirements Q05 remain open. First release is online-only."
   ],
   "tasks": [
     {
@@ -112,7 +111,8 @@
       "evidence": [
         "T020",
         "T022",
-        "T024"
+        "T024",
+        "T026"
       ],
       "steps": [
         {
@@ -130,10 +130,13 @@
         {
           "id": "R08-M02",
           "title": "Reservations, issue and release with concurrency",
-          "status": "in_progress",
+          "status": "done",
           "evidence": [
-            "T024"
-          ]
+            "T024",
+            "T026"
+          ],
+          "ci_run": "https://github.com/Elhussin/osm/actions/runs/42681586976",
+          "verified_code_commit": "667a0bdd6a4b9afbd2f6c2cb5792ad4f96bbc900"
         },
         {
           "id": "R08-M03",
@@ -204,5 +207,5 @@
       "evidence": []
     }
   ],
-  "next_step": "R08-M02"
+  "next_step": "R08-M03"
 }
