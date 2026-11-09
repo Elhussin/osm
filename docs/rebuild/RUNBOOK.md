@@ -50,7 +50,7 @@ OSM_REBUILD_DB_MODE افتراضيًا runtime. أوامر migrate-shared/manage
 في الإنتاج لا تضع بيانات المالك مع بيئة الويب، ولا تفعّل DEBUG أو runserver. لم يجهز نشر الإنتاج في R03. لا تُنفذ أوامر حذف volumes لتنظيف الكود؛ هذه بيانات تطوير دائمة. إيقاف قاعدة التطوير فقط: `docker compose --env-file .env -f compose.yaml stop db` من rebuild/.
 
 ## التحقق المستمر
-- `pdm run test`: 49 اختبار Django/PostgreSQL حاليًا تشمل أساس R03 وعزل R04 وHTTP والروابط والتزامن وقيود التدقيق.
+- `pdm run test`: 67 اختبار Django/PostgreSQL حاليًا تشمل أساس R03 وعزل R04 وHTTP والروابط والتزامن وقيود التدقيق.
 - `pdm run test-policy`: 44 اختبار سياسة مجردة؛ لا يعوض اختبارات قاعدة البيانات.
 - نجح `.github/workflows/rebuild.yml` فعليًا على GitHub للـcommit 67a30e0: [تشغيل R03](https://github.com/Elhussin/osm/actions/runs/42575805281). يستمر التشغيل على كل تعديل مطابق لمسارات workflow.
 - نجح كذلك [تشغيل R04](https://github.com/Elhussin/osm/actions/runs/42594132931) للـcommit 74553dc، شاملاً اختبارات الهوية والصلاحيات الجديدة. أضيفت اختبارات واجهة R05 إلى المسار نفسه.
@@ -72,3 +72,12 @@ pwsh -NoProfile -File rebuild/pdm.ps1 run python -m playwright install chromium 
 pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser
 ```
 Chromium معزول، والصور الصناعية في rebuild/.tools/ui-artifacts مستبعدة. CI يثبت Chromium ومكتبات النظام قبل الاختبارات. لا تستخدم بيانات حقيقية أو تتبع شبكة يحتوي رموز الدعوات. للخادم الإنتاجي اجمع staticfiles عبر `pdm run manage-migration collectstatic --noinput` وخدمها من إعداد نشر مستقل؛ runserver محلي فقط.
+
+## R06 — العملاء وصور الفحص
+طبّق `pdm run migrate-all` ثم `pdm run configure-runtime` بعد التحديث، لكل مخططات الشركات. يضيف clinical جداول العملاء والروابط والوصفات والإصدارات والصور؛ سحب UPDATE/DELETE من revision/image يحتاج configure-runtime للشركات القائمة، ويحدث تلقائيًا للشركات الجديدة. لا تستخدم حساب migration للويب.
+
+بعد الدخول اختر «العملاء والفحوص»: أضف عميلًا في فرع مسموح، ثم سجل فحصًا بمختص مخول. الكاشير يدير بيانات العميل دون قراءة وصفاته وصوره. مشاركة العميل للفرع من المالك لا تكشف تاريخ الفرع الآخر. التصحيح ينشئ إصدارًا جديدًا مع سبب؛ اختيار «بدون صورة» لا يحذف صورة الإصدار القديم.
+
+الصورة اختيارية JPEG/PNG حتى5MiB و16MP وبُعد6000؛ صورة واحدة لكل إصدار. لا HEIC/PDF/SVG ولا OCR. PostgreSQL يحفظ PNG المعاد ترميزها داخل مخطط الشركة؛ لا إعداد MEDIA_URL عام، ولا مجلد صور مرضى داخل static. النسخ الاحتياطي يجب أن يشمل جداول clinical، وتُقاس سعة الصور والنسخ والاستعادة في R14. تشغيل الإنتاج يحتاج حد request body6MiB ومهلة وموارد workers في reverse proxy؛ upload handler داخل Django لا يغني عن ذلك خصوصًا تحت ASGI.
+
+اختبارات clinical داخل `pdm run test`، وثلاث حالات متصفح إضافية داخل `pdm run test-browser`. الصور الصناعية المحلية clinical-exam-*.png تحت .tools/ui-artifacts. القياسات وحدود الإدخال وسياسة التاريخ وقيود مرحلة R10 في ADR 0007؛ لا تستخدم صورة وحدها كلقطة قياسات لطلب بيع.

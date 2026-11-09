@@ -27,6 +27,7 @@ TENANT_APPS = (
     "identity.apps.IdentityConfig",
     "access.apps.AccessConfig",
     "django.contrib.messages", "workspace.apps.WorkspaceConfig",
+    "clinical.apps.ClinicalConfig",
 )
 INSTALLED_APPS = list(SHARED_APPS) + list(TENANT_APPS)
 TENANT_MODEL = "directory.Company"
@@ -51,6 +52,10 @@ TEMPLATES = [{"BACKEND": "django.template.backends.django.DjangoTemplates", "DIR
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+FILE_UPLOAD_HANDLERS = ["clinical.images.BoundedUploadHandler", "django.core.files.uploadhandler.MemoryFileUploadHandler", "django.core.files.uploadhandler.TemporaryFileUploadHandler"]
+FILE_UPLOAD_MAX_MEMORY_SIZE = 512 * 1024
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024
+DATA_UPLOAD_MAX_NUMBER_FILES = 1
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 INVITE_DELIVERY = os.environ.get("OSM_REBUILD_INVITE_DELIVERY", "manual")
 if INVITE_DELIVERY not in {"manual", "smtp"}:

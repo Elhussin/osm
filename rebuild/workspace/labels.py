@@ -12,6 +12,7 @@ ACTION_LABELS = {
     "stock.read": "عرض المخزون", "stock.reserve": "حجز المخزون", "stock.transfer": "تحويل المخزون", "insurance.read": "عرض ملفات التأمين", "insurance.prepare": "إعداد طلبات التأمين", "insurance.submit": "إرسال طلبات التأمين", "reports.read": "عرض التقارير", "data.export": "تصدير البيانات",
 }
 EVENT_LABELS = {
+    "customer.created": "إضافة عميل", "customer.updated": "تحديث بيانات عميل", "customer.shared": "مشاركة بيانات عميل", "prescription.created": "تسجيل فحص ووصفة", "prescription.corrected": "تصحيح وصفة بإصدار جديد", "prescription.image_viewed": "عرض صورة فحص",
     "company.provisioned": "إنشاء الشركة", "branch.created": "إضافة فرع", "branch.updated": "تحديث فرع", "branch.disabled": "إيقاف فرع", "branch.activated": "تفعيل فرع",
     "member.created": "إضافة عضو", "member.invited": "دعوة عضو", "member.updated": "تحديث عضو", "member.activated": "تفعيل عضو", "member.disabled": "إيقاف عضو",
     "role.assigned": "إسناد دور", "role.revoked": "سحب دور", "branch_access.granted": "منح وصول لفرع", "branch_access.revoked": "سحب وصول لفرع",

@@ -284,5 +284,5 @@ def ownership(request):
 
 
 def error_page(request, exception=None, status=403):
-    titles = {403: "لا تملك صلاحية لهذا الإجراء", 404: "الصفحة غير موجودة", 500: "تعذّر إكمال الطلب"}
+    titles = {400: "تعذّر قبول البيانات أو حجم المرفق", 403: "لا تملك صلاحية لهذا الإجراء", 404: "الصفحة غير موجودة", 500: "تعذّر إكمال الطلب"}
     return render(request, "workspace/error.html", {"title": titles[status], "error_status": status}, status=status)

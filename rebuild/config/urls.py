@@ -2,8 +2,18 @@ from django.urls import path
 from .views import live, ready
 from identity import views as identity
 from workspace import views as workspace
+from clinical import views as clinical
 
 urlpatterns = [
+    path("customers/", clinical.customers, name="customers"),
+    path("customers/new/", clinical.customer_new, name="customer-new"),
+    path("customers/<uuid:customer_id>/", clinical.customer_detail, name="customer-detail"),
+    path("customers/<uuid:customer_id>/edit/", clinical.customer_edit, name="customer-edit"),
+    path("customers/<uuid:customer_id>/share/", clinical.customer_share, name="customer-share"),
+    path("customers/<uuid:customer_id>/prescriptions/new/", clinical.prescription_new, name="prescription-new"),
+    path("prescriptions/<uuid:prescription_id>/correct/", clinical.prescription_correct, name="prescription-correct"),
+    path("prescriptions/<uuid:prescription_id>/v/<int:version>/", clinical.prescription_detail, name="prescription-detail"),
+    path("prescriptions/<uuid:prescription_id>/v/<int:version>/image/", clinical.exam_image, name="exam-image"),
     path("health/live/", live), path("health/ready/", ready),
     path("auth/login/", identity.sign_in, name="login"),
     path("auth/logout/", identity.sign_out, name="logout"),
@@ -30,5 +40,6 @@ urlpatterns = [
 ]
 
 handler403 = workspace.error_page
+handler400 = lambda request, exception: workspace.error_page(request, exception, status=400)
 handler404 = lambda request, exception: workspace.error_page(request, exception, status=404)
 handler500 = lambda request: workspace.error_page(request, status=500)
