@@ -1,0 +1,25 @@
+[project]
+name = "optics-erp-rebuild"
+version = "0.1.0"
+description = "Independent Django optics ERP rebuild"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "Django>=5.2.19,<5.3",
+    "django-tenants>=3.9,<4",
+    "psycopg[binary]>=3.2,<4",
+    "python-dotenv>=1.1,<2",
+]
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.scripts]
+check = "python manage.py check"
+migrations-check = {cmd = "python manage.py makemigrations --check --dry-run", env = {OSM_REBUILD_DB_MODE = "migration"}}
+test = {cmd = "python manage.py test foundation_tests --verbosity 2 --noinput", env = {OSM_REBUILD_DB_MODE = "migration"}}
+test-policy = {cmd = "python -m unittest discover -s rebuild/tests -v", working_dir = ".."}
+dev = {cmd = "python manage.py runserver 127.0.0.1:8100", env = {OSM_REBUILD_DB_MODE = "runtime"}}
+migrate-shared = {cmd = "python manage.py migrate_schemas --shared --noinput", env = {OSM_REBUILD_DB_MODE = "migration"}}
+manage-migration = {cmd = "python manage.py", env = {OSM_REBUILD_DB_MODE = "migration"}}
+configure-runtime = {cmd = "python manage.py configure_runtime_role", env = {OSM_REBUILD_DB_MODE = "migration"}}
+verify-runtime = {cmd = "python manage.py verify_runtime_role", env = {OSM_REBUILD_DB_MODE = "runtime"}}

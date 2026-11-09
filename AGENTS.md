@@ -11,15 +11,19 @@ Before every implementation task, read `docs/rebuild/README.md`, `docs/rebuild/P
 4. Run the relevant tests. A missing runtime or database means blocked verification, never a passing result. Record exact command, date, outcome, and limitations in TEST_LOG.md.
 5. Mark a task done only with passing test evidence and its acceptance criteria met. Update PLAN.md, STATUS.json, CHANGELOG.md, and any changed decision in the same change.
 6. Run `pwsh -NoProfile -File scripts/check-rebuild.ps1` before reporting completion.
+   Also run `pwsh -NoProfile -File scripts/check-discovery.ps1` after R01. If legacy files change, review their disposition and regenerate the inventory with `-RefreshInventory`; never refresh blindly to conceal unexplained deletions.
 7. End each work session by recording the next task and unresolved blockers in STATUS.json.
 
 ## Architecture
 - Modular Django application, PostgreSQL, server-rendered templates, HTMX, small Alpine.js interactions. Dedicated workflow screens rather than a universal schema-generated UI.
+- Keep PDM for Python dependency management and command execution. Create a new tested lock in R03; do not confuse PDM environments with application configuration (.env / process environment). Read ADR 0002.
 - Keep business operations in explicit services shared by HTML views and integration APIs. No financial or stock posting side effects in model save().
 - Tenant and branch authorization must be explicit and tested. Resolve identity and tenancy before creating the initial application migrations (R02).
+- ADR 0003 is binding: each account belongs to exactly one company; identity/auth/sessions live only in tenant schemas, not public. Read ACCESS_MODEL.md and ACCESS_VERIFICATION.md before models or adapters. Pure-policy tests do not prove database/session isolation; R04 must execute I01-I20 as applicable and retain stage-specific checks for later modules.
 - Financial posting and stock operations require atomicity, concurrency tests, idempotency, and an auditable reversal path. Never delete posted documents to undo transactions.
 - External calls use adapters and background delivery with retry/idempotency; never hold database locks across network calls.
 - Do not claim ZATCA or insurance compliance from mocks. Record official specifications and sandbox verification separately.
+- Before insurance changes read `docs/rebuild/waseel/REVIEW.md`. Raw `Waseel_PI_Document/` and its ZIP contain sample credentials and personal data and are ignored; never commit them or copy real sample values into tests. Keep the sanitized inventory current using `scripts/check_waseel_docs.py` and run `scripts/test_waseel_docs.py` with an available Python interpreter. Missing raw docs must be reported, never replaced by fabricated provider contracts.
 
 ## Cleanup
 Record each deletion and its reason in CLEANUP.md, check references first, and run affected checks. Keep unresolved domain code until reviewed. Never execute legacy reset/database-deletion scripts. Do not remove migrations as a cleanup operation. Existing tracked environment files must not be copied or printed; new secrets must be ignored by Git.

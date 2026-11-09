@@ -68,10 +68,10 @@ foreach ($case in $cases) {
 $positive = $state | ConvertTo-Json -Depth 10 | ConvertFrom-Json
 $positive.tasks[0].status = 'done'
 $positive.tasks[0].evidence = @('T999998')
-$sample = "## T999998 | passed`nTask: R00`nDate: 2026-11-09`nCommand: sample test`n"
+$sample = $log + "`n## T999998 | passed`nTask: R00`nDate: 2026-11-09`nCommand: sample test`n"
 Assert-RebuildState $positive $sample $plan
 Write-Output 'PASS: accepts completion with matching passing evidence.'
-$mismatched = "## T999998 | passed`nTask: R01`nDate: 2026-11-09`nCommand: sample test`n"
+$mismatched = $log + "`n## T999998 | passed`nTask: R01`nDate: 2026-11-09`nCommand: sample test`n"
 $rejected = $false
 try { Assert-RebuildState $positive $mismatched $plan } catch { $rejected = $true }
 if (-not $rejected) { throw 'Validator accepted evidence for another task.' }

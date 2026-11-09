@@ -1,0 +1,19 @@
+name: optics-rebuild
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: optics_rebuild_dev
+      POSTGRES_USER: optics_rebuild_owner
+      POSTGRES_PASSWORD: ${OSM_REBUILD_DB_PASSWORD:?Set a new rebuild-only password}
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - rebuild_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U optics_rebuild_owner -d optics_rebuild_dev"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+volumes:
+  rebuild_postgres:

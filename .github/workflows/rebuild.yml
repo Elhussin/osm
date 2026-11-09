@@ -1,0 +1,64 @@
+name: Rebuild foundation
+on:
+  push:
+    paths: ['rebuild/**', 'docs/rebuild/**', '.github/workflows/rebuild.yml']
+  pull_request:
+    paths: ['rebuild/**', 'docs/rebuild/**', '.github/workflows/rebuild.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  foundation:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: optics_rebuild_ci
+          POSTGRES_USER: optics_rebuild_owner
+          POSTGRES_PASSWORD: synthetic-ci-password-not-for-production
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U optics_rebuild_owner -d optics_rebuild_ci"
+          --health-interval 3s --health-timeout 3s --health-retries 20
+    defaults:
+      run:
+        working-directory: rebuild
+    env:
+      OSM_REBUILD_ENVIRONMENT: test
+      OSM_REBUILD_SECRET_KEY: synthetic-ci-only-key-at-least-fifty-characters-do-not-use-in-production
+      OSM_REBUILD_ALLOWED_HOSTS: localhost,127.0.0.1,testserver,a.example.test,b.example.test,unknown.example.test
+      OSM_REBUILD_DB_NAME: optics_rebuild_ci
+      OSM_REBUILD_DB_USER: optics_rebuild_owner
+      OSM_REBUILD_DB_PASSWORD: synthetic-ci-password-not-for-production
+      OSM_REBUILD_DB_HOST: 127.0.0.1
+      OSM_REBUILD_DB_PORT: '5432'
+      OSM_REBUILD_RUNTIME_DB_PASSWORD: synthetic-runtime-password-not-for-production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install tested PDM version
+        run: python -m pip install pdm==2.29.7
+      - name: Install only the committed lock
+        run: |
+          pdm use -f python
+          pdm lock --check
+          pdm sync --clean
+      - name: Check configuration and migrations
+        run: |
+          pdm run check
+          pdm run migrations-check
+          pdm run migrate-shared
+          pdm run configure-runtime
+          pdm run verify-runtime
+      - name: Run PostgreSQL foundation and policy tests
+        run: |
+          pdm run test
+          pdm run test-policy
+      - name: Check rebuild plan and legacy inventory
+        shell: pwsh
+        run: |
+          & ../scripts/check-rebuild.ps1
+          & ../scripts/check-discovery.ps1

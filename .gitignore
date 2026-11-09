@@ -19,3 +19,21 @@ docker-compose.override.yml
 
 # venv
 venv
+
+# Supplied Waseel examples contain credentials, bearer tokens and personal data.
+# Keep raw originals local; commit only the sanitized contract inventory.
+/Waseel_PI_Document/
+/Fwd__Waseel_API_Document.zip
+/scripts/__pycache__/
+/rebuild/**/__pycache__/
+/rebuild/__pycache__/
+/rebuild/.tools/
+/rebuild/.venv/
+/rebuild/.pdm-python
+/rebuild/pdm.toml
+/rebuild/.env
+/rebuild/.env.*
+!/rebuild/.env.example
+/rebuild/.pytest_cache/
+/rebuild/staticfiles/
+/rebuild/media/
