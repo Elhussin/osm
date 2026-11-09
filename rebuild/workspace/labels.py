@@ -4,7 +4,7 @@ ROLE_LABELS = {
     "cashier": "موظف المبيعات", "optometrist": "أخصائي البصريات", "inventory_clerk": "مسؤول المخزون", "insurance_officer": "مسؤول التأمين",
 }
 ACTION_LABELS = {
-    "stock.receive": "إضافة مخزون", "stock.reverse": "عكس إضافة مخزون",
+    "stock.receive": "إضافة مخزون", "stock.issue": "صرف مخزون محجوز", "stock.reverse": "عكس حركة مخزون",
     "company.manage": "إدارة بيانات الشركة", "members.manage": "إدارة الأعضاء", "roles.manage": "إسناد الأدوار",
     "branches.manage": "إدارة الفروع", "ownership.transfer": "نقل ملكية الشركة", "provider.configure": "إعداد الربط الخارجي",
     "catalog.read": "عرض دليل المنتجات", "catalog.manage": "إدارة دليل المنتجات", "ledger.read": "عرض دفتر الأستاذ", "ledger.post": "ترحيل القيود", "audit.read": "عرض سجل التدقيق",
@@ -13,6 +13,7 @@ ACTION_LABELS = {
     "stock.read": "عرض المخزون", "stock.reserve": "حجز المخزون", "stock.transfer": "تحويل المخزون", "insurance.read": "عرض ملفات التأمين", "insurance.prepare": "إعداد طلبات التأمين", "insurance.submit": "إرسال طلبات التأمين", "reports.read": "عرض التقارير", "data.export": "تصدير البيانات",
 }
 EVENT_LABELS = {
+    "stock.reserve": "حجز مخزون", "stock.issue": "صرف مخزون محجوز", "stock.release": "تحرير حجز مخزون", "stock.cancel": "إلغاء المتبقي من حجز", "stock.reverse_issue": "عكس صرف مخزون",
     "stock.received": "إضافة مخزون بالمصفوفة", "stock.receipt_reversed": "عكس إضافة مخزون",
     "catalog.product_created": "إضافة منتج", "catalog.product_updated": "تحديث منتج", "catalog.variant_created": "إضافة متغير", "catalog.variant_updated": "تحديث سعر متغير", "catalog.price_rule_created": "إضافة قاعدة سعر", "catalog.price_rule_disabled": "إيقاف قاعدة سعر",
     "customer.created": "إضافة عميل", "customer.updated": "تحديث بيانات عميل", "customer.shared": "مشاركة بيانات عميل", "prescription.created": "تسجيل فحص ووصفة", "prescription.corrected": "تصحيح وصفة بإصدار جديد", "prescription.image_viewed": "عرض صورة فحص",
