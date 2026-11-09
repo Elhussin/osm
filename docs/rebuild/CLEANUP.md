@@ -32,3 +32,6 @@
 
 ## R04 — خدمات الهوية
 لا حذف legacy: نماذج users/branches القديمة تتضمن أيضًا صفحات وإعدادات وHR واشتراكًا لم تنقل معانيه كلها، وهي مرجع فقط. لا imports منها في التنفيذ الجديد. أنشئت ترحيلات جديدة additive دون محو history. اختبار audit أنشأ دور PostgreSQL مؤقتًا باسم عشوائي داخل حاوية التطوير ثم أزال منح هذا الدور ودوره فقط؛ جميع جداول الاختبار في test_optics_rebuild_dev التي دمرها Django. لا حذف لأي volume أو قاعدة قديمة أو تعديل لأصول وصيل.
+
+## R05 — استبدال HTML الأولي
+حذفت rebuild/templates/identity/home.html وbranches.html وaudit.html ودوال العرض القديمة المقابلة من identity/views.py بعد تحويل routes إلى workspace وفحص المراجع بـrg. بدائلها صفحات workspace المختبرة؛ بقيت المصادقة وتبديل الفرع في identity. لم تحذف migrations أو كود legacy؛ الحصر القديم لم يتغير. أضيفت staticfiles إلى قائمة التجاهل؛ لا تولد أو تنقل ملفات Next القديمة. HTMX المحلي dependency مرخص ومثبت البصمة وليس أصلًا من المشروع القديم.

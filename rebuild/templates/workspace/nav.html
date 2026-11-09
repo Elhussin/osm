@@ -1,0 +1,8 @@
+<nav class="navigation" aria-label="القائمة الرئيسية" hx-boost="true" hx-target="#app-shell" hx-select="#app-shell" hx-swap="outerHTML show:top"><p class="nav-label">مساحة العمل</p>
+<a href="{% url 'account-home' %}" {% if active_page == 'home' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-home"/></svg>نظرة عامة</a>
+{% if can_members %}<a href="{% url 'members' %}" {% if active_page == 'members' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-users"/></svg>الأعضاء</a>{% endif %}
+<a href="{% url 'account-branches' %}" {% if active_page == 'branches' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-branch"/></svg>الفروع والمستودعات</a>
+{% if can_roles %}<a href="{% url 'roles' %}" {% if active_page == 'roles' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-shield"/></svg>الأدوار والصلاحيات</a>{% endif %}
+{% if can_audit %}<a href="{% url 'account-audit' %}" {% if active_page == 'audit' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-audit"/></svg>سجل التدقيق</a>{% endif %}
+{% if can_ownership %}<p class="nav-label">إعدادات الشركة</p><a href="{% url 'ownership' %}" {% if active_page == 'ownership' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-shield"/></svg>ملكية الشركة</a>{% endif %}
+</nav>

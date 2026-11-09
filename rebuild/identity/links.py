@@ -7,17 +7,27 @@ from django.core import signing
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.utils import timezone
+from django.utils.crypto import salted_hmac
 from access.authorization import current_company, require, require_delegation
 from access.services import audit, lock_access
 from .models import PasswordLink
 
 
-def _issue(user, purpose):
+def delivery_token(link):
+    """Reconstruct a queued token without retaining a bearer secret in the outbox."""
     company = current_company()
-    nonce = secrets.token_urlsafe(32)
+    nonce = salted_hmac("erp.password-link.nonce", f"{company.pk}:{link.pk}:{link.user_id}:{link.purpose}", algorithm="sha256").hexdigest()
+    return signing.dumps({"link": str(link.pk), "company": str(company.pk), "user": str(link.user_id), "purpose": link.purpose, "nonce": nonce}, salt="erp.password-link", compress=False)
+
+
+def _issue(user, purpose):
     PasswordLink.objects.filter(user=user, purpose=purpose, used_at__isnull=True).update(used_at=timezone.now())
-    link = PasswordLink.objects.create(user=user, purpose=purpose, digest=hashlib.sha256(nonce.encode()).hexdigest(), expires_at=timezone.now() + timedelta(hours=1))
-    return signing.dumps({"link": str(link.pk), "company": str(company.pk), "user": str(user.pk), "purpose": purpose, "nonce": nonce}, salt="erp.password-link", compress=False)
+    link = PasswordLink(user=user, purpose=purpose, expires_at=timezone.now() + timedelta(hours=1))
+    token = delivery_token(link)
+    nonce = signing.loads(token, salt="erp.password-link")["nonce"]
+    link.digest = hashlib.sha256(nonce.encode()).hexdigest()
+    link.save()
+    return token
 
 
 @transaction.atomic

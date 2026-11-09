@@ -1,0 +1,25 @@
+{% load static %}<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="referrer" content="same-origin"><meta name="htmx-config" content='{"historyCacheSize":0,"historyRestoreAsHxRequest":false,"selfRequestsOnly":true}'><title>{{ title|default:"نظام البصريات" }} · {{ company_name }}</title><link rel="stylesheet" href="{% static 'workspace/app.css' %}"><script defer src="{% static 'vendor/htmx.min.js' %}"></script><script defer src="{% static 'workspace/app.js' %}"></script></head>
+<body hx-history="false"><a class="skip-link" href="#main-content">تخطي إلى المحتوى</a>
+<svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10H3Z M9 20v-7h6v7"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3 M17 4a3 3 0 0 1 0 6 M18 14a5 5 0 0 1 3 5v2"/></symbol>
+<symbol id="i-branch" viewBox="0 0 24 24"><path d="M4 21V5h10v16 M14 11h6v10 M2 21h20 M7 9h4 M7 13h4 M7 17h4"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9S4 17 4 12V6Z m-4 9 3 3 5-6"/></symbol>
+<symbol id="i-audit" viewBox="0 0 24 24"><path d="M6 3h12v18H6Z M9 8h6 M9 12h6 M9 16h4"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16 M4 12h16 M4 18h16"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14 M5 12h14"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></symbol>
+</defs></svg>
+<div id="app-shell" class="{% if is_signed_in %}app-shell{% else %}auth-shell{% endif %}">
+{% if is_signed_in %}
+<aside class="sidebar" aria-label="الشريط الجانبي"><a class="brand" href="{% url 'account-home' %}"><span class="brand-mark" aria-hidden="true">◎</span><span>بصريات<small>إدارة الأعمال</small></span></a><div class="company-label"><span class="status-dot"></span>{{ company_name }}</div>{% include 'workspace/nav.html' %}<div class="sidebar-bottom"><span class="avatar">{{ request.user.username|first }}</span><div><strong>{{ request.user.get_full_name|default:request.user.username }}</strong><small>حساب الشركة</small></div><form action="{% url 'logout' %}" method="post">{% csrf_token %}<button class="icon-button logout" title="تسجيل الخروج" aria-label="تسجيل الخروج">↪</button></form></div></aside>
+<div class="app-body"><header class="topbar"><button class="icon-button mobile-only" type="button" data-open-dialog="mobile-menu" aria-label="فتح القائمة"><svg class="icon"><use href="#i-menu"/></svg></button><div class="breadcrumb">إدارة المنشأة <span aria-hidden="true">/</span> <strong>{{ title }}</strong></div><div class="branch-context"><span class="status-dot"></span>{% if selected_branch %}{{ selected_branch.name }}{% else %}{{ company_name }}{% endif %}</div></header>
+<dialog id="mobile-menu" class="mobile-menu" aria-label="القائمة الرئيسية"><div class="dialog-top"><strong>بصريات</strong><button class="icon-button" type="button" data-close-dialog aria-label="إغلاق القائمة">×</button></div>{% include 'workspace/nav.html' %}</dialog>
+{% endif %}
+<main id="main-content" tabindex="-1" class="{% if is_signed_in %}workspace{% else %}auth-content{% endif %}">
+{% if request.company %}{% if messages %}<div class="notifications" aria-live="polite">{% for message in messages %}<div class="notice notice-success" role="status">{{ message }}</div>{% endfor %}</div>{% endif %}{% endif %}
+{% block content %}{% endblock %}
+</main>{% if is_signed_in %}<footer class="app-footer">{{ company_name }} <span>مساحة عمل آمنة</span></footer></div>{% endif %}
+</div><div id="copy-feedback" class="copy-feedback" role="status" aria-live="polite"></div>
+</body></html>

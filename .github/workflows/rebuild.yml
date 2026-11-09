@@ -57,6 +57,10 @@ jobs:
         run: |
           pdm run test
           pdm run test-policy
+      - name: Install isolated browser
+        run: pdm run python -m playwright install --with-deps chromium --only-shell
+      - name: Test desktop and mobile workflows
+        run: pdm run test-browser
       - name: Check rebuild plan and legacy inventory
         shell: pwsh
         run: |

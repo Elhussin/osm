@@ -1,1 +1,0 @@
-<section lang="ar" dir="rtl"><h2>الفروع المتاحة</h2><p>عدد الفروع: {{ count }}</p><ul>{% for branch in branches %}<li data-branch-id="{{ branch.pk }}">{{ branch.code }} — {{ branch.name }}</li>{% empty %}<li>لا توجد فروع متاحة.</li>{% endfor %}</ul></section>

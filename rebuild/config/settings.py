@@ -21,11 +21,12 @@ ALLOWED_HOSTS = [host.strip() for host in required("ALLOWED_HOSTS").split(",") i
 if "*" in ALLOWED_HOSTS:
     raise ImproperlyConfigured("Wildcard ALLOWED_HOSTS is prohibited")
 
-SHARED_APPS = ("django_tenants", "directory.apps.DirectoryConfig")
+SHARED_APPS = ("django_tenants", "directory.apps.DirectoryConfig", "django.contrib.staticfiles")
 TENANT_APPS = (
     "django.contrib.contenttypes", "django.contrib.auth", "django.contrib.sessions",
     "identity.apps.IdentityConfig",
     "access.apps.AccessConfig",
+    "django.contrib.messages", "workspace.apps.WorkspaceConfig",
 )
 INSTALLED_APPS = list(SHARED_APPS) + list(TENANT_APPS)
 TENANT_MODEL = "directory.Company"
@@ -41,11 +42,29 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
     "identity.middleware.BoundSessionMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 ROOT_URLCONF = "config.urls"
-TEMPLATES = [{"BACKEND": "django.template.backends.django.DjangoTemplates", "DIRS": [BASE_DIR / "templates"], "APP_DIRS": True, "OPTIONS": {"context_processors": ["django.template.context_processors.request", "django.template.context_processors.csrf"]}}]
+TEMPLATES = [{"BACKEND": "django.template.backends.django.DjangoTemplates", "DIRS": [BASE_DIR / "templates"], "APP_DIRS": True, "OPTIONS": {"context_processors": ["django.template.context_processors.request", "django.template.context_processors.csrf", "django.contrib.messages.context_processors.messages", "workspace.context.ui_context"]}}]
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
+INVITE_DELIVERY = os.environ.get("OSM_REBUILD_INVITE_DELIVERY", "manual")
+if INVITE_DELIVERY not in {"manual", "smtp"}:
+    raise ImproperlyConfigured("INVITE_DELIVERY must be manual or smtp")
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.environ.get("OSM_REBUILD_SMTP_HOST", "")
+EMAIL_PORT = int(os.environ.get("OSM_REBUILD_SMTP_PORT", "587"))
+EMAIL_HOST_USER = os.environ.get("OSM_REBUILD_SMTP_USER", "")
+EMAIL_HOST_PASSWORD = os.environ.get("OSM_REBUILD_SMTP_PASSWORD", "")
+EMAIL_USE_TLS = os.environ.get("OSM_REBUILD_SMTP_TLS", "true").lower() == "true"
+EMAIL_TIMEOUT = 10
+DEFAULT_FROM_EMAIL = os.environ.get("OSM_REBUILD_SMTP_FROM", "")
+if INVITE_DELIVERY == "smtp" and (not EMAIL_HOST or not DEFAULT_FROM_EMAIL):
+    raise ImproperlyConfigured("SMTP delivery requires explicit host and from address")
 PUBLIC_SCHEMA_URLCONF = "config.public_urls"
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"

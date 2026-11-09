@@ -40,9 +40,9 @@ pdm run manage-migration provision_company --name "شركة تجريبية" --do
 
 استبدل <UUID> بمعرف تولده مرة واحدة؛ الأمر يطلب كلمة مرور المالك عبر getpass ولا يقبلها في arguments. أضف النطاق إلى OSM_REBUILD_ALLOWED_HOSTS المحلي قبل زيارته. ينشأ schema داخلي ومالك ودور owner وفرع MAIN، ويحدث منح runtime قبل إعلان ready. إذا فشل الإنشاء لا تحذف schema؛ أصلح السبب وأعد الأمر بنفس مفتاح العملية والنطاق واسم المالك. لا تعاد كلمة مرور مالك جاهز بمجرد إعادة الأمر.
 
-بعد التشغيل `pdm run dev` افتح http://tenant-a.localhost:8100/auth/login/ ثم /account/. لا توجد شركة أو كلمة مرور افتراضية جاهزة. شاشات الدخول الحالية أولية؛ شاشات الإدارة الموسعة R05. توجد خدمات create_member/invite_member/assign_role/transfer_ownership داخلية وليست endpoints CRUD عامة. لا تضبط is_superuser لمنح صلاحية ERP.
+بعد التشغيل `pdm run dev` افتح http://tenant-a.localhost:8100/auth/login/ ثم /account/. لا توجد شركة أو كلمة مرور افتراضية جاهزة. تتوفر واجهة الإدارة العربية في R05. توجد خدمات create_member/invite_member/assign_role/transfer_ownership داخلية وليست endpoints CRUD عامة. لا تضبط is_superuser لمنح صلاحية ERP.
 
-روابط الدعوة/reset تصدر من مسؤول مخول وتستهلك في شركة واحدة فقط؛ لا قناة إرسال بريد تلقائي مفعلة. لا تنسخ الرموز في المحادثة أو logs. خيارات التسليم ستجهز ضمن تجربة R05.
+روابط الدعوة/reset تصدر من مسؤول مخول وتستهلك في شركة واحدة فقط؛ قناة SMTP اختيارية وفق الإعداد التالي. لا تنسخ الرموز في المحادثة أو logs. راجع ADR 0006 لتفاصيل سجل الانتظار.
 
 ## قواعد الاتصال
 OSM_REBUILD_DB_MODE افتراضيًا runtime. أوامر migrate-shared/manage-migration/migrations-check/test/configure-runtime تضبط migration صراحة. `pdm run manage-migration <command>` مخصص للمطور/النشر فقط، ولا يوضع في خدمة الويب. `pdm run dev` وverify-runtime يستخدمان runtime. بعد إضافة مخططات في R04، تُحدّث منح runtime بواسطة configure-runtime ضمن provisioning الموثق.
@@ -50,9 +50,25 @@ OSM_REBUILD_DB_MODE افتراضيًا runtime. أوامر migrate-shared/manage
 في الإنتاج لا تضع بيانات المالك مع بيئة الويب، ولا تفعّل DEBUG أو runserver. لم يجهز نشر الإنتاج في R03. لا تُنفذ أوامر حذف volumes لتنظيف الكود؛ هذه بيانات تطوير دائمة. إيقاف قاعدة التطوير فقط: `docker compose --env-file .env -f compose.yaml stop db` من rebuild/.
 
 ## التحقق المستمر
-- `pdm run test`: 33 اختبار Django/PostgreSQL حاليًا تشمل أساس R03 وعزل R04 وHTTP والروابط والتزامن وقيود التدقيق.
+- `pdm run test`: 49 اختبار Django/PostgreSQL حاليًا تشمل أساس R03 وعزل R04 وHTTP والروابط والتزامن وقيود التدقيق.
 - `pdm run test-policy`: 44 اختبار سياسة مجردة؛ لا يعوض اختبارات قاعدة البيانات.
 - نجح `.github/workflows/rebuild.yml` فعليًا على GitHub للـcommit 67a30e0: [تشغيل R03](https://github.com/Elhussin/osm/actions/runs/42575805281). يستمر التشغيل على كل تعديل مطابق لمسارات workflow.
-- نجح كذلك [تشغيل R04](https://github.com/Elhussin/osm/actions/runs/42594132931) للـcommit 74553dc، شاملاً اختبارات الهوية والصلاحيات الجديدة. الواجهة المتكاملة وتجربة إدارة الأعضاء R05.
+- نجح كذلك [تشغيل R04](https://github.com/Elhussin/osm/actions/runs/42594132931) للـcommit 74553dc، شاملاً اختبارات الهوية والصلاحيات الجديدة. أضيفت اختبارات واجهة R05 إلى المسار نفسه.
 - تغييرات اعتماديات: عبر PDM فقط، لا تعديل lock يدويًا. لا تستخدم ملف requirements القديم.
-- نتائج هذه الجلسة وحدودها في TEST_LOG.md. R04 سيضيف خدمات provisioning والأدوار والفروع ومنع التصعيد وروابط الدعوات والاسترداد.
+- نتائج هذه الجلسة وحدودها في TEST_LOG.md. تتوفر خدمات provisioning والأدوار والفروع وروابط الدعوات والاسترداد؛ وحدات الأعمال R06 وما بعدها.
+
+## واجهة R05 وSMTP
+بعد أي ترحيل جديد: `pdm run migrate-all` ثم `pdm run configure-runtime`. سجل البريد الجديد داخل مخططات الشركات فقط. لا بيانات دخول افتراضية؛ أنشئ شركة صناعية بالأمر أعلاه ثم افتح /account/ على نطاقها.
+
+في rebuild/.env المحلي فقط اضبط OSM_REBUILD_INVITE_DELIVERY=smtp وOSM_REBUILD_SMTP_HOST/PORT/USER/PASSWORD/FROM وOSM_REBUILD_SMTP_TLS=true (STARTTLS؛ الافتراضي port587). لا تدعم هذه الإعدادات SSL الضمني على 465؛ اختر endpoint STARTTLS من مزودك. لا تضع الأسرار في أمر shell أو Git أو المحادثة. بقاء manual يعني تسليم الرابط الآمن يدويًا وعدم إرسال بريد.
+
+شغّل `pdm run mail-worker --limit 20` دوريًا، مثل كل دقيقة عبر مشغل خدمات/جدولة موثوق، بنفس إعداد runtime للويب. الأمر دفعة واحدة ثم ينتهي، وليس daemon أو scheduler مضمّنًا. لا يحتاج بيانات مستخدم DB migration. يعالج حدًا لكل شركة ready دون إخراج مستلمين أو رموز. عند عدم تشغيله تبقى الرسالة queued؛ الواجهة لا تدّعي إرسالها. المهلة10ثوانٍ، حجز دقيقتين، خمس محاولات مع backoff. عند فشل نهائي أو انتهاء الرابط أصدر رابطًا جديدًا من صفحة العضو. لا يوجد في هذه المرحلة لوحة مراقبة outbox كاملة أو ضمان SMTP exactly-once. لم تختبر خدمة SMTP حقيقية؛ الاختبارات تستخدم locmem ومحاكاة فشل.
+
+اختبارات المتصفح الاختيارية محليًا:
+```powershell
+# من جذر المستودع بعد تثبيت مجموعة browser بواسطة PDM
+$env:PLAYWRIGHT_BROWSERS_PATH = Join-Path (Resolve-Path rebuild/.tools).Path 'browsers'
+pwsh -NoProfile -File rebuild/pdm.ps1 run python -m playwright install chromium --only-shell
+pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser
+```
+Chromium معزول، والصور الصناعية في rebuild/.tools/ui-artifacts مستبعدة. CI يثبت Chromium ومكتبات النظام قبل الاختبارات. لا تستخدم بيانات حقيقية أو تتبع شبكة يحتوي رموز الدعوات. للخادم الإنتاجي اجمع staticfiles عبر `pdm run manage-migration collectstatic --noinput` وخدمها من إعداد نشر مستقل؛ runserver محلي فقط.

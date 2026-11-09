@@ -41,22 +41,27 @@ def require(actor_id, action, branches=()):
         raise PermissionDenied
 
 
-def require_delegation(actor_id, role, branch_id=None):
-    """Check permission ownership at the grant's scope, not an empty document scope."""
-    state = authorization_state(actor_id)
+def delegation_permitted(state, role, branch_id=None):
+    """Pure check shared by server-side choices and mutation authorization."""
     if state is None:
-        raise PermissionDenied
+        return False
     principal, context, grants = state
     for permission in role.permissions:
         if role.scope == "company" and permission not in COMPANY_ACTIONS:
             # A company grant can only be delegated by another company grant;
             # checking an empty branch resource would incorrectly deny it.
             if not any(g.branch_id is None and g.role in ROLES and ROLES[g.role].scope == "company" and permission in ROLES[g.role].permissions for g in grants):
-                raise PermissionDenied
+                return False
         else:
             branches = frozenset([str(branch_id)]) if branch_id else frozenset()
             if not permits(principal, context, permission, ResourceScope(context.company_id, branches), grants):
-                raise PermissionDenied
+                return False
+    return True
+
+
+def require_delegation(actor_id, role, branch_id=None):
+    if not delegation_permitted(authorization_state(actor_id), role, branch_id):
+        raise PermissionDenied
 
 
 def visible_branches(actor_id, action="invoice.read"):

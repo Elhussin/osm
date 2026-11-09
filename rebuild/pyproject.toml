@@ -16,11 +16,18 @@ distribution = false
 [tool.pdm.scripts]
 check = "python manage.py check"
 migrations-check = {cmd = "python manage.py makemigrations --check --dry-run", env = {OSM_REBUILD_DB_MODE = "migration"}}
-test = {cmd = "python manage.py test foundation_tests access_tests --verbosity 2 --noinput", env = {OSM_REBUILD_DB_MODE = "migration"}}
+test = {cmd = "python manage.py test foundation_tests access_tests workspace_tests --verbosity 2 --noinput", env = {OSM_REBUILD_DB_MODE = "migration"}}
 test-policy = {cmd = "python -m unittest discover -s rebuild/tests -v", working_dir = ".."}
+test-browser = {cmd = "python manage.py test browser_tests --verbosity 2 --noinput", env = {OSM_REBUILD_DB_MODE = "migration"}}
+mail-worker = {cmd = "python manage.py process_mail", env = {OSM_REBUILD_DB_MODE = "runtime"}}
 dev = {cmd = "python manage.py runserver 127.0.0.1:8100", env = {OSM_REBUILD_DB_MODE = "runtime"}}
 migrate-shared = {cmd = "python manage.py migrate_schemas --shared --noinput", env = {OSM_REBUILD_DB_MODE = "migration"}}
 migrate-all = {cmd = "python manage.py migrate_schemas --noinput", env = {OSM_REBUILD_DB_MODE = "migration"}}
 manage-migration = {cmd = "python manage.py", env = {OSM_REBUILD_DB_MODE = "migration"}}
 configure-runtime = {cmd = "python manage.py configure_runtime_role", env = {OSM_REBUILD_DB_MODE = "migration"}}
 verify-runtime = {cmd = "python manage.py verify_runtime_role", env = {OSM_REBUILD_DB_MODE = "runtime"}}
+
+[dependency-groups]
+browser = [
+    "playwright<2,>=1.55",
+]

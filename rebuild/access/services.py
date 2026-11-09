@@ -92,6 +92,8 @@ def set_member_active(actor_id, *, user_id, active):
     lock_access()
     require(actor_id, "members.manage")
     target = get_user_model().objects.select_for_update().get(pk=user_id)
+    if active and not target.has_usable_password():
+        raise ValidationError("Accept the invitation before activating this account")
     if RoleAssignment.objects.filter(user=target, role_id="owner", active=True).exists():
         require(actor_id, "ownership.transfer")
         if not active and target.is_active and owner_count() <= 1:
@@ -99,6 +101,30 @@ def set_member_active(actor_id, *, user_id, active):
     target.is_active = active
     target.save(update_fields=["is_active"])
     audit(actor_id, "member.activated" if active else "member.disabled", target.pk)
+
+
+@transaction.atomic
+def update_member(actor_id, *, user_id, email, first_name, last_name):
+    lock_access()
+    require(actor_id, "members.manage")
+    target = get_user_model().objects.select_for_update().get(pk=user_id)
+    for assignment in RoleAssignment.objects.filter(user=target, active=True):
+        require_delegation(actor_id, ROLES[assignment.role_id], assignment.branch_id)
+    target.email, target.first_name, target.last_name = email, first_name, last_name
+    target.full_clean()
+    target.save(update_fields=["email", "first_name", "last_name"])
+    audit(actor_id, "member.updated", target.pk)
+
+
+@transaction.atomic
+def update_branch(actor_id, *, branch_id, code, name, kind):
+    lock_access()
+    require(actor_id, "branches.manage")
+    branch = Branch.objects.select_for_update().get(pk=branch_id)
+    branch.code, branch.name, branch.kind = code, name, kind
+    branch.full_clean()
+    branch.save(update_fields=["code", "name", "kind"])
+    audit(actor_id, "branch.updated", branch.pk)
 
 
 @transaction.atomic
