@@ -36,3 +36,5 @@ python -m unittest discover -s rebuild/tests -v
 اكتملت R05: واجهة إدارة عربية RTL عبر Django/HTMX، ودعوات واستعادة مع سجل SMTP في الخلفية عند إعداده. نجحت 97 حالة فريدة محليًا وعلى [CI](https://github.com/Elhussin/osm/actions/runs/42635412157). التالي R06 للعملاء والفحوص والوصفات؛ تفاصيل البريد وحدوده في [ADR 0006](docs/rebuild/decisions/0006-workspace-and-mail.md).
 
 اكتملت R06: العملاء والفحوص والوصفات بإصدارات محفوظة وصورة فحص اختيارية خاصة. نجحت118 حالة فريدة محليًا وعلى [CI](https://github.com/Elhussin/osm/actions/runs/42648591494). التالي R07 للمنتجات والمتغيرات والتسعير؛ التفاصيل في [ADR 0007](docs/rebuild/decisions/0007-clinical-records-and-images.md).
+
+اكتملت R07: دليل منتجات ومتغيرات بصريات ووحدات بيع ثابتة وقواعد سعر حسب العميل والفرع والقناة والكمية والتاريخ. نجحت143 حالة فريدة محليًا وعلى [CI](https://github.com/Elhussin/osm/actions/runs/42654940007). التالي R08 للمخزون والحجز والتحويل والجرد؛ التفاصيل في [ADR 0008](docs/rebuild/decisions/0008-catalog-and-pricing.md).

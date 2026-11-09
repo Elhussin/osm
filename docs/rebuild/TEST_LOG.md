@@ -200,3 +200,14 @@ Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test
 أثناء المراجعة عولج إسقاط اسم زر submit عند تعطيله: يُحفظ الأمر مؤقتًا ثم يُنظف عند pageshow/إرسال جديد، فلا يتحول refresh إلى إنشاء قاعدة ولا يبقى أمر قديم بعد الرجوع. اختُبر سلوك refresh في المتصفح مع JavaScript مفعّل، والحفظ بدونه. كذلك ثُبت count distinct وترتيب المواصفات وصفر موحد، ورسائل تعارض عربية دون أسماء قيود داخلية. هذه نتائج مراجعة وتصحيح؛ لم نسجل فشلًا اختباريًا لم يحدث.
 
 نجح check/migrations-check/lock --check وcheck-rebuild/check-discovery/diff --check. نُفذ migrate-all على optics_rebuild_dev ثم configure-runtime/verify-runtime وجمع الأصول. اختبارات البيانات في test_optics_rebuild_dev التي دمرها Django؛ لا SQLite أو legacy أو أسعار حقيقية. صور catalog-*.png الصناعية في .tools مستبعدة. لا مخزون/فاتورة/حجز أو التزام بضريبة أو بيع جملة أو تكامل خارجي. القيود والمفاضلات ومراجعة حقول الملاءمة في ADR 0008 وR07_CHECKLIST. R07 تنتظر CI الحالي قبل الإغلاق.
+
+## T018 | passed
+Task: R07
+Date: 2026-11-09
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs/42654940007/jobs
+
+دفع commit b2b550f08bae9ee0c482c9651c4fdc916dcb8a09 على codex/r03-foundation بعد مراجعة36 ملفًا وفحص استبعاد الصور والأدوات وقيم أسرار البيئة الفعلية. الدليل: https://github.com/Elhussin/osm/actions/runs/42654940007 — job foundation وجميع خطواته success.
+
+نجح تثبيت lock على Ubuntu/PostgreSQL16 ثم check/migrations-check والترحيل ومنح runtime وverify-runtime، ومجموعة89 حالة Django (تشمل اختبارات المخططات النقية) و44 سياسة، وتثبيت Chromium ثم10 حالات متصفح، وفحوص الخطة والحصر. الإجمالي143 حالة فريدة؛ لا تُضاف الإعادات المحلية إلى العدد.
+
+أغلقت R07 وفق ADR 0008 وR07_CHECKLIST، وأصبح التالي R08 للمخزون والحجز والتحويل والجرد والتزامن. لا حركة مخزون أو طلب بيع أو احتساب ضريبة أو ترحيل مالي ضمن R07. لا دمج main أو نشر إنتاج أو نقل بيانات legacy أو اتصال وصيل/ZATCA.
