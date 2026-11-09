@@ -143,3 +143,14 @@ Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test
 المتصفح: تشغيل فعلي ببيانات صناعية عبر خادم Django وPostgreSQL، دخول وCSRF، تنقل HTMX يحتفظ بسياق الصفحة، بحث وحالة فارغة، دعوة SMTP queued ثم قبول وتسجيل دخول ورفض إدارة الأعضاء، dialog للهاتف بلوحة المفاتيح وEscape واستعادة التركيز والتخطي، عرض390/768/1440، ونموذج دون JavaScript مع خطأ ثم حفظ. فحصت صور سطح المكتب والهاتف، بلا overflow عام وبتمرير داخلي للجدول. الصور المحلية في .tools مستبعدة ولا تشمل صفحة رمز دعوة. لم يطلب المتصفح أصولًا خارجية.
 
 نجح check وmigrations-check وlock --check وجمع خمسة ملفات static وبصمة HTMX. طبق migrate-all ترحيل identity.0003 على قاعدة التطوير المستقلة، وconfigure-runtime/verify-runtime نجحا، وأمر mail-worker --limit1 أنهى بصفر مهمات في الوضع اليدوي. جميع اختبارات البيانات في test_optics_rebuild_dev ودمرها Django؛ لا SQLite أو قاعدة legacy أو SMTP/وصيل/ZATCA حقيقي. الاختبار لا يثبت حمل إنتاج أو WCAG شاملًا أو متصفحات أخرى. R05 تنتظر CI الحالي قبل الإغلاق.
+
+## T013 | passed
+Task: R05
+Date: 2026-11-09
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs/42635412157/jobs
+
+دفع commit fe41f3bffdbfceb5e1c2fdb2194bfdadf656a591 على codex/r03-foundation بعد مراجعة 61 ملفًا جديدًا/معدلًا وثلاثة محذوفة، وفحص استبعاد الأسرار الفعلية والبيئات والأدوات المحلية. الدليل: https://github.com/Elhussin/osm/actions/runs/42635412157 — job foundation وجميع خطواته success.
+
+شمل Ubuntu/PostgreSQL16 وتثبيت PDM من lock والترحيل ومنح runtime، والمجموعة الكاملة الحالية (49 Django/PostgreSQL و44 سياسة)، وتثبيت Chromium ثم أربع حالات متصفح، وفحوص الخطة والحصر. الإجمالي 97 حالة فريدة؛ نجاح الحالات المتكررة لا يضاف إلى العدد. لا اتصال SMTP حقيقي أو وصيل أو نشر إنتاج، ولا دمج main.
+
+اكتملت بوابة R05 وفق ADR 0006 وR05_CHECKLIST. التالي R06 للعملاء والفحوص والوصفات وتاريخها؛ ما زال pending ولم تنفذ وظائفه ضمن هذه المرحلة.

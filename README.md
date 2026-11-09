@@ -32,3 +32,5 @@ python -m unittest discover -s rebuild/tests -v
 ```
 
 يستخدم الإصدار الجديد PDM لإدارة اعتماديات Python وتشغيل أوامر المشروع. راجع قرار `docs/rebuild/decisions/0002-pdm-and-configuration.md` لفصل إدارة الاعتماديات عن إعدادات التطبيق.
+
+اكتملت R05: واجهة إدارة عربية RTL عبر Django/HTMX، ودعوات واستعادة مع سجل SMTP في الخلفية عند إعداده. نجحت 97 حالة فريدة محليًا وعلى [CI](https://github.com/Elhussin/osm/actions/runs/42635412157). التالي R06 للعملاء والفحوص والوصفات؛ تفاصيل البريد وحدوده في [ADR 0006](docs/rebuild/decisions/0006-workspace-and-mail.md).
