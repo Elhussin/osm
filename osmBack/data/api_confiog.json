@@ -1,0 +1,13 @@
+{
+  "schema": "store1",
+  "app": "products",
+  "model": "Category",
+  "csv": "csvCategories.csv",
+  "foreign_keys": {
+    "parent": {
+      "related_model": "products.Category",
+      "lookup_field": "name",
+      "create_if_missing": true
+    }
+  }
+}

@@ -1,0 +1,211 @@
+attribute_id,value,label
+Shape,Cercl,Cercl
+Shape,Round,Round
+Shape,Square,Square
+Shape,Oval,Oval
+Material,Plastic,Plastic
+Material,Steel,Steel
+Material,Wood,Wood
+Material,Glass,Glass
+Color,Green,Green
+Color,Red,Red
+Color,Blue,Blue
+Color,Yellow,Yellow
+Color,Black,Black
+Color,White,White
+Color,Orange,Orange
+Color,Purple,Purple
+Color,Brown,Brown
+Color,Gray,Gray
+Length,152,152
+Length,150,150
+Length,148,148
+Length,146,146
+Length,144,144
+Length,142,142
+Length,140,140
+Length,138,138
+Length,136,136
+Length,134,134
+Length,132,132
+Length,130,130
+Length,128,128
+Length,126,126
+Length,124,124
+Length,122,122
+Length,120,120
+Length,118,118
+Length,116,116
+Length,114,114
+Length,112,112
+Length,110,110
+Length,108,108
+Length,106,106
+Length,104,104
+Length,102,102
+Length,100,100
+Length,98,98
+Length,96,96
+Length,94,94
+Length,92,92
+Length,90,90
+Length,88,88
+Length,86,86
+Length,84,84
+Length,82,82
+Length,80,80
+Length,78,78
+Length,76,76
+Length,74,74
+Length,72,72
+Length,70,70
+Length,68,68
+Length,66,66
+Length,64,64
+Length,62,62
+Length,60,60
+Length,58,58
+Length,56,56
+Length,54,54
+Length,52,52
+Length,50,50
+Length,48,48
+Length,46,46
+Length,44,44
+Length,42,42
+Length,40,40
+Length,38,38
+Length,36,36
+Length,34,34
+Length,32,32
+Length,30,30
+Length,28,28
+Length,26,26
+Length,24,24
+Length,22,22
+Length,20,20
+Length,18,18
+Length,16,16  
+Length,14,14
+Length,12,12
+Length,10,10
+Width,62,62
+Width,60,60
+Width,58,58
+Width,56,56
+Width,54,54
+Width,52,52
+Width,50,50
+Width,48,48
+Width,46,46
+Width,44,44
+Width,42,42
+Width,40,40
+Width,38,38
+Width,36,36
+Width,34,34
+Width,32,32
+Width,30,30
+Width,28,28
+Width,26,26
+Width,24,24
+Diameter,62,62
+Diameter,60,60
+Diameter,58,58
+Diameter,56,56
+Diameter,54,54
+Diameter,52,52
+Diameter,50,50
+Diameter,48,48
+Diameter,46,46
+Diameter,44,44
+Diameter,42,42
+Diameter,40,40
+Diameter,38,38
+Diameter,36,36
+Diameter,34,34
+Diameter,32,32
+Diameter,30,30
+
+Base Curve,0,+00.00
+Base Curve,0.5,+00.50
+Base Curve,1,+01.00
+Base Curve,1.5,+01.50
+Base Curve,2,+02.00
+Base Curve,2.5,+02.50
+Base Curve,3,+03.00
+Base Curve,3.5,+03.50
+Base Curve,4,+04.00
+Base Curve,4.5,+04.50
+Base Curve,5,+05.00
+Base Curve,5.5,+05.50
+Base Curve,6,+06.00
+Base Curve,6.5,+06.50
+Base Curve,7,+07.00
+Base Curve,7.5,+07.50
+Base Curve,8,+08.00
+Base Curve,8.5,+08.50
+Base Curve,9,+09.00
+Base Curve,9.5,+09.50
+Base Curve,10,+10.00
+Base Curve,10.5,+10.50
+Base Curve,11,+11.00    
+Base Curve,11.5,+11.50
+Base Curve,12,+12.00
+Base Curve,12.5,+12.50
+
+Product Type,"SV-ST",Single Stock
+Product Type,"SV-RX",Single RX
+Product Type,"MF-RX",Multi  Focal RX
+Product Type,"BF-RX",Bifocal RX
+Product Type,"TF-RX",Triple Focal RX
+Product Type,"CL-Cl",Contact Lens Clear
+Product Type,"CL-CO",Contact Lens Colored 
+Product Type,"FR-SG",Frames Sun Glasses
+Product Type,"FR-SP",Frames Spectacle Glasses
+
+
+
+Water Content,50% ,Water Content 50%
+Water Content,60%,Water Content 60%
+Replacement Schedule,6M ,Replacement Schedule 6 Month
+Replacement Schedule,1M ,Replacement Schedule 1 Month
+Replacement Schedule,3M ,Replacement Schedule 3 Month
+Replacement Schedule,1Y ,Replacement Schedule 1 Year
+Warranty,2Y ,Warranty 2 Year
+Warranty,1Y ,Warranty 1 Year
+Dimensions,30-140-150,Dimensions 30MM-140MM-150MM
+Dimensions,28-138-148,Dimensions 28MM-138MM-148MM
+Dimensions,26-136-146,Dimensions 26MM-136MM-146MM
+Dimensions,24-134-144,Dimensions 24MM-134MM-144MM
+Dimensions,22-132-142,Dimensions 22MM-132MM-142MM
+Dimensions,20-130-140,Dimensions 20MM-130MM-140MM
+Dimensions,18-128-138,Dimensions 18MM-128MM-138MM
+Dimensions,16-126-136,Dimensions 16MM-126MM-136MM
+Dimensions,14-124-134,Dimensions 14MM-124MM-134MM
+Dimensions,12-122-132,Dimensions 12MM-122MM-132MM
+Dimensions,10-120-130,Dimensions 10MM-120MM-130MM
+
+Coatings,MC-GR,MC Green
+Coatings,MC-BL,MC Blue
+Coatings,PL-G15,Polarized G15
+Coatings,PL-GREY,Polarized Grey
+Coatings,PL-GRN,Polarized Green
+Coatings,TR-GRY,Transitions Gray 
+Coatings,TR-BRN,Transitions Brown 
+Coatings,TR-GRN,Transitions Green 
+Coatings,UV,UV 
+Coatings,UV400,UV400
+Coatings,BL-LI,Blue Light
+
+Weight,100g,100g
+Weight,200g,200g
+Weight,300g,300g
+Weight,400g,400g
+Weight,500g,500g
+Uint,1P,1P
+Uint,2P,2P
+Uint,10P,10P
+Uint,30P,30P
+Uint,90P,90P
+

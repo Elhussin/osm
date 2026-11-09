@@ -1,0 +1,44 @@
+
+[
+{
+  "schema": "public",
+  "app": "users",
+  "model": "Role",
+  "csv": "csv/Role.csv"
+  },
+  {
+    "schema": "public",
+    "app": "users",
+    "model": "Permission",
+    "csv": "csv/Permission.csv"
+  },
+  {
+    "schema": "public",
+    "app": "users",
+    "model": "RolePermission",
+    "csv": "csv/RolePermission.csv",
+    "foreign_keys": {
+      "role": {
+        "lookup_field": "name",
+        "create_if_missing": true
+      },
+      "permission": {
+        "lookup_field": "code",
+        "create_if_missing": true
+      }
+    }
+  },
+  {
+    "schema": "public",
+    "app": "tenants",
+    "model": "SubscriptionPlan",
+    "csv": "csv/SubscriptionPlan.csv"
+  },
+  {
+    "schema": "public",
+    "app": "users",
+    "model": "User",
+    "csv": "csv/Users.csv"
+  }
+
+]

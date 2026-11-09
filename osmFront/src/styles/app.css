@@ -1,0 +1,30 @@
+/**
+ * Main Stylesheet Entry Point
+ * 
+ * This file orchestrates the loading of all application styles.
+ * It imports fonts, Tailwind CSS, and custom style modules in a specific order.
+ */
+
+/* 1. Fonts: Inter (English) and Cairo (Arabic) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Cairo:wght@400;700&display=swap");
+
+/* 2. Tailwind CSS Framework */
+@import "tailwindcss";
+
+/* 3. Custom Theme Variables (Colors, Fonts, etc.) */
+@import "./theme.css";
+
+/* 4. Base Styles (Resets, Typography, Global Defaults) */
+@import "./base.css";
+
+/* 5. Component Styles (Buttons, Cards, Inputs, etc.) */
+@import "./components.css";
+
+/* 6. Editor Specific Styles */
+@import "./editor.css";
+
+/* 7. Animations */
+@import "tw-animate-css";
+
+/* Custom variant for dark mode support */
+@custom-variant dark (&:is(.dark *));

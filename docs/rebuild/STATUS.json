@@ -1,0 +1,24 @@
+{
+  "updated": "2026-11-09",
+  "current_task": "R01",
+  "next_task": "R01",
+  "blockers": ["Python launcher is unavailable; application runtime has not been verified.", "Advanced insurance implementation has not been located in the inspected checkout."],
+  "tasks": [
+    {"id":"R00","status":"done","depends_on":[],"evidence":["T000"]},
+    {"id":"R01","status":"pending","depends_on":["R00"],"evidence":[]},
+    {"id":"R02","status":"pending","depends_on":["R01"],"evidence":[]},
+    {"id":"R03","status":"pending","depends_on":["R02"],"evidence":[]},
+    {"id":"R04","status":"pending","depends_on":["R03"],"evidence":[]},
+    {"id":"R05","status":"pending","depends_on":["R04"],"evidence":[]},
+    {"id":"R06","status":"pending","depends_on":["R05"],"evidence":[]},
+    {"id":"R07","status":"pending","depends_on":["R06"],"evidence":[]},
+    {"id":"R08","status":"pending","depends_on":["R07"],"evidence":[]},
+    {"id":"R09","status":"pending","depends_on":["R08"],"evidence":[]},
+    {"id":"R10","status":"pending","depends_on":["R09"],"evidence":[]},
+    {"id":"R11","status":"pending","depends_on":["R10"],"evidence":[]},
+    {"id":"R12","status":"pending","depends_on":["R11"],"evidence":[]},
+    {"id":"R13","status":"pending","depends_on":["R12"],"evidence":[]},
+    {"id":"R14","status":"pending","depends_on":["R13"],"evidence":[]},
+    {"id":"R15","status":"pending","depends_on":["R14"],"evidence":[]}
+  ]
+}

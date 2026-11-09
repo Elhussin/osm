@@ -1,0 +1,41 @@
+
+#etc/systemd/system/optics_tenant.service
+
+[Unit]
+Description=Gunicorn daemon for optics_tenant
+After=network.target
+
+[Service]
+User=hussin
+Group=www-data
+WorkingDirectory=/home/hussin/Desktop/learning/optics_tenant
+ExecStart=/home/hussin/Desktop/learning/venv/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind 127.0.0.1:8000 \
+          optics_tenant.wsgi:application
+
+Restart=always
+Environment="DJANGO_SETTINGS_MODULE=optics_tenant.settings"
+Environment="PYTHONUNBUFFERED=1"
+
+[Install]
+WantedBy=multi-user.target
+
+#Active it 
+sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
+sudo systemctl enable optics_tenant
+sudo systemctl start optics_tenant
+
+#Check status
+sudo systemctl status optics_tenant
+journalctl -xeu optics_tenant
+
+#Stop it
+sudo systemctl stop optics_tenant
+
+#Disable it
+sudo systemctl disable optics_tenant
+
+

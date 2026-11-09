@@ -1,0 +1,312 @@
+{
+  "viewCard": {
+    "view": "عرض",
+    "edit": "تحديث",
+    "createTitle": "إضافة",
+    "updateTitle": "تحديث",
+    "back": "الرجوع",
+    "errorGetFormData": "حدث خطأ أثناء الحصول على بيانات الصفحة.",
+    "is_active": "الحالة",
+    "values": {
+      "is_active": {
+        "true": "مفعل",
+        "false": "غير مفعل"
+      }
+    }
+  },
+  "viewDetailsCard": {
+    "print": "طباعة",
+    "copy": "نسخ",
+    "pdf": "pdf",
+    "entityError": "العنصر غير صحيح أو ID",
+    "noConfigError": "العنصر غير صحيح - تم اكتشاف الـ config",
+    "errorLoadingData": "حدث خطأ أثناء تحميل البيانات",
+    "deletedItem": "تم حذف هذا العنصر. يمكنك استرجاعه أو حذفه بشكل نهائي.",
+    "is_active": "الحالة",
+    "is_deleted": "الحذف",
+    "created_at": "تاريخ الاستلام ",
+    "updated_at": "اخر تحديث",
+    "values": {
+      "is_active": {
+        "true": "مفعل",
+        "false": "غير مفعل"
+      },
+      "is_deleted": {
+        "true": "محذوف",
+        "false": "غير محذوف"
+      }
+    }
+  },
+  "formsConfig": {
+    "create": "إضافة",
+    "update": "تحديث",
+    "back": "الرجوع",
+    "reset": "إعادة تعيين",
+    "submit": "إرسال",
+    "saving": "جاري الحفظ",
+    "loading": "جاري التحميل...",
+    "noData": "لم يتم العثور على بيانات",
+    "success": "تم بنجاح",
+    "failed": "فشل في",
+    "thisFormDoesNotExist":"هذا النموذج غير موجود أو غير مسموح به",
+    "clients": "المستاجرين",
+    "register-tenants": "تسجيل المستأجر",
+    "domains": "النطاقات",
+    "payments": "المدفوعات",
+    "subscription-plans": "الاشتراكات",
+    "roles": "إعدادات الصلاحيات",
+    "users": "المستخدمين",
+    "permissions": "الصلاحيات",
+    "role-permissions": "امتيازات الصلاحيات",
+    "contact-us": "تواصل معنا",
+    "tenant-settings": "اعدادات المستأجر",
+    "departments": "الاقسام",
+    "employees": "الموظفين",
+    "customers": "العملاء",
+    "prescriptions": "كشف النظر",
+    "branches": "الفروع",
+    "branch-users": "مسؤول الفرع",
+    "attributes": "الخصائص",
+    "attribute-values": "قيم الخصائص",
+    "suppliers": "الموردين",
+    "manufacturers": "المصنع",
+    "brands": "العلامات التجارية",
+    "categories": "الاقسام",
+    "lens-coatings": "طبقات الحماية",
+    "products": "المنتجات",
+    "product-variants": "تفاصيل المنتجات",
+    "product-images": "صور المنتجات",
+    "flexible-prices": "السعر المرن"
+  },
+  "clients": {
+    "title": "العملاء",
+    "detailsTitle": "تفاصيل العميل",
+    "name": "اسم العميل",
+    "max_branches": "عدد الفروع",
+    "max_users": "عدد المستخدمين",
+    "website": "الموقع الإلكتروني",
+    "paid_until": "تاريخ الانتهاء",
+    "max_products": "عدد المنتجات",
+    "on_trial": "تجريبي"
+
+  },
+  "register_tenants": {
+    "title": "تسجيل مستأجر جديد",
+    "detailsTitle": "تفاصيل المستأجر",
+    "name": "اسم المستأجر",
+    "email": "النطاق الفرعي"
+  },
+  "domains": {
+    "title": "النطاقات",
+    "detailsTitle": "تفاصيل النطاق",
+    "domain": "النطاق"
+  },
+  "payments": {
+    "title": "الدفعات",
+    "detailsTitle": "تفاصيل الدفع",
+    "amount": "المبلغ",
+    "transaction_id": "رقم الحركة",
+    "status": "الحالة",
+    "client": "العميل",
+    "method": "نوع العملية",
+    "currency": "العملة"
+  },
+  "subscription-plans": {
+    "title": "خطط الاشتراك",
+    "detailsTitle": "تفاصيل خطة الاشتراك",
+    "name": "اسم الخطة",
+    "description": "الوصف",
+    "max_branches": "عدد الفروع",
+    "max_users": "عدد المستخدمين",
+    "month_price": "السعر الشهري",
+    "year_price": "السعر السنوي",
+    "currency": "العملة",
+    "discount": "الخصم"
+  },
+  "roles": {
+    "title": "الادوار",
+    "detailsTitle": "تفاصيل الدور",
+    "name": "الاسم",
+    "description": "الوصف"
+  },
+  "users": {
+    "title": "المستخدمين",
+    "detailsTitle": "تفاصيل المستخدم",
+    "username": "اسم المستخدم",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "address": "العنوان",
+    "website": "الموقع الإلكتروني",
+    "role": "الدور"
+  },
+  "permissions": {
+    "title": "الصلاحيات",
+    "detailsTitle": "تفاصيل الصلاحية",
+    "code": "الكود",
+    "description": "الوصف"
+
+  },
+  "role-permissions": {
+    "title": " الصلاحيات والادوار",
+    "detailsTitle": "تفاصيل الصلاحيات والادوار",
+    "role": "الدور",
+    "permission": "الصلاحية"
+  },
+  "contact-us": {
+    "title": "تواصل",
+    "detailsTitle": "تفاصيل الرسالة",
+    "name": "اسم المرسل",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "message": "الرسالة"
+
+  },
+  "tenant-settings": {
+    "title": "الأعدادت الأساسية",
+    "detailsTitle": "تفاصيل الأعدادت الأساسية",
+    "business_name": "الاسم",
+    "phone": "الهاتف",
+    "email": "البريد الإلكتروني",
+    "facebook": "الفيسبوك",
+    "twitter": "تويتر",
+    "instagram": "الانستغرام",
+    "linkedin": "لينكدإن",
+    "description": "الوصف",
+    "website": "الموقع الإلكتروني"
+  },
+  "departments": {
+    "title": "الاقسام",
+    "detailsTitle": "تفاصيل القسم",
+    "name": "اسم القسم",
+    "description": "الوصف"
+  },
+  "employees": {
+    "title": "الموظفين",
+    "detailsTitle": "تفاصيل الموظف",
+    "name": "اسم الموظف",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "address": "العنوان"
+  },
+  "customer": {
+    "title": "العملاء",
+    "detailsTitle": "تفاصيل العميل",
+    "name": "اسم العميل",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "address": "العنوان"
+  },
+  "prescriptions": {
+    "title": "الفحوصات",
+    "detailsTitle": "تفاصيل الفحص",
+    "customer_name": "اسم المريض",
+    "notes": "الملاحظات",
+    "user_name": "اسم المستخدم"
+  },
+  "branch-users": {
+    "title": "مستخدم الفرع",
+    "detailsTitle": "تفاصيل المستخدم",
+    "branch_name": "الفرع",
+    "employee_name": "الموظف",
+    "status": "الحالة"
+  },
+  "branches": {
+    "title": "الفروع",
+    "detailsTitle": "تفاصيل الفرع",
+    "name": "اسم الفرع",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "address": "العنوان",
+    "city": "المدينة",
+    "country": "البلد"
+  },
+  "attributes": {
+    "title": "الخصائص",
+    "detailsTitle": "تفاصيل الخصائص",
+    "name": "اسم الخصائص",
+    "description": "الوصف"
+  },
+  "attribute-values": {
+    "title": "قيم الخصائص",
+    "detailsTitle": "تفاصيل قيمة الخصائص",
+    "attribute_name": "اسم قيمة الخصائص",
+    "value": "الوصف"
+  },
+  "suppliers": {
+    "title": "الموردين",
+    "detailsTitle": "تفاصيل المورد",
+    "name": "اسم المورد",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "address": "العنوان",
+    "contact_person": "مسؤول التواصل",
+    "country": "البلد",
+    "website": "الموقع الإلكتروني",
+    "payment_terms": "شروط الدفع"
+  },
+  "manufacturers": {
+    "title": "المصنع",
+    "detailsTitle": "تفاصيل المصنع",
+    "name": "اسم المصنع",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "address": "العنوان",
+    "country": "البلد",
+    "website": "الموقع الإلكتروني"
+  },
+  "brands": {
+    "title": "العلامات التجارية",
+    "detailsTitle": "تفاصيل العلامة التجارية",
+    "name": "اسم العلامة التجارية",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "address": "العنوان",
+    "country": "البلد",
+    "website": "الموقع الإلكتروني",
+    "description": "الوصف",
+    "logo": "الشعار"
+  },
+  "categories": {
+    "title": "الاقسام",
+    "detailsTitle": "تفاصيل القسم",
+    "name": "اسم القسم",
+    "description": "الوصف",
+    "parent_name": "القسم الرئيسي"
+  },
+  "lens-coatings": {
+    "title": "طبقات الحماية",
+    "detailsTitle": "تفاصيل طبقة الحماية",
+    "name": "اسم طبقة الحماية",
+    "description": "الوصف"
+  },
+  "products": {
+    "title": "المنتجات",
+    "detailsTitle": "تفاصيل المنتج",
+    "name": "اسم المنتج",
+    "category_name": "التصنيف",
+    "brand_name": "العلامة التجارية",
+    "description": "الوصف",
+    "supplier_name": "المورد",
+    "manufacturer_name": "المصنع",
+    "model": "الموديل",
+    "type": "النوع"
+  },
+  "product-variants": {
+    "title": "  تفاصيل المنتجات ",
+    "detailsTitle": "تفاصيل اضافات المنتج",
+    "name": "اسم اضافات المنتج",
+    "description": "الوصف"
+  },
+  "product-images": {
+    "title": "صور المنتج",
+    "detailsTitle": "تفاصيل صورة المنتج",
+    "name": "اسم صورة المنتج",
+    "description": "الوصف"
+  },
+  "flexible-prices": {
+    "title": "السعر المرن",
+    "detailsTitle": "تفاصيل السعر المرن",
+    "name": "اسم السعر المرن",
+    "description": "الوصف"
+  }
+}

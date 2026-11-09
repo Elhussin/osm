@@ -1,0 +1,361 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-05 11:34+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: .\core\models.py:8
+msgid "Created at"
+msgstr "تم انشاء في"
+
+#: .\core\models.py:9
+msgid "Updated at"
+msgstr "تم التحديث في"
+
+#: .\core\models.py:10 .\tenants\models.py:72
+msgid "Active"
+msgstr "نشط"
+
+#: .\core\models.py:11 .\tenants\models.py:46 .\tenants\models.py:73
+msgid "Deleted"
+msgstr "تم الحذف"
+
+#: .\core\utils\ReusableFields.py:20
+msgid "Username is required."
+msgstr "اسم المستخدم مطلوب"
+
+#: .\core\utils\ReusableFields.py:21
+msgid "Username cannot be blank."
+msgstr "اسم المستخدم لا يمكن ان يكون فارغا"
+
+#: .\core\utils\ReusableFields.py:22
+msgid "Username must be at least 5 characters."
+msgstr "اسم المستخدم يجب ان يحتوي على 5 حروف على الأقل"
+
+#: .\core\utils\ReusableFields.py:23
+msgid "Username must be at most 50 characters."
+msgstr "اسم المستخدم يجب ان يحتوي على 50 حرف على الأكثر"
+
+#: .\core\utils\ReusableFields.py:36
+msgid ""
+"Password must contain at least one uppercase, one lowercase, and one number."
+msgstr "كلمة المرور يجب ان تحتوي على حرف كبير وحرف صغير ورقم"
+
+#: .\core\utils\ReusableFields.py:40
+msgid "Password is required."
+msgstr "كلمة المرور مطلوبة"
+
+#: .\core\utils\ReusableFields.py:41
+msgid "Password cannot be blank."
+msgstr "كلمة المرور لا يمكن ان تكون فارغة"
+
+#: .\core\utils\ReusableFields.py:42
+msgid "Password must be at least 8 characters."
+msgstr "كلمة المرور يجب ان تحتوي على 8 حرف على الأقل"
+
+#: .\core\utils\ReusableFields.py:51
+msgid "Email is required."
+msgstr "البريد الالكتروني مطلوب"
+
+#: .\core\utils\ReusableFields.py:52
+msgid "Email cannot be blank."
+msgstr "البريد الالكتروني لا يمكن ان يكون فارغا"
+
+#: .\core\utils\ReusableFields.py:53
+msgid "Enter a valid email address."
+msgstr "البريد الالكتروني غير صالح"
+
+#: .\core\utils\ReusableFields.py:64
+msgid "Enter a valid phone number (7-15 digits)."
+msgstr "رقم الهاتف يجب ان يحتوي على 7-15 رقم"
+
+#: .\core\utils\ReusableFields.py:68
+msgid "Phone number is required."
+msgstr "رقم الهاتف مطلوب"
+
+#: .\core\utils\ReusableFields.py:69
+msgid "Phone number cannot be blank."
+msgstr "رقم الهاتف لا يمكن ان يكون فارغا"
+
+#: .\core\utils\ReusableFields.py:79
+msgid "First name is required."
+msgstr "الاسم الاول مطلوب"
+
+#: .\core\utils\ReusableFields.py:80
+msgid "First name cannot be blank."
+msgstr "الاسم الاول لا يمكن ان يكون فارغا"
+
+#: .\core\utils\ReusableFields.py:81
+msgid "First name must be at most 30 characters."
+msgstr "الاسم الاول يجب ان يحتوي على 30 حرف على الأكثر"
+
+#: .\core\utils\ReusableFields.py:91
+msgid "Last name is required."
+msgstr "الاسم الاخير مطلوب"
+
+#: .\core\utils\ReusableFields.py:92
+msgid "Last name cannot be blank."
+msgstr "الاسم الاخير لا يمكن ان يكون فارغا"
+
+#: .\core\utils\ReusableFields.py:93
+msgid "Last name must be at most 30 characters."
+msgstr "الاسم الاخير يجب ان يحتوي على 30 حرف على الأكثر"
+
+#: .\core\utils\ReusableFields.py:103
+msgid "Name is required."
+msgstr "الاسم مطلوب"
+
+#: .\core\utils\ReusableFields.py:104
+msgid "Name cannot be blank."
+msgstr "الاسم لا يمكن ان يكون فارغا"
+
+#: .\core\utils\ReusableFields.py:105
+msgid "Name must be at most 25 characters."
+msgstr "الاسم يجب ان يحتوي على 25 حرف على الأكثر"
+
+#: .\scripts\romve_cash.py:61
+msgid "🔄 Start removing cache and migration files..."
+msgstr "🔄 بدء حذف الملفات المؤقتة والملفات"
+
+#: .\scripts\romve_cash.py:63
+msgid "❌ This operation is only allowed in DEBUG mode."
+msgstr "❌ هذه العملية مسموح بها فقط في وضع DEBUG"
+
+#: .\scripts\romve_cash.py:68
+msgid "✅ All cache and migration files have been cleared successfully."
+msgstr "✅ تم حذف جميع الملفات المؤقتة والملفات بنجاح"
+
+#: .\tenants\models.py:14
+msgid "Name"
+msgstr "اسم المستخدم"
+
+#: .\tenants\models.py:17 .\tenants\models.py:67
+msgid "Max Users"
+msgstr "عدد المستخدمين"
+
+#: .\tenants\models.py:18 .\tenants\models.py:69
+msgid "Max Branches"
+msgstr "عدد الفروع"
+
+#: .\tenants\models.py:19 .\tenants\models.py:68
+msgid "Max Products"
+msgstr "المنتجات"
+
+#: .\tenants\models.py:20
+msgid "Month"
+msgstr "شهر"
+
+#: .\tenants\models.py:21
+msgid "Year"
+msgstr "سنة"
+
+#: .\tenants\models.py:22
+msgid "Currency"
+msgstr "العملة"
+
+#: .\tenants\models.py:23
+msgid "Discount"
+msgstr "الخصم"
+
+#: .\tenants\models.py:27
+msgid "Subscription Plan"
+msgstr "الخطة"
+
+#: .\tenants\models.py:28
+msgid "Subscription Plans"
+msgstr "الخطط"
+
+#: .\tenants\models.py:37
+#, fuzzy
+#| msgid "Company Name"
+msgid "Schema Name"
+msgstr "اسم الشركة"
+
+#: .\tenants\models.py:38 .\tenants\models.py:66
+msgid "Company Name"
+msgstr "اسم الشركة"
+
+#: .\tenants\models.py:39
+msgid "Email"
+msgstr "البريد الالكتروني"
+
+#: .\tenants\models.py:40
+msgid "Password"
+msgstr "كلمة المرور"
+
+#: .\tenants\models.py:42
+#, fuzzy
+#| msgid "Expires At"
+msgid "Token Expires At"
+msgstr "تاريخ الانتهاء"
+
+#: .\tenants\models.py:43
+#, fuzzy
+#| msgid "Active"
+msgid "Activated"
+msgstr "نشط"
+
+#: .\tenants\models.py:44 .\tenants\models.py:75
+#, fuzzy
+#| msgid "Created at"
+msgid "Created At"
+msgstr "تم انشاء في"
+
+#: .\tenants\models.py:45
+msgid "Expires At"
+msgstr "تاريخ الانتهاء"
+
+#: .\tenants\models.py:49
+msgid "Pending Tenant Request"
+msgstr "الطلب المعلق"
+
+#: .\tenants\models.py:50
+msgid "Pending Tenant Requests"
+msgstr "الطلبات المعلقة"
+
+#: .\tenants\models.py:70
+msgid "Paid Until"
+msgstr "تاريخ الانتهاء"
+
+#: .\tenants\models.py:71
+msgid "On Trial"
+msgstr "تجريبي"
+
+#: .\tenants\models.py:80
+msgid "Client"
+msgstr "العميل"
+
+#: .\tenants\models.py:81
+msgid "Clients"
+msgstr "العملاء"
+
+#: .\tenants\models.py:122
+msgid "Payment"
+msgstr "الدفع"
+
+#: .\tenants\models.py:123
+msgid "Payments"
+msgstr "الدفعات"
+
+#: .\tenants\serializers.py:101 .\tenants\serializers.py:141
+msgid "Client not found"
+msgstr "العميل غير موجود"
+
+#: .\tenants\serializers.py:105
+msgid "Transaction already exists"
+msgstr "تم تسجيل الدفع بالفعل"
+
+#: .\tenants\views.py:62
+msgid "Activation email sent."
+msgstr "تم ارسال بريد تفعيل بنجاح"
+
+#: .\tenants\views.py:81
+msgid "Invalid or expired activation link."
+msgstr "الرابط غير صحيح أو انتهت الصلاحية"
+
+#: .\tenants\views.py:84
+#, fuzzy
+#| msgid ""
+#| "Your account is already activated. Please login. You can find your login "
+#| "link in the activation email."
+msgid "Your account is already activated. Please login."
+msgstr ""
+"الحساب مفعل بالفعل. يرجى تسجيل الدخول. يمكنك العثور على رابط تسجيل الدخول في "
+"البريد الإلكتروني"
+
+#: .\tenants\views.py:90
+#, fuzzy
+#| msgid "Activation link has expired. A new activation email has been sent."
+msgid "Activation link expired. New activation email sent."
+msgstr "الرابط انتهت الصلاحية. تم ارسال بريد تفعيل جديد"
+
+#: .\tenants\views.py:126
+msgid "Account activated successfully. You can now log in."
+msgstr "تم تفعيل الحساب بنجاح. يمكنك الآن تسجيل الدخول"
+
+#: .\tenants\views.py:151
+msgid "Payment method not supported yet."
+msgstr "الطريقة الدفع غير مدعومة"
+
+#~ msgid "Month Price"
+#~ msgstr "السعر الشهري"
+
+#~ msgid "Year Price"
+#~ msgstr "السعر السنوي"
+
+#~ msgid "Duration Months"
+#~ msgstr " الاشتراك الشهري"
+
+#~ msgid "Duration Years"
+#~ msgstr "الاشتراك السنوي"
+
+#, python-brace-format
+#~ msgid ""
+#~ "\n"
+#~ "        Hi 👋,\n"
+#~ "        Please activate your account by clicking the link below:\n"
+#~ "        {activation_link}\n"
+#~ "\n"
+#~ "        Note: This link will expire in 24 hours.\n"
+#~ "\n"
+#~ "        Thanks,\n"
+#~ "        Solo Vizion Team\n"
+#~ "        "
+#~ msgstr ""
+#~ "\n"
+#~ "        مرحبًا 👋،\n"
+#~ "        يُرجى تفعيل حسابك بالنقر على الرابط أدناه:\n"
+#~ "        {activation_link}\n"
+#~ "\n"
+#~ "        ملاحظة: سينتهي صلاحية هذا الرابط خلال 24 ساعة.\n"
+#~ "\n"
+#~ "        شكرًا لك،\n"
+#~ "        فريق Solo Vizion\n"
+#~ "        "
+
+#, python-brace-format
+#~ msgid "🗑️ Removed: {pycache_dir}"
+#~ msgstr "🗑️ تم حذف: {pycache_dir}"
+
+#, python-brace-format
+#~ msgid "🗑️ Removed: {pyc_file}"
+#~ msgstr "🗑️ تم حذف: {pyc_file}"
+
+#, python-brace-format
+#~ msgid "⚠️ Could not remove {pyc_file}: {e}"
+#~ msgstr "⚠️ لا يمكن حذف {pyc_file}: {e}"
+
+#, python-brace-format
+#~ msgid "🗑️ Removed migration: {file_path}"
+#~ msgstr "🗑️ تم حذف: {file_path}"
+
+#, python-brace-format
+#~ msgid "⚠️ Could not remove {file_path}: {e}"
+#~ msgstr "⚠️ لا يمكن حذف {file_path}: {e}"
+
+#~ msgid "Basic"
+#~ msgstr "الأساسي"
+
+#~ msgid "Premium"
+#~ msgstr "البريميوم"
+
+#~ msgid "Enterprise"
+#~ msgstr "البريميوم +"
+
+#~ msgid "Plan"
+#~ msgstr "الخطة"

@@ -1,0 +1,12 @@
+name,description
+GUEST,Guest permissions
+OWNER,Owner permissions
+ADMIN,All permissions
+BRANCH_MANAGER,Branch permissions
+TECHNICIAN,Product permissions
+SALESPERSON,Invoice permissions
+ACCOUNTANT,Payment permissions
+INVENTORY_MANAGER,Inventory permissions
+RECEPTIONIST,Appointment permissions
+CRM,Customer permissions
+CUSTOMER,Individual customer permissions

@@ -1,0 +1,314 @@
+{
+
+  "viewCard":{
+    "view":"View",
+    "edit":"Edit",
+    "createTitle":"Create",
+    "updateTitle":"Update",
+    "back":"Back",
+    "errorGetFormData":"Invalid entity Detected",
+    "is_active": "Active",
+    "values": {
+      "is_active": {
+        "true": "Active",
+        "false": "Inactive"
+      }
+    }
+  },
+  "viewDetailsCard":{
+    "print":"Print Details",
+    "copy":"Copy Details",
+    "pdf":"PDF Details",
+    "entityError":"Invalid entity Or ID",
+    "noConfigError":"Invalid entity - No config Detected",
+    "errorLoadingData":"Error loading data",
+    "deletedItem":"This item is deleted. You can restore it or delete it permanently.",
+    "is_active": "Active",
+    "is_deleted": "Deleted",
+    "values": {
+      "is_active": {
+        "true": "Active",
+        "false": "Inactive"
+      },
+      "is_deleted": {
+        "true": "Deleted",
+        "false": "Not Deleted"
+      }
+    }
+ 
+  },
+  "formsConfig":{
+    "create":"Add",
+    "update":"Update",
+    "back":"Back",
+    "reset":"Reset",
+    "submit":"Submit",
+    "saving":"Saving",
+    "loading":"Loading...",
+    "noData":"No Data Found",
+    "success":"Successfully",
+    "failed":"Failed to",
+    "thisFormDoesNotExist":"This form does not exist OR  not Allowed",
+    "clients":"Clients",
+    "register-tenants":"Register Tenants",
+    "domains":"Domains",
+    "payments":"Payments",
+    "subscription-plans":"Subscription Plans",
+    "roles":"Roles",
+    "users":"Users",
+    "permissions":"Permissions",
+    "role-permissions":"Role & Permissions",
+    "contact-us":"Contact Us",
+    "tenant-settings":"Tenant Settings",
+    "departments":"Departments",
+    "employees":"Employees",
+    "customers":"Customers",
+    "prescriptions":"Prescriptions",
+    "branches":"Branches",
+    "branch-users":"Branch Users",
+    "attributes":"Attributes",
+    "attribute-values":"Attribute Values",
+    "suppliers":"Suppliers",
+    "manufacturers":"Manufacturers",
+    "brands":"Brands",
+    "categories":"Categories",
+    "lens-coatings":"Lens Coatings",
+    "products":"Products",
+    "product-variants":"Product Variants",
+    "product-images":"Product Images",
+    "flexible-prices":"Flexible Prices"
+  },
+  "clients": {
+    "title": "Clients",
+    "detailsTitle": "Client Details",
+    "name": "Client Name",
+    "max_branches": "Max Branches",
+    "max_users": "Max Users",
+    "website": "Website",
+    "paid_until": "Paid Until",
+    "on_trial": "On Trial",
+    "max_products": "Max Products"
+
+  },
+  "register-tenants": {
+    "title": "Register New Tenant",
+    "detailsTitle": "Tenant Details",
+    "name": "Tenant Name",
+    "email": "Subdomain"
+  },
+  "domains": {
+    "title": "Domains",
+    "detailsTitle": "Domain Details",
+    "domain": "Domain"
+  },
+  "payments": {
+    "title": "Payments",
+    "detailsTitle": "Payment Details",
+    "amount": "Amount",
+    "transaction_id": "Transaction ID",
+    "status": "Status",
+    "client": "Client",
+    "method": "Method",
+    "currency": "Currency"
+  },
+  "subscription-plans": {
+    "title": "Subscription Plans",
+    "detailsTitle": "Subscription Plan Details",
+    "name": "Plan Name",
+    "description": "Description",
+    "max_branches": "Max Branches",
+    "max_users": "Max Users",
+    "month_price": "Monthly Price",
+    "year_price": "Yearly Price",
+    "currency": "Currency",
+    "discount": "Discount"
+  },
+  "roles": {
+    "title": "Roles",
+    "detailsTitle": "Role Details",
+    "name": "Role Name",
+    "description": "Description"
+  },
+  "users": {
+    "title": "Users",
+    "detailsTitle": "User Details",
+    "username": "Username",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "website": "Website",
+    "role": "Role"
+  },
+  "permissions": {
+    "title": "Permissions",
+    "detailsTitle": "Permission Details",
+    "code": "Code",
+    "description": "Description"
+
+  },
+  "role-permissions": {
+    "title": "Role & Permissions",
+    "detailsTitle": "Role & Permissions Details",
+    "role": "Role",
+    "permission": "Permission"
+  },
+  "contact_us": {
+    "title": "Contact Us",
+    "detailsTitle": "Contact Us Details",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message"
+
+  },
+  "tenant-settings": {
+    "title": "Tenant Settings",
+    "detailsTitle": "Tenant Settings Details",
+    "business_name": "Business Name",
+    "phone": "Phone",
+    "email": "Email",
+    "facebook": "Facebook",
+    "twitter": "Twitter",
+    "instagram": "Instagram",
+    "linkedin": "Linkedin",
+    "description": "Description",
+    "website": "Website"
+  },
+  "departments": {
+    "title": "Departments",
+    "detailsTitle": "Department Details",
+    "name": "Department Name",
+    "description": "Description"
+  },
+  "employees": {
+    "title": "Employees",
+    "detailsTitle": "Employee Details",
+    "name": "Employee Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address"
+  },
+  "customer": {
+    "title": "Customers",
+    "detailsTitle": "Customer Details",
+    "name": "Customer Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address"
+  },
+  "prescriptions": {
+    "title": "Prescriptions",
+    "detailsTitle": "Prescription Details",
+    "customer_name": "Customer Name",
+    "notes": "Notes",
+    "user_name": "User Name"
+  },
+  "branch-users": {
+    "title": "Branch Users",
+    "detailsTitle": "Branch User Details",
+    "branch_name": "Branch Name",
+    "employee_name": "Employee Name",
+    "status": "Status"
+  },
+  "branches": {
+    "title": "Branches",
+    "detailsTitle": "Branch Details",
+    "name": "Branch Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "city": "City",
+    "country": "Country"
+  },
+  "attributes": {
+    "title": "Attributes",
+    "detailsTitle": "Attribute Details",
+    "name": "Attribute Name",
+    "description": "Description"
+  },
+  "attribute-values": {
+    "title": "Attribute Values",
+    "detailsTitle": "Attribute Value Details",
+    "attribute_name": "Attribute Name",
+    "value": "Value"
+  },
+  "suppliers": {
+    "title": "Suppliers",
+    "detailsTitle": "Supplier Details",
+    "name": "Supplier Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "contact_person": "Contact Person",
+    "country": "Country",
+    "website": "Website",
+    "payment_terms": "Payment Terms"
+  },
+  "manufacturers": {
+    "title": "Manufacturers",
+    "detailsTitle": "Manufacturer Details",
+    "name": "Manufacturer Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "country": "Country",
+    "website": "Website"
+  },
+  "brands": {
+    "title": "Brands",
+    "detailsTitle": "Brand Details",
+    "name": "Brand Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "country": "Country",
+    "website": "Website",
+    "description": "Description",
+    "logo": "Logo"
+  },
+  "categories": {
+    "title": "Categories",
+    "detailsTitle": "Category Details",
+    "name": "Category Name",
+    "description": "Description",
+    "parent_name": "Parent Category"
+  },
+  "lens-coatings": {
+    "title": "Lens Coatings",
+    "detailsTitle": "Lens Coating Details",
+    "name": "Lens Coating Name",
+    "description": "Description"
+  },
+  "products": {
+    "title": "Products",
+    "detailsTitle": "Product Details",
+    "name": "Product Name",
+    "category_name": "Category Name",
+    "brand_name": "Brand Name",
+    "description": "Description",
+    "supplier_name": "Supplier Name",
+    "manufacturer_name": "Manufacturer Name",
+    "model": "Model",
+    "type": "Type"
+  },
+  "product-variants": {
+    "title": "Product Variants",
+    "detailsTitle": "Product Variant Details",
+    "name": "Product Variant Name",
+    "description": "Description"
+  },
+  "product-images": {
+    "title": "Product Images",
+    "detailsTitle": "Product Image Details",
+    "name": "Product Image Name",
+    "description": "Description"
+  },
+  "flexible-prices": {
+    "title": "Flexible Prices",
+    "detailsTitle": "Flexible Price Details",
+    "name": "Flexible Price Name",
+    "description": "Description"
+  } 
+}
+
+

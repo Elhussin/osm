@@ -1,0 +1,145 @@
+
+[
+    {
+      "schema": "public",
+      "app": "users",
+      "model": "Role",
+      "csv": "csv/Role.csv"
+      },
+      {
+        "schema": "public",
+        "app": "users",
+        "model": "Permission",
+        "csv": "csv/Permission.csv"
+      },
+      {
+        "schema": "public",
+        "app": "users",
+        "model": "RolePermission",
+        "csv": "csv/RolePermission.csv",
+        "foreign_keys": {
+          "role": {
+            "lookup_field": "name",
+            "create_if_missing": true
+          },
+          "permission": {
+            "lookup_field": "code",
+            "create_if_missing": true
+          }
+        }
+      },
+      {
+        "schema": "public",
+        "app": "tenants",
+        "model": "SubscriptionPlan",
+        "csv": "csv/SubscriptionPlan.csv"
+      },
+      {
+        "schema": "public",
+        "app": "products",
+        "model": "Attributes",
+        "csv": "csv/attribute.csv"
+      },
+      {
+        "schema": "public",
+        "app": "products",
+        "model": "AttributeValue",
+        "csv": "csv/attribute_value.csv",
+        "foreign_keys": {
+          "attribute_id": {
+            "lookup_field": "name",
+            "create_if_missing": true
+          }
+        }
+      },
+      {
+        "schema": "public",
+        "app": "products",
+        "model": "Category",
+        "csv": "csv/Categories.csv",
+        "foreign_keys": {
+          "parent": {
+            "lookup_field": "name",
+            "create_if_missing": true
+          }
+        }
+      },
+      {
+        "schema": "public",
+        "app": "products",
+        "model": "Brand",
+        "csv": "csv/brand.csv"
+      },
+      {
+        "schema": "public",
+        "app": "products",
+        "model": "Supplier",
+        "csv": "csv/supplier.csv"
+      },
+      {
+        "schema": "public",
+        "app": "products",
+        "model": "Manufacturer",
+        "csv": "csv/manufacturer.csv"
+      },
+      {
+        "schema": "public",
+        "app": "products",
+        "model": "Product",
+        "csv": "csv/product.csv",
+        "foreign_keys": {
+          "brand_id": {
+            "lookup_field": "name",
+            "create_if_missing": true
+          },
+          "supplier_id": {
+            "lookup_field": "name",
+            "create_if_missing": true
+          },
+          "manufacturer_id": {
+            "lookup_field": "name",
+            "create_if_missing": true
+          },
+          "category_id": {
+            "lookup_field": "name",
+            "create_if_missing": true
+          }
+        }
+      },
+      {
+        "schema": "public",
+        "app": "branches",
+        "model": "Branch",
+        "csv": "csv/branch.csv"
+      },
+      {
+        "schema": "public",
+        "app": "HRM",
+        "model": "Department",
+        "csv": "csv/department.csv"
+      },
+      {
+        "schema": "public",
+        "app": "HRM",
+        "model": "Employee",
+        "csv": "csv/employee.csv",
+        "foreign_keys": {
+          "user": {
+            "related_model": "users.User",
+            "lookup_field": "username",
+            "create_if_missing": true
+          },
+          "department": {
+            "lookup_field": "name",
+            "create_if_missing": true
+          }
+        }
+      },
+      {
+        "schema": "public",
+        "app": "users",
+        "model": "User",
+        "csv": "csv/Users.csv"
+      }
+    
+    ]

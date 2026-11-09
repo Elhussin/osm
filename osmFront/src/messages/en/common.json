@@ -1,0 +1,476 @@
+{
+  "userContext": {
+    "title": "Logout",
+    "logoutSuccess": "Logged out successfully",
+    "logoutError": "Failed to log out",
+    "fetchError": "Failed to fetch user data"
+  },
+  "loading":{
+    "loading":"Loading",
+    "message":"Please wait..."
+  },
+  "login": {
+    "title": "Login",
+    "description": "Login to O-S-M",
+    "button": "Login",
+    "message": "Login successfully",
+    "welcomeMessage": "Start Your Journey with O-S-M best solution for Optical System Management",
+    "welcomeTitle": "Welcome to the Portal",
+    "userNameLabel": "User Name",
+    "userNamePlaceholder": "Enter User Name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Enter Email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter Password",
+    "planLabel": "Plan",
+    "planPlaceholder": "Select Plan",
+    "forgotPassword": "Forgot Password",
+    "register": "Register",
+    "successMessage": "Login successfully",
+    "errorMessage": "Error during login",
+    "logoutSuccess": "Logged out successfully",
+    "logoutError": "Failed to log out",
+    "useUserError": "useUser must be used within a UserProvider",
+    "planOption": {
+      "trial": "Trial",
+      "basic": "Basic",
+      "pro": "Pro",
+      "enterprise": "Enterprise"
+    }
+  },
+  "register": {
+    "title": "Register",
+    "description": "Register to O-S-M",
+    "button": "Register",
+    "message": "Register successfully"
+  },
+  "forgotPassword": {
+    "title": "Forgot Password",
+    "description": "Please enter your email address below to reset your password.",
+    "button": "Send Reset Email",
+    "sending": "Sending Reset Link...",
+    "Resetting": "Resetting your password...",
+    "SuccessMessage": "If the email is valid, a password reset link will be sent to your email.",
+    "ErrorMessage": "Sorry, we cannot send the email. Please try again later.",
+    "emailRequired": "Email is required",
+    "email": "Email"
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter Password",
+    "passwordRequired": "Password is required",
+    "description": "Enter your new password",
+    "button": "Reset Password",
+    "sending": "Resetting your password...",
+    "SuccessMessage": "Password reset successfully",
+    "loginMessage": "You can now login using your new password."
+  },
+  "profilePage": {
+    "title": "Profile",
+    "description": "Profile to O-S-M",
+    "button": "Profile",
+    "message": "Profile successfully",
+    "welcomeMessage": "Start Your Journey with O-S-M MR/S",
+    "userInformation": "User Information",
+    "username": "Username",
+    "email": "Email",
+    "role": "Role",
+    "clientInformation": " Client Information",
+    "clientName": "Name",
+    "plan": "Plan",
+    "maxUsers": "Max Users",
+    "maxProducts": "Max Products",
+    "maxBranches": "Max Branches",
+    "daysLeft": "Days Left",
+    "status": "Status",
+    "paidUntil": "Paid Until",
+    "subscriptionAboutToExpire": "Subscription About To Expire",
+    "subscriptionActive": "Subscription Active",
+    "subscriptionExpiresIn": "Subscription Expires In",
+    "subscriptionExpired": "Subscription Expired",
+    "failedToLoad": "Failed to load profile data"
+  },
+  "tenants": {
+    "title": "Start Now",
+    "description": "Tenants to O-S-M",
+    "button": "Register",
+    "message": "You are successfully registered your account check your email for confirmation"
+  },
+  "HomePage": {
+    "title": "Welcome to O-S-M",
+    "description": "Best Solution For Optical System Management at O-S-M."
+  },
+  "navBar": {
+    "title": "Navigation",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "admin": "Admin",
+    "technician": "Technician",
+    "profile": "Profile",
+    "logout": "Logout",
+    "dark": "Dark",
+    "light": "Light",
+    "register": "Register",
+    "login": "Login",
+    "search": "Search",
+    "closeSearch": "Close Search"
+  },
+  "button": {
+    "close": "Close",
+    "deactivate": "Deactivate",
+    "delete": "Delete",
+    "deleteTitle": "This action will delete the item",
+    "restoreTitle": "This action will restore the item",
+    "edit": "Edit",
+    "hardDelete": "Remove",
+    "restore": "Restore",
+    "view": "View",
+    "activate": "Activate",
+    "back": "Back",
+    "rest": "Reset",
+    "create": "Create",
+    "copy": "Copy",
+    "print": "Print",
+    "pdf": "PDF",
+    "updatedSuccessfully": "Updated Successfully",
+    "errorUpdating": "Error Updating"
+  },
+  "aside": {
+    "Home": "Home",
+    "About": "About",
+    "Contact": "Contact",
+    "Privacy": "Privacy",
+    "Terms": "Terms",
+    "FAQ": "FAQ",
+    "Register": "Register",
+    "Login": "Login",
+    "Profile": "Profile",
+    "Admin": "Admin",
+    "Prescriptions": "Prescriptions",
+    "Users": "Users",
+    "Tenants": "Tenants",
+    "Groups": "Groups",
+    "CRM": "CRM",
+    "Permissions": "Permissions",
+    "Products": "Products",
+    "Branches": "Branches",
+    "Suppliers": "Suppliers",
+    "Orders": "Orders",
+    "Invoices": "Invoices",
+    "Accounting": "Accounting",
+    "Analytics": "Analytics",
+    "Reports": "Reports",
+    "Settings": "Settings",
+    "Support": "Support",
+    "Careers": "Careers",
+    "Blog": "Blog",
+    "Logout": "Logout",
+    "DarkMode": "Dark Mode",
+    "LightMode": "Light Mode",
+    "Language": "Language"
+  },
+  "unauthorized": {
+    "title": "Unauthorized",
+    "message": "You do not have permission to access this page.",
+    "backButton": "Back",
+    "homeButton": "Go to Home",
+    "redirectMessage": "You will be redirected to the home page in 3 seconds..."
+  },
+  "about": {
+    "title": "About Optical Store Management [O-S-M]",
+    "description": "O-S-M is a powerful system designed to help optical shops and companies manage inventory, track orders, generate invoices, handle accounting tasks, and provide powerful analytics and periodic reports.",
+    "featuresTitle": "Key Features",
+    "features": {
+      "inventory": "Inventory and stock management",
+      "orders": "Order tracking and status updates",
+      "billing": "Invoice generation and payment tracking",
+      "accounting": "Built-in accounting tools",
+      "reports": "Periodic reporting tools",
+      "analytics": "Advanced data analytics and visualization"
+    },
+    "techTitle": "Technology Used",
+    "techDescription": "Built with Django, Next.js, Tailwind CSS, RESTful APIs, and multilingual support for seamless user experience.",
+    "startTrial": "Start Free Trial",
+    "contactUs": "Contact Us"
+  },
+
+  "error": {
+    "title": "Error",
+    "message": "An error occurred. Please try again later.",
+    "button": "Back",
+    "homeButton": "Go to Home",
+    "redirectMessage": "You will be redirected to the home page in 3 seconds..."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "Need help? Have feedback or suggestions? We'd love to hear from you.",
+    "company": "Company",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "name": "Your Name",
+    "message": "Your Message",
+    "image": "Upload Image (optional)",
+    "submit": "Send Message",
+    "successMessage": "Message sent successfully!",
+    "errorMessage": "Something went wrong. Please try again later."
+  },
+  "NotFound": {
+    "title": "Page Not Found",
+    "description": "The page you are looking for does not exist.",
+    "goHome": "Go to Home"
+  },
+  "home": {},
+  "heroSection": {
+    "title": "Manage Your Optical Stores with Ease",
+    "description": "A powerful SaaS platform tailored for optical store management. Track sales, inventory, customers & more.",
+    "cta": "Start Free Trial"
+  },
+  "featuresSection": {
+    "title": "Key Features",
+    "list": {
+      "inventory": "Branch & Inventory Management",
+      "sales": "Sales & Invoice Tracking",
+      "permissions": "Multi-user & Role Permissions",
+      "support": "Customer Support Integration"
+    }
+  },
+  "pricing": {
+    "title": "Pricing Plans",
+    "free": "Free Trial",
+    "basic": "Basic Plan",
+    "pro": "Pro Plan"
+  },
+  "footer": {
+    "followUs": "Follow Us",
+    "more": "More",
+    "quickLinks": "Quick Links",
+    "footer": "O-S-M",
+    "right": "All rights reserved",
+    "Support": "Support",
+    "Careers": "Careers",
+    "Blog": "Blog"
+  },
+  "pricingSection": {
+    "title": "Choose Your Plan",
+    "free": "Free",
+    "choosePlan": "Choose Plan",
+    "contactUs": "Contact Us",
+    "duration": "Duration",
+    "days": "days",
+    "maxUsers": "Max Users",
+    "maxBranches": "Max Branches",
+    "maxProducts": "Max Products",
+    "month": "Month",
+    "year": "Year",
+    "trial": "Trial",
+    "basic": "Basic",
+    "premium": "Premium",
+    "enterprise": "Enterprise",
+    "plans": {
+      "trial": {
+        "name": "Trial",
+        "description": "Try all features for free for a limited time (1 month)",
+        "features": ["Basic Inventory", "Sales Tracking"]
+      },
+      "basic": {
+        "name": "Basic",
+        "description": "For small businesses",
+        "features": ["Basic Inventory", "Sales Tracking"]
+      },
+      "premium": {
+        "name": "Premium",
+        "description": "For growing businesses",
+        "features": ["Advanced Inventory", "Reports & Analytics"]
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "description": "For large enterprises",
+      "features": ["Custom Features", "Priority Support"]
+    }
+    }
+  },
+  "paymantPage": {
+    "title": "Complete Your Payment",
+    "duration": "Billing Cycle",
+    "plan": "Plan",
+    "choosePlan": "Choose Plan",
+    "payButton": "Pay Now",
+    "processing": "Please wait will redirect to payment...",
+    "paypal": "PayPal",
+    "stripe": "Stripe payment coming soon...",
+    "cash": "Please pay in cash at our store.",
+    "bankName": "Bank Name",
+    "accountNumber": "Account Number",
+    "iban": "IBAN",
+    "other": "Please contact support for other payment options.",
+    "sendEmail": "Send Email",
+    "callUs": "Call Us",
+    "whatsapp": "WhatsApp"
+  },
+  "paymentFail": {
+    "title": "Payment Failed",
+    "description": "Unfortunately, your payment could not be processed. Please try again or contact support.",
+    "button": "Try Again"
+  },
+  "paymentCancel": {
+    "title": "Payment Cancelled",
+    "description": "You have cancelled the payment process. You can try again anytime to complete your subscription.",
+    "tryAgain": "Try Again"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "description": "We value your privacy and commit to protecting your personal data.",
+    "section1": {
+      "title": "Information Collection",
+      "content": "We collect minimal personal data necessary to operate the platform."
+    },
+    "section2": {
+      "title": "Data Protection",
+      "content": "Your data is encrypted and not shared with third parties."
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "description": "Please read these terms before using our services.",
+    "section1": {
+      "title": "Usage Terms",
+      "content": "You agree to use the platform lawfully and responsibly."
+    },
+    "section2": {
+      "title": "Liability",
+      "content": "We are not responsible for data loss due to misuse."
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "q1": {
+      "question": "How do I register?",
+      "answer": "Go to the registration page and fill out your details."
+    },
+    "q2": {
+      "question": "How can I contact support?",
+      "answer": "You can use the contact form or email us directly."
+    },
+    "q3": {
+      "question": "Is there a free trial?",
+      "answer": "Yes, we offer a free trial for 30 days."
+    }
+  },
+  "support": {
+    "title": "Support",
+    "description": "Need help? Our support team is here to assist you anytime.",
+    "section1": {
+      "title": "How to Get Support",
+      "content": "You can reach out via the contact form or email support@osm.com."
+    },
+    "section2": {
+      "title": "Response Time",
+      "content": "We aim to respond to all queries within 24 hours."
+    }
+  },
+  "careers": {
+    "title": "Careers",
+    "description": "Join our growing team and shape the future of optical retail software.",
+    "section1": {
+      "title": "Why Work With Us?",
+      "content": "We offer a collaborative environment, growth opportunities, and meaningful work."
+    },
+    "section2": {
+      "title": "Open Positions",
+      "content": "Currently, we are hiring developers, designers, and sales representatives."
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Stay updated with the latest news, tips, and insights from the O-S-M team.",
+    "section1": {
+      "title": "Latest Articles",
+      "content": "Check out our latest articles on optical retail management."
+    },
+    "section2": {
+      "title": "Subscribe",
+      "content": "Subscribe to our newsletter for regular updates."
+    }
+  },
+  "pages": {
+    "allPages": "All Pages",
+    "createNewPage": "Create Page",
+    "publicPages": "Public Pages",
+    "publicPagesDesc": "You can add public pages with default data like (About Us, Contact Us, Privacy Policy, Terms of Service, FAQ, Support, Careers, Blog) in the sidebar."
+  
+  },
+  "publicPagesList": {
+    "about": "About Us",
+    "contact": "Contact Us",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "faq": "Frequently Asked Questions",
+    "support": "Support",
+    "careers": "Careers",
+    "blog": "Blog"
+  },
+  "MultilingualPageEditor": {
+    "editPage": "Edit Page",
+    "createNewPage": "Create New Page",
+    "errorLoading": "Error when loading pages",
+    "errorGetFormData": "Error when getting form data",
+    "pleaseProvideTitle": "Please provide a title for the page",
+    "PageUpdated": "Page updated successfully.",
+    "errorUpdatingPage": "Error updating page.",
+    "PageCreated": "Page created successfully.",
+    "errorCreatingPage": "Error creating page.",
+    "errorSavingPage": "Error saving page.",
+    "noTranslationFound": "No translation found for the active language.",
+    "defaultLanguage": "Default Language",
+    "default": "Default",
+    "complete": "Complete",
+    "pageURL": "Page URL",
+    "pageURLDesc": "Should not contain spaces or special characters only can use '_' or '-' or  for separating words.",
+    "pageTitle": "Page Title",
+    "pageTitleDesc": "Represents the main title of the page.",
+    "content": "Page Content",
+    "contentDesc": "Represents the content of the page.",
+    "seoSettings": "SEO Settings",
+    "seoTitle": "SEO Title",
+    "seoTitleDesc": "Represents the main title of the page for search engines.",
+    "metaDescription": "Description SEO",
+    "metaDescriptionDesc": "Represents the description of the page for search engines.",
+    "metaKeywords": "Meta Keywords",
+    "metaKeywordsDesc": "Represents the keywords of the page for search engines.",
+    "publish": "Publish Page",
+    "cancel": "Cancel",
+    "update":"Update Page",
+    "create":"Create Page",
+    "save" :"Saving"
+
+},"MultilingualPageDisplay":{
+},
+"pagesList":{
+    "title": "Pages List",
+    "description": "List of all pages",
+    "slug": "Slug",
+    "status": "Status",
+    "seoTitle": "SEO Title",
+    "edit":"Edit",
+    "view":"View",
+    "isDeleted":"Is Deleted",
+    "isPublished":"Is Published",
+    "isActive":"Is Active",
+    "deletedMessage":"This item is deleted. You can restore it or delete it permanently.",
+    "draft":"Draft",
+    "published":"Published"
+  },
+
+  "useHardDeleteWithDialog":{
+    "title":"Confirm Deletion",
+    "message":"Are you sure you want to permanently delete this item?",
+    "successMessage":"Item permanently deleted Successfully",
+    "failedMessage":"Failed to delete item"
+  }
+
+
+
+}

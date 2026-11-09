@@ -1,0 +1,12 @@
+
+{
+    "types":{
+        "CL": "Contact Lenses",
+        "SL": "Spectacle Lenses",
+        "SG": "Sunglasses",
+        "EW": "Eyewear",
+        "AX": "Accessories",
+        "OT": "Other",
+        "DV": "Devices"
+  }
+  }

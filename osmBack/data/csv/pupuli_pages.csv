@@ -1,0 +1,3 @@
+type,title,body,features,image_path
+AboutPage,About us,<p>Welcome to our site</p>,"[{""type"": ""feature"", ""value"": {""key"": ""help"", ""text"": ""in all time""}}]",images/about.jpg
+GenericPage,Terms,<p>Terms and Conditions</p>,,

@@ -1,0 +1,5 @@
+name,duration_months,duration_years,max_users,max_branches,max_products,month_price,year_price,currency,discount
+trial,30,365,1,1,200,0,,USD,0
+basic,30,365,4,2,1000,19,190,USD,0
+premium,30,365,10,5,10000,49,490,USD,0
+enterprise,30,365,40,20,100000,99,990,USD,0

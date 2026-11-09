@@ -1,0 +1,32 @@
+[2025-10-03 15:06:48,685] ERROR tenant: Tenant creation failed: current transaction is aborted, commands ignored until end of transaction block
+
+[2025-10-03 15:08:21,326] ERROR tenant: Tenant creation failed: deadlock detected
+DETAIL:  Process 873538 waits for ShareLock on transaction 1445; blocked by process 873536.
+Process 873536 waits for ShareRowExclusiveLock on relation 16402 of database 16390; blocked by process 873538.
+HINT:  See server log for query details.
+CONTEXT:  while inserting index tuple (0,9) in relation "tenants_client_schema_name_key"
+
+[2025-10-03 15:08:21,330] ERROR tenant: Tenant creation failed: deadlock detected
+DETAIL:  Process 872938 waits for ShareLock on transaction 1445; blocked by process 873536.
+Process 873536 waits for ShareRowExclusiveLock on relation 16402 of database 16390; blocked by process 872938.
+HINT:  See server log for query details.
+CONTEXT:  while inserting index tuple (0,6) in relation "tenants_client_schema_name_key"
+
+[2025-10-03 15:08:21,331] ERROR tenant: Tenant creation failed: deadlock detected
+DETAIL:  Process 873155 waits for ShareLock on transaction 1445; blocked by process 873536.
+Process 873536 waits for ShareRowExclusiveLock on relation 16402 of database 16390; blocked by process 873155.
+HINT:  See server log for query details.
+CONTEXT:  while inserting index tuple (0,7) in relation "tenants_client_schema_name_key"
+
+[2025-10-03 15:08:21,332] ERROR tenant: Tenant creation failed: deadlock detected
+DETAIL:  Process 872636 waits for ShareLock on transaction 1445; blocked by process 873536.
+Process 873536 waits for ShareRowExclusiveLock on relation 16402 of database 16390; blocked by process 872636.
+HINT:  See server log for query details.
+CONTEXT:  while inserting index tuple (0,5) in relation "tenants_client_schema_name_key"
+
+[2025-10-17 11:54:19,658] WARNING tenant: Post-activation setup failed: Cannot resolve keyword 'permission' into field. Choices are: created_at, id, is_active, is_deleted, permission_id, permission_id_id, role_id, role_id_id, updated_at
+[2025-12-04 21:34:27,479] WARNING tenant: Post-activation setup failed: Cannot resolve keyword 'permission' into field. Choices are: created_at, id, is_active, is_deleted, permission_id, permission_id_id, role_id, role_id_id, updated_at
+[2025-12-04 21:45:55,150] WARNING tenant: Post-activation setup failed: Cannot resolve keyword 'permission' into field. Choices are: created_at, id, is_active, is_deleted, permission_id, permission_id_id, role_id, role_id_id, updated_at
+[2025-12-06 17:19:40,969] WARNING tenant: Post-activation setup failed: Cannot resolve keyword 'permission' into field. Choices are: created_at, id, is_active, is_deleted, permission_id, permission_id_id, role_id, role_id_id, updated_at
+[2025-12-07 17:52:19,421] WARNING tenant: Post-activation setup failed: Cannot resolve keyword 'permission' into field. Choices are: created_at, id, is_active, is_deleted, permission_id, permission_id_id, role_id, role_id_id, updated_at
+[2025-12-07 18:59:35,905] WARNING tenant: Post-activation setup failed: User() got unexpected keyword arguments: 'role'

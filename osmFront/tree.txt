@@ -1,0 +1,91 @@
+Folder PATH listing for volume Hard-2
+Volume serial number is B435-5845
+H:.
+├───public
+│   └───media
+└───src
+    ├───app
+    │   ├───i18n
+    │   └───[locale]
+    │       ├───admin
+    │       ├───auth
+    │       │   ├───activate
+    │       │   ├───forgot-password
+    │       │   ├───login
+    │       │   ├───register
+    │       │   └───reset-password
+    │       ├───contact
+    │       ├───dashboard
+    │       │   ├───pages
+    │       │   │   ├───create
+    │       │   │   └───[id]
+    │       │   │       └───edit
+    │       │   └───[entity]
+    │       │       ├───create
+    │       │       └───[id]
+    │       │           └───edit
+    │       ├───payment
+    │       │   ├───cancel
+    │       │   ├───fail
+    │       │   ├───processing
+    │       │   └───success
+    │       ├───prescription
+    │       │   ├───create
+    │       │   └───[id]
+    │       │       └───edit
+    │       ├───profile
+    │       ├───unauthorized
+    │       └───[slug]
+    ├───config
+    │   └───themes
+    ├───features
+    │   ├───auth
+    │   │   ├───api
+    │   │   ├───components
+    │   │   ├───hooks
+    │   │   └───utils
+    │   ├───dashboard
+    │   │   ├───api
+    │   │   ├───components
+    │   │   ├───hooks
+    │   │   └───utils
+    │   ├───home
+    │   │   └───components
+    │   ├───pages
+    │   │   ├───components
+    │   │   └───types
+    │   ├───payment
+    │   │   ├───api
+    │   │   ├───components
+    │   │   ├───hooks
+    │   │   └───types
+    │   ├───prescription
+    │   │   ├───api
+    │   │   ├───components
+    │   │   ├───hooks
+    │   │   ├───types
+    │   │   └───utils
+    │   └───profile
+    │       └───components
+    ├───messages
+    │   ├───ar
+    │   └───en
+    ├───scripts
+    ├───shared
+    │   ├───components
+    │   │   ├───forms
+    │   │   ├───layout
+    │   │   ├───search
+    │   │   ├───ui
+    │   │   │   ├───buttons
+    │   │   │   └───dialogs
+    │   │   └───views
+    │   ├───constants
+    │   ├───contexts
+    │   ├───hooks
+    │   ├───lib
+    │   ├───types
+    │   └───utils
+    └───styles
+
+
