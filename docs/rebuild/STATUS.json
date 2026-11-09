@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-09",
+  "updated": "2026-11-10",
   "current_task": "R08",
   "next_task": "R08",
   "blockers": [
@@ -112,7 +112,8 @@
         "T020",
         "T022",
         "T024",
-        "T026"
+        "T026",
+        "T028"
       ],
       "steps": [
         {
@@ -141,7 +142,10 @@
         {
           "id": "R08-M03",
           "title": "Transfers and stock counts with reversals",
-          "status": "pending"
+          "status": "in_progress",
+          "evidence": [
+            "T028"
+          ]
         },
         {
           "id": "R08-M04",

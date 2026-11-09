@@ -116,7 +116,7 @@ def receive_matrix(actor_id, **values):
             balance.version += 1
         before = balance.on_hand
         balance.on_hand += line["quantity"]
-        movements.append(StockMovement(receipt=document, variant=variant, delta=line["quantity"], before=before, after=balance.on_hand, reserved_after=balance.reserved,
+        movements.append(StockMovement(receipt=document, branch_id=payload["branch_id"], variant=variant, delta=line["quantity"], before=before, after=balance.on_hand, reserved_after=balance.reserved,
             variant_snapshot={"sku": variant.sku, "product": template.product.name, "unit": variant.unit, "unit_label": template.unit_label, "specifications": variant.specifications}))
     StockBalance.objects.bulk_create(to_create)
     if to_update:
@@ -161,7 +161,7 @@ def reverse_receipt(actor_id, *, receipt_id, operation_key, reason):
         before = balance.on_hand
         balance.on_hand -= entry.delta
         balance.version += 1
-        movements.append(StockMovement(receipt=reversal, variant_id=entry.variant_id, delta=-entry.delta, before=before, after=balance.on_hand, reserved_after=balance.reserved, variant_snapshot=entry.variant_snapshot))
+        movements.append(StockMovement(receipt=reversal, branch_id=document.branch_id, variant_id=entry.variant_id, delta=-entry.delta, before=before, after=balance.on_hand, reserved_after=balance.reserved, variant_snapshot=entry.variant_snapshot))
     StockBalance.objects.bulk_update(list(balances.values()), ["on_hand", "version"])
     StockMovement.objects.bulk_create(movements)
     audit(actor_id, "stock.receipt_reversed", reversal.pk)

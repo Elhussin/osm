@@ -57,6 +57,12 @@ class AccessPolicyTests(unittest.TestCase):
             self.assertEqual(role in {"owner", "branch_manager", "inventory_clerk"}, permits(p, context, "stock.issue", resource, grants))
             self.assertFalse(permits(p, context, "stock.issue", ResourceScope(context.company_id), grants))
 
+    def test_stock_count_is_manager_or_owner_and_branch_bound(self):
+        for role in ROLES:
+            p, context, resource, grants = make_case({"roles": [role]})
+            self.assertEqual(role in {"owner", "branch_manager"}, permits(p, context, "stock.count", resource, grants))
+            self.assertFalse(permits(p, context, "stock.count", ResourceScope(context.company_id), grants))
+
     def test_matrix_integrity(self):
         cases = MATRIX["cases"]
         self.assertEqual("pure_policy_cases_not_database_or_http_isolation_proof", MATRIX["scope"])

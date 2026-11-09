@@ -16,7 +16,7 @@ COMPANY_ACTIONS = frozenset({
 BRANCH_ACTIONS = frozenset({
     "customer.read", "customer.write", "prescription.read", "prescription.write",
     "invoice.read", "invoice.create", "invoice.confirm", "payment.read",
-    "payment.record", "payment.reverse", "stock.read", "stock.reserve", "stock.issue",
+    "payment.record", "payment.reverse", "stock.read", "stock.reserve", "stock.issue", "stock.count",
     "stock.transfer", "stock.receive", "stock.reverse", "insurance.read", "insurance.prepare", "insurance.submit",
     "reports.read", "data.export",
 })
@@ -35,7 +35,7 @@ ROLES = MappingProxyType({
     "catalog_reader": Role("company", frozenset({"catalog.read"})),
     "accountant": Role("company", frozenset({"invoice.read", "payment.read", "payment.record", "payment.reverse", "ledger.read", "ledger.post", "reports.read", "data.export"})),
     "integration_admin": Role("company", frozenset({"provider.configure"})),
-    "branch_manager": Role("branch", frozenset({"customer.read", "customer.write", "invoice.read", "invoice.create", "invoice.confirm", "payment.read", "payment.record", "payment.reverse", "stock.read", "stock.reserve", "stock.issue", "stock.transfer", "stock.receive", "reports.read"})),
+    "branch_manager": Role("branch", frozenset({"customer.read", "customer.write", "invoice.read", "invoice.create", "invoice.confirm", "payment.read", "payment.record", "payment.reverse", "stock.read", "stock.reserve", "stock.issue", "stock.count", "stock.transfer", "stock.receive", "reports.read"})),
     "cashier": Role("branch", frozenset({"customer.read", "customer.write", "invoice.read", "invoice.create", "invoice.confirm", "payment.read", "payment.record"})),
     "optometrist": Role("branch", frozenset({"customer.read", "prescription.read", "prescription.write"})),
     "inventory_clerk": Role("branch", frozenset({"stock.read", "stock.reserve", "stock.issue", "stock.transfer", "stock.receive"})),

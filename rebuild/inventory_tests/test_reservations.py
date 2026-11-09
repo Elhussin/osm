@@ -255,7 +255,7 @@ class ReservationTests(TransactionTestCase):
                 with self.assertRaises(IntegrityError), transaction.atomic():
                     StockReservation.objects.update(**changes)
             with self.assertRaises(IntegrityError), transaction.atomic():
-                StockMovement.objects.create(variant=self.template, delta=1, before=5, after=6, reserved_after=5, variant_snapshot={})
+                StockMovement.objects.create(branch=self.main, variant=self.template, delta=1, before=5, after=6, reserved_after=5, variant_snapshot={})
             with connection.cursor() as cursor:
                 cursor.execute(sql.SQL("CREATE ROLE {} NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE").format(sql.Identifier(role)))
                 grant_tenant_runtime(cursor, self.a.schema_name, role)

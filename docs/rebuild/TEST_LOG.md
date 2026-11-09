@@ -303,3 +303,27 @@ Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs/42681586976/
 شمل CI تثبيت lock وفحوص الإعدادات والترحيلات، migrate-shared ومنح runtime والتحقق منه، ثم الاختبارات والمتصفح وفحص الخطة والحصر781. لا إعادة تشغيل للتحايل على فشل اختبار، ولا SQLite أو أسرار/صور/وثائق وصيل خام ضمن التغيير. الإذن الصريح حسم مانع T025 مع الاحتفاظ بسجله التاريخي.
 
 أغلقت R08-M02 فقط بدليلي T024/T026، وبقيت R08 in_progress؛ next_step هو R08-M03 للتحويل والجرد ثم M04 للدفعات والصلاحية والتسلسلات. نجح `pwsh -NoProfile -File scripts/check-rebuild.ps1` و`pwsh -NoProfile -File scripts/check-discovery.ps1` و`git diff --check` بعد تحديث الإغلاق التوثيقي. لا محاسبة أو بيع مالي أو ربط إنتاج خارجي أو دمج main أو نشر؛ لا تعاد الاختبارات الوظيفية لتغييرات الوثائق وحدها.
+
+## T027 | failed
+Task: R08
+Date: 2026-11-09
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser -k transfer_count -k mobile_nojs_zero_count
+
+نجحت14 حالة خدمة/قاعدة للتحويل والجرد أولًا خلال62.274 ثانية، ثم فشل اختبارا Chromium الجديدان خلال34.104 ثانية عند العثور على حقل الكمية: StyledForm ضبط aria-label قبل تغيير label بحسب التحويل/الجرد، فبقي الاسم المتاح لقارئ الشاشة «الكمية». صحح widget aria-label بالتوازي مع label، وحد min للتحويل في widget وvalidator؛ لا تغيير لقواعد الترحيل المخزني بسبب فشل الواجهة.
+
+كشفت المراجعة أيضًا أن روابط الحجز القديمة والتحويل الجديدة أدرجت بترميز Windows داخل قالب UTF-8 بسبب أداة تحرير Python اعتمدت الترميز الافتراضي. أصلح المقطع بكتابة UTF-8 صريحة دون تغيير بقية القالب، وأضيف تحقق للترميز وروابط عربية في المتصفح. أدوات الإصلاح المحلية في .tools مستبعدة. تشغيل migrations-check غير المصعد أظهر تحذير رفض اتصال sandbox رغم No changes detected؛ لا يحتسب دليل تاريخ DB، ويعاد بالاتصال المصرح قبل الإغلاق.
+
+الإعادة الثانية لاختباري المتصفح: نجح الهاتف وفشل سطح المكتب خلال14.610 ثانية بعد اعتماد التحويل؛ اسم الجدول كان على حاوية التمرير دون عنصر table، فلم يجد locator الجدول باسمه. أضيفت أسماء مباشرة للجداول لتحسين الوصول وتثبيت الاختبار؛ لا تغيير لكميات أو مستندات التحويل. تسجل النتيجة الكاملة لاحقًا بعد إعادة المتصفح.
+
+## T028 | passed
+Task: R08
+Date: 2026-11-10
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test
+
+نطاق الإثبات R08-M03 محليًا. نجحت134 حالة Django/PostgreSQL خلال1063.133 ثانية في تشغيل بدأ2026-11-09 وانتهى2026-11-10 بتوقيت الرياض. شملت النقل والجرد والتنافس والعكس والمنح وترحيل تاريخ فعلي. بعد بدء المجموعة أضيف اختبار سقف استعلامات القائمة وقُوّي اختبار مصدر الحركة؛ نجح الأمر `pwsh -NoProfile -File rebuild/pdm.ps1 run test -k operation_list_is_paginated -k database_constraints_and_runtime_immutability_allow_real_transfer_and_count` 2/2 خلال8.620 ثانية. إحداهما جديدة والأخرى إعادة؛ الإجمالي135 حالة Django فريدة، وستنفذ كاملة على CI قبل الإغلاق. يعرض اختبار القائمة20 من21 رصيدًا بأقل من100 استعلام؛ ليس benchmark حمل إنتاج.
+
+نجح `pwsh -NoProfile -File rebuild/pdm.ps1 run test-policy`:48/48. نجح `pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser` مع PLAYWRIGHT_BROWSERS_PATH=مسار rebuild/.tools/browsers:17/17 Chromium خلال88.808 ثانية. تشمل تحويلًا وعكسه وجردًا وعكسه على سطح المكتب، وجرد0 على هاتف390 دون JavaScript، ورفض فرع آخر، وروابط عربية فعلية من قائمة المخزون. راجعت بصريًا stock-count-desktop.png وstock-count-mobile-nojs.png؛ صور صناعية في .tools المستبعدة. الإجمالي200 حالة فريدة مغطاة محليًا؛ لا نحتسب الإعادات حالات إضافية أو نمحو فشل T027.
+
+نجحت check وlock --check وmigrations-check باتصال PostgreSQL مصرح. طبق migrate-all inventory.0003 على optics_rebuild_dev فقط، ثم configure-runtime وverify-runtime. اختبار downgrade/forward بين inventory.0002 و0003 حافظ على هوية وكميات ولقطات حركات receipt وissue واشتق branch؛ لم يعدل ترحيل سابق أو قاعدة legacy. اختبار SET LOCAL ROLE منع UPDATE/DELETE على StockOperation والحركات، مع نقل وعكس وجرد فعليين بالدور المحدود. كل بيانات الاختبار صناعية في test_optics_rebuild_dev المستقلة التي دمرتها Django؛ لا SQLite.
+
+نجح فحص الخطة والحصر781 وdiff --check، وفحص UTF-8 وغياب ملفات البيئة/الأدوات/الصور/الوثائق الخام ومطابقة أسرار البيئة المحلية في30 ملفًا مجهزًا. لا ملفات محذوفة. يبقى M03 in_progress حتى CI، وR08 ككل in_progress؛ التالي بعدها M04 للتتبع وليس R09. حدود ADR 0011: نقل فوري لصنف واحد، وجرد لرصيد قائم، لا شحن/استلام مؤجل أو اعتماد ثنائي أو تجميد جرد كامل أو تقييم/ترحيل مالي أو مزود خارجي أو نشر.

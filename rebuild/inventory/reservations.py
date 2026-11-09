@@ -54,7 +54,7 @@ def _event(actor_id, reservation, balance, *, kind, quantity, key, fingerprint, 
     balance.version += 1
     balance.save(update_fields=["on_hand", "reserved", "version"])
     if delta:
-        StockMovement.objects.create(reservation_event=event, variant_id=reservation.variant_id, delta=delta, before=before,
+        StockMovement.objects.create(reservation_event=event, branch_id=reservation.branch_id, variant_id=reservation.variant_id, delta=delta, before=before,
             after=balance.on_hand, reserved_after=balance.reserved, variant_snapshot=reservation.variant_snapshot)
     audit(actor_id, "stock." + kind, event.pk)
     return event

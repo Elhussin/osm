@@ -5,9 +5,12 @@ from workspace import views as workspace
 from clinical import views as clinical
 from catalog import views as catalog
 from inventory import views as inventory
-from inventory import reservation_views
+from inventory import reservation_views, operation_views
 
 urlpatterns = [
+    path("inventory/operations/", operation_views.operation_list, name="stock-operations"),
+    path("inventory/operations/new/<int:balance_id>/<str:kind>/", operation_views.operation_new, name="stock-operation-new"),
+    path("inventory/operations/<uuid:operation_id>/", operation_views.operation_detail, name="stock-operation"),
     path("inventory/reservations/", reservation_views.reservations, name="stock-reservations"),
     path("inventory/reservations/<uuid:reservation_id>/", reservation_views.reservation_detail, name="stock-reservation"),
     path("inventory/lenses/", inventory.lens_products, name="inventory-lenses"),
