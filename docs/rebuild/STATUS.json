@@ -1,6 +1,6 @@
 {
   "updated": "2026-11-09",
-  "current_task": "R06",
+  "current_task": "R07",
   "next_task": "R07",
   "blockers": [
     "R13: supplied Waseel v2 docs reviewed locally; resolve W01-W07 in docs/rebuild/waseel/REVIEW.md, including claims/customer endpoints, auth response and sandbox activation. Sample credentials have not been used or validated.",
@@ -91,11 +91,13 @@
     },
     {
       "id": "R07",
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "R06"
       ],
-      "evidence": []
+      "evidence": [
+        "T017"
+      ]
     },
     {
       "id": "R08",

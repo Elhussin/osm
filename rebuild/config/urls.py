@@ -3,8 +3,19 @@ from .views import live, ready
 from identity import views as identity
 from workspace import views as workspace
 from clinical import views as clinical
+from catalog import views as catalog
 
 urlpatterns = [
+    path("catalog/", catalog.products, name="catalog-products"),
+    path("catalog/new/", catalog.product_new, name="product-new"),
+    path("catalog/products/<uuid:product_id>/", catalog.product_detail, name="product-detail"),
+    path("catalog/products/<uuid:product_id>/edit/", catalog.product_edit, name="product-edit"),
+    path("catalog/products/<uuid:product_id>/variants/new/", catalog.variant_new, name="variant-new"),
+    path("catalog/variants/<uuid:variant_id>/", catalog.variant_detail, name="variant-detail"),
+    path("catalog/variants/<uuid:variant_id>/edit/", catalog.variant_edit, name="variant-edit"),
+    path("catalog/variants/<uuid:variant_id>/prices/new/", catalog.rule_new, name="price-rule-new"),
+    path("catalog/prices/<uuid:rule_id>/disable/", catalog.rule_disable, name="price-rule-disable"),
+    path("catalog/variants/<uuid:variant_id>/quote/", catalog.price_preview, name="price-preview"),
     path("customers/", clinical.customers, name="customers"),
     path("customers/new/", clinical.customer_new, name="customer-new"),
     path("customers/<uuid:customer_id>/", clinical.customer_detail, name="customer-detail"),

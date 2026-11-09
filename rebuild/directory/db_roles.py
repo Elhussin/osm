@@ -15,3 +15,8 @@ def grant_tenant_runtime(cursor, schema, role):
         cursor.execute("SELECT to_regclass(%s)", [schema + "." + table])
         if cursor.fetchone()[0]:
             cursor.execute(sql.SQL("REVOKE UPDATE, DELETE ON TABLE {}.{} FROM {}").format(schema_id, sql.Identifier(table), role_id))
+    for table, columns in {"catalog_product": ("name", "brand", "model", "active", "version"), "catalog_variant": ("base_price", "active", "version"), "catalog_pricerule": ("active",)}.items():
+        cursor.execute("SELECT to_regclass(%s)", [schema + "." + table])
+        if cursor.fetchone()[0]:
+            cursor.execute(sql.SQL("REVOKE UPDATE, DELETE ON TABLE {}.{} FROM {}").format(schema_id, sql.Identifier(table), role_id))
+            cursor.execute(sql.SQL("GRANT UPDATE ({}) ON TABLE {}.{} TO {}").format(sql.SQL(", ").join(map(sql.Identifier, columns)), schema_id, sql.Identifier(table), role_id))

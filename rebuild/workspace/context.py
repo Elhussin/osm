@@ -14,7 +14,7 @@ def ui_context(request):
         return result
     principal, context, grants = state
     flags = {name: permits(principal, context, action, ResourceScope(context.company_id), grants) for name, action in {
-        "can_members": "members.manage", "can_roles": "roles.manage", "can_branches": "branches.manage", "can_audit": "audit.read", "can_ownership": "ownership.transfer",
+        "can_members": "members.manage", "can_roles": "roles.manage", "can_branches": "branches.manage", "can_audit": "audit.read", "can_ownership": "ownership.transfer", "can_catalog": "catalog.read", "can_catalog_manage": "catalog.manage",
     }.items()}
     branch_ids = [pk for pk in context.active_branches if any(permits(principal, context, action, ResourceScope(context.company_id, frozenset([pk])), grants) for action in BRANCH_ACTIONS | {"provider.configure"})]
     result["can_customers"] = any(permits(principal, context, "customer.read", ResourceScope(context.company_id, frozenset([pk])), grants) for pk in branch_ids)

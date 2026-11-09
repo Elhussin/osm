@@ -45,12 +45,24 @@
   });
   document.addEventListener("submit", (event) => {
     if (event.target.method === "post" && event.submitter) {
+      event.target.querySelectorAll("[data-submit-command]").forEach(field => field.remove());
+      // Disabled submit controls are omitted from the browser's form data.
+      // Preserve the selected command (e.g. refresh choices) before disabling it.
+      if (event.submitter.name) {
+        const command = document.createElement("input");
+        command.type = "hidden";
+        command.name = event.submitter.name;
+        command.value = event.submitter.value;
+        command.dataset.submitCommand = "true";
+        event.target.appendChild(command);
+      }
       event.submitter.disabled = true;
       event.submitter.dataset.submitted = "true";
       event.submitter.setAttribute("aria-busy", "true");
     }
   });
   window.addEventListener("pageshow", () => {
+    document.querySelectorAll("[data-submit-command]").forEach(field => field.remove());
     document.querySelectorAll("[data-submitted]").forEach(button => {
       button.disabled = false;
       button.removeAttribute("aria-busy");
