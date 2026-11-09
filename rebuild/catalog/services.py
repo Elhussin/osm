@@ -7,7 +7,7 @@ from access.authorization import require, current_company, visible_branches
 from access.services import audit, lock_access
 from clinical.models import CustomerBranchAccess
 from .models import Product, Variant, PriceRule, CHANNELS
-from .specifications import code, money, canonical_specs
+from .specifications import code, money, canonical_specs, stock_matrix_fields
 
 
 def quantity(value):
@@ -57,7 +57,7 @@ def create_variant(actor_id, *, product_id, sku, barcode="", unit, base_price, s
     if Variant.objects.filter(product=product, fingerprint=fingerprint).exists():
         raise ValidationError("يوجد متغير بالمواصفات ووحدة البيع نفسيهما. استخدمه أو غيّر المواصفات.")
     variant = Variant(product=product, sku=code(sku), barcode=code(barcode, 80) if barcode else None, unit=unit,
-        base_price=money(base_price), specifications=packed, fingerprint=fingerprint, created_by_id=actor_id)
+        base_price=money(base_price), specifications=packed, fingerprint=fingerprint, created_by_id=actor_id, **stock_matrix_fields(packed))
     variant.full_clean()
     variant.save()
     audit(actor_id, "catalog.variant_created", variant.pk)

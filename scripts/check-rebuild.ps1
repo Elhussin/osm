@@ -20,6 +20,22 @@ function Assert-RebuildState {
             $parent = $State.tasks | Where-Object id -eq $dependency
             if ($task.status -in @('in_progress','done') -and $parent.status -ne 'done') { throw "Unfinished dependency: $($task.id)" }
         }
+        $steps = @($task.steps | Where-Object { $null -ne $_ })
+        $stepIds = @($steps | ForEach-Object { $_.id })
+        if ($stepIds.Count -ne @($stepIds | Select-Object -Unique).Count) { throw 'Duplicate step ID.' }
+        foreach ($step in $steps) {
+            if ($step.id -notmatch ('^' + $task.id + '-M\d{2}$') -or $step.status -notin @('pending','in_progress','blocked','done')) { throw 'Invalid task step.' }
+            if ($task.status -eq 'done' -and $step.status -ne 'done') { throw 'Completed task has unfinished step.' }
+            if ($step.status -eq 'done') {
+                if (-not $step.evidence -or @($step.evidence).Count -eq 0) { throw 'Missing step evidence.' }
+                foreach ($entry in $step.evidence) {
+                    $pattern = '(?m)^## ' + [regex]::Escape($entry) + ' \| passed\r?$'
+                    if ($entry -notmatch '^T\d{3,}$' -or $Log -notmatch $pattern) { throw 'No passing step evidence.' }
+                    $section = ($Log -split $pattern, 2)[1] -split '(?m)^## ', 2 | Select-Object -First 1
+                    if ($section -notmatch ("(?m)^Task: " + $task.id + "\r?$") -or $section -notmatch '(?m)^Command: .+' -or $section -notmatch '(?m)^Date: \d{4}-\d{2}-\d{2}') { throw 'Mismatched step evidence.' }
+                }
+            }
+        }
         if ($task.status -eq 'done') {
             if (@($task.evidence).Count -eq 0) { throw "Missing evidence: $($task.id)" }
             foreach ($entry in $task.evidence) {
@@ -55,7 +71,10 @@ $cases = @(
     @{ Name = 'cycle'; Mutate = { param($s) $s.tasks[0].depends_on = @('R01') } },
     @{ Name = 'duplicate ID'; Mutate = { param($s) $s.tasks[1].id = 'R00' } },
     @{ Name = 'unknown status'; Mutate = { param($s) $s.tasks[0].status = 'finished' } },
-    @{ Name = 'missing test result'; Mutate = { param($s) $s.tasks[0].status = 'done'; $s.tasks[0].evidence = @('T999999') } }
+    @{ Name = 'missing test result'; Mutate = { param($s) $s.tasks[0].status = 'done'; $s.tasks[0].evidence = @('T999999') } },
+    @{ Name = 'step completion without evidence'; Mutate = { param($s) $s.tasks[0] | Add-Member -NotePropertyName steps -NotePropertyValue @(@{id='R00-M01'; status='done'; evidence=@()}) -Force } },
+    @{ Name = 'step missing evidence property'; Mutate = { param($s) $s.tasks[0] | Add-Member -NotePropertyName steps -NotePropertyValue @(@{id='R00-M01'; status='done'}) -Force } },
+    @{ Name = 'parent completion with unfinished step'; Mutate = { param($s) $s.tasks[0] | Add-Member -NotePropertyName steps -NotePropertyValue @(@{id='R00-M01'; status='pending'}) -Force } }
 )
 foreach ($case in $cases) {
     $copy = $state | ConvertTo-Json -Depth 10 | ConvertFrom-Json
@@ -71,6 +90,9 @@ $positive.tasks[0].evidence = @('T999998')
 $sample = $log + "`n## T999998 | passed`nTask: R00`nDate: 2026-11-09`nCommand: sample test`n"
 Assert-RebuildState $positive $sample $plan
 Write-Output 'PASS: accepts completion with matching passing evidence.'
+$positive.tasks[0] | Add-Member -NotePropertyName steps -NotePropertyValue @(@{id='R00-M01'; status='done'; evidence=@('T999998')}) -Force
+Assert-RebuildState $positive $sample $plan
+Write-Output 'PASS: accepts step completion with matching evidence.'
 $mismatched = $log + "`n## T999998 | passed`nTask: R01`nDate: 2026-11-09`nCommand: sample test`n"
 $rejected = $false
 try { Assert-RebuildState $positive $mismatched $plan } catch { $rejected = $true }

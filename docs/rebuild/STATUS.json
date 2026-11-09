@@ -1,6 +1,6 @@
 {
   "updated": "2026-11-09",
-  "current_task": "R07",
+  "current_task": "R08",
   "next_task": "R08",
   "blockers": [
     "R13: supplied Waseel v2 docs reviewed locally; resolve W01-W07 in docs/rebuild/waseel/REVIEW.md, including claims/customer endpoints, auth response and sandbox activation. Sample credentials have not been used or validated.",
@@ -104,11 +104,38 @@
     },
     {
       "id": "R08",
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "R07"
       ],
-      "evidence": []
+      "evidence": [
+        "T020"
+      ],
+      "steps": [
+        {
+          "id": "R08-M01",
+          "title": "Stock-lens matrices, receipts, balances and reversal",
+          "status": "in_progress",
+          "evidence": [
+            "T020"
+          ]
+        },
+        {
+          "id": "R08-M02",
+          "title": "Reservations, issue and release with concurrency",
+          "status": "pending"
+        },
+        {
+          "id": "R08-M03",
+          "title": "Transfers and stock counts with reversals",
+          "status": "pending"
+        },
+        {
+          "id": "R08-M04",
+          "title": "Batch/expiry and device serial tracking",
+          "status": "pending"
+        }
+      ]
     },
     {
       "id": "R09",

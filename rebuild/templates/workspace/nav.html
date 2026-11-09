@@ -2,6 +2,7 @@
 <a href="{% url 'account-home' %}" {% if active_page == 'home' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-home"/></svg>نظرة عامة</a>
 {% if can_customers %}<a href="{% url 'customers' %}" {% if active_page == 'customers' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-users"/></svg>العملاء والفحوص</a>{% endif %}
 {% if can_catalog %}<a href="{% url 'catalog-products' %}" {% if active_page == 'catalog' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-branch"/></svg>دليل المنتجات</a>{% endif %}
+{% if can_inventory %}<a href="{% url 'inventory-lenses' %}" {% if active_page == 'inventory' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-branch"/></svg>مخزون العدسات</a>{% endif %}
 {% if can_members %}<a href="{% url 'members' %}" {% if active_page == 'members' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-users"/></svg>الأعضاء</a>{% endif %}
 <a href="{% url 'account-branches' %}" {% if active_page == 'branches' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-branch"/></svg>الفروع والمستودعات</a>
 {% if can_roles %}<a href="{% url 'roles' %}" {% if active_page == 'roles' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-shield"/></svg>الأدوار والصلاحيات</a>{% endif %}

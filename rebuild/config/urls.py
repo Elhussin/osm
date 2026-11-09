@@ -4,8 +4,13 @@ from identity import views as identity
 from workspace import views as workspace
 from clinical import views as clinical
 from catalog import views as catalog
+from inventory import views as inventory
 
 urlpatterns = [
+    path("inventory/lenses/", inventory.lens_products, name="inventory-lenses"),
+    path("inventory/lenses/<uuid:product_id>/", inventory.lens_matrix, name="lens-matrix"),
+    path("inventory/receipts/confirm/", inventory.confirm_receipt, name="matrix-confirm"),
+    path("inventory/receipts/<uuid:receipt_id>/", inventory.receipt_detail, name="stock-receipt"),
     path("catalog/", catalog.products, name="catalog-products"),
     path("catalog/new/", catalog.product_new, name="product-new"),
     path("catalog/products/<uuid:product_id>/", catalog.product_detail, name="product-detail"),

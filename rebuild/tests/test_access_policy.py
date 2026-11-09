@@ -36,6 +36,21 @@ def make_case(case):
 
 
 class AccessPolicyTests(unittest.TestCase):
+    def test_stock_receipt_permissions_are_explicit_and_branch_scoped(self):
+        for role in ("inventory_clerk", "branch_manager", "owner"):
+            p, context, resource, grants = make_case({"roles": [role]})
+            self.assertTrue(permits(p, context, "stock.receive", resource, grants))
+            denied = ResourceScope(context.company_id, frozenset(["branch-a2"]))
+            self.assertFalse(permits(p, context, "stock.receive", denied, grants))
+        for role in ("cashier", "catalog_reader", "company_admin"):
+            p, context, resource, grants = make_case({"roles": [role]})
+            self.assertFalse(permits(p, context, "stock.receive", resource, grants))
+
+    def test_stock_reversal_is_owner_only_in_current_templates(self):
+        for role in ROLES:
+            p, context, resource, grants = make_case({"roles": [role]})
+            self.assertEqual(role == "owner", permits(p, context, "stock.reverse", resource, grants))
+
     def test_matrix_integrity(self):
         cases = MATRIX["cases"]
         self.assertEqual("pure_policy_cases_not_database_or_http_isolation_proof", MATRIX["scope"])

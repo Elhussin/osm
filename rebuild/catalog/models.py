@@ -32,6 +32,9 @@ class Variant(models.Model):
     unit = models.CharField(max_length=12, choices=UNITS)
     specifications = models.JSONField()
     fingerprint = models.CharField(max_length=64)
+    matrix_family = models.CharField(max_length=64, null=True, blank=True)
+    sphere = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    cylinder = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     base_price = models.DecimalField(max_digits=12, decimal_places=2)
     active = models.BooleanField(default=True)
     version = models.PositiveIntegerField(default=1)
@@ -46,6 +49,8 @@ class Variant(models.Model):
 
     class Meta:
         constraints = [models.UniqueConstraint(fields=["product", "fingerprint"], name="catalog_variant_specs_unique"), models.CheckConstraint(condition=Q(base_price__gte=0), name="catalog_base_price_nonnegative")]
+        constraints += [models.UniqueConstraint(fields=["product", "matrix_family", "sphere", "cylinder"], condition=Q(matrix_family__isnull=False), name="catalog_matrix_cell_unique"), models.CheckConstraint(condition=Q(matrix_family__isnull=True, sphere__isnull=True, cylinder__isnull=True) | Q(matrix_family__isnull=False, sphere__isnull=False, cylinder__isnull=False), name="catalog_matrix_fields_together")]
+        indexes = [models.Index(fields=["product", "matrix_family"], name="catalog_matrix_family_idx")]
 
 
 class PriceRule(models.Model):

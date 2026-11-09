@@ -29,6 +29,7 @@ TENANT_APPS = (
     "django.contrib.messages", "workspace.apps.WorkspaceConfig",
     "clinical.apps.ClinicalConfig",
     "catalog.apps.CatalogConfig",
+    "inventory.apps.InventoryConfig",
 )
 INSTALLED_APPS = list(SHARED_APPS) + list(TENANT_APPS)
 TENANT_MODEL = "directory.Company"

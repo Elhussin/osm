@@ -130,3 +130,12 @@ def display_specs(variant):
     schema = SCHEMAS[variant.product.kind]
     values = variant.specifications["values"]
     return [(spec.label, ", ".join(values[key]) if isinstance(values[key], list) else (dict(spec.choices).get(values[key], values[key]) if spec.choices else values[key])) for key, spec in schema.items() if values.get(key) is not None and values[key] != []]
+
+
+def stock_matrix_fields(packed):
+    if packed["kind"] != "stock_lens":
+        return {"matrix_family": None, "sphere": None, "cylinder": None}
+    values = {key: value for key, value in packed["values"].items() if key not in {"sphere", "cylinder"}}
+    family = {**packed, "values": values}
+    digest = hashlib.sha256(json.dumps(family, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode()).hexdigest()
+    return {"matrix_family": digest, "sphere": Decimal(packed["values"]["sphere"]), "cylinder": Decimal(packed["values"]["cylinder"])}
