@@ -1,14 +1,14 @@
 {
   "updated": "2026-11-09",
-  "current_task": "R04",
-  "next_task": "R04",
+  "current_task": "R05",
+  "next_task": "R05",
   "blockers": ["R13: supplied Waseel v2 docs reviewed locally; resolve W01-W07 in docs/rebuild/waseel/REVIEW.md, including claims/customer endpoints, auth response and sandbox activation. Sample credentials have not been used or validated.", "R10: device choices Q03-Q04 deferred by user; cash shift requirements Q05 remain open. First release is online-only."],
   "tasks": [
     {"id":"R00","status":"done","depends_on":[],"evidence":["T000"]},
     {"id":"R01","status":"done","depends_on":["R00"],"evidence":["T001","T003","T004"]},
     {"id":"R02","status":"done","depends_on":["R01"],"evidence":["T005"]},
     {"id":"R03","status":"done","depends_on":["R02"],"evidence":["T007","T008"],"ci_run":"https://github.com/Elhussin/osm/actions/runs/42575805281","verified_code_commit":"67a30e0299f73bead0d9bd5a430d907e1b2efac3"},
-    {"id":"R04","status":"in_progress","depends_on":["R03"],"evidence":["T009"],"pending_checks":["GitHub Actions run for R04 changes"]},
+    {"id":"R04","status":"done","depends_on":["R03"],"evidence":["T009","T010"],"ci_run":"https://github.com/Elhussin/osm/actions/runs/42594132931","verified_code_commit":"74553dc7647a7978d9fcf50347874fbe07a4d62d"},
     {"id":"R05","status":"pending","depends_on":["R04"],"evidence":[]},
     {"id":"R06","status":"pending","depends_on":["R05"],"evidence":[]},
     {"id":"R07","status":"pending","depends_on":["R06"],"evidence":[]},

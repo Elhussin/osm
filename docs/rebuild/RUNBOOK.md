@@ -53,5 +53,6 @@ OSM_REBUILD_DB_MODE افتراضيًا runtime. أوامر migrate-shared/manage
 - `pdm run test`: 33 اختبار Django/PostgreSQL حاليًا تشمل أساس R03 وعزل R04 وHTTP والروابط والتزامن وقيود التدقيق.
 - `pdm run test-policy`: 44 اختبار سياسة مجردة؛ لا يعوض اختبارات قاعدة البيانات.
 - نجح `.github/workflows/rebuild.yml` فعليًا على GitHub للـcommit 67a30e0: [تشغيل R03](https://github.com/Elhussin/osm/actions/runs/42575805281). يستمر التشغيل على كل تعديل مطابق لمسارات workflow.
+- نجح كذلك [تشغيل R04](https://github.com/Elhussin/osm/actions/runs/42594132931) للـcommit 74553dc، شاملاً اختبارات الهوية والصلاحيات الجديدة. الواجهة المتكاملة وتجربة إدارة الأعضاء R05.
 - تغييرات اعتماديات: عبر PDM فقط، لا تعديل lock يدويًا. لا تستخدم ملف requirements القديم.
 - نتائج هذه الجلسة وحدودها في TEST_LOG.md. R04 سيضيف خدمات provisioning والأدوار والفروع ومنع التصعيد وروابط الدعوات والاسترداد.
