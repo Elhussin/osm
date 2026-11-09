@@ -25,6 +25,7 @@ SHARED_APPS = ("django_tenants", "directory.apps.DirectoryConfig")
 TENANT_APPS = (
     "django.contrib.contenttypes", "django.contrib.auth", "django.contrib.sessions",
     "identity.apps.IdentityConfig",
+    "access.apps.AccessConfig",
 )
 INSTALLED_APPS = list(SHARED_APPS) + list(TENANT_APPS)
 TENANT_MODEL = "directory.Company"
@@ -40,9 +41,11 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "identity.middleware.BoundSessionMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 ROOT_URLCONF = "config.urls"
+TEMPLATES = [{"BACKEND": "django.template.backends.django.DjangoTemplates", "DIRS": [BASE_DIR / "templates"], "APP_DIRS": True, "OPTIONS": {"context_processors": ["django.template.context_processors.request", "django.template.context_processors.csrf"]}}]
 PUBLIC_SCHEMA_URLCONF = "config.public_urls"
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"

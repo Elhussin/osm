@@ -4,12 +4,16 @@ from django.db import connection
 from psycopg import sql
 from config.environment import required
 from directory.models import Company
+from directory.db_roles import grant_tenant_runtime
 
 ROLE = "optics_rebuild_runtime"
 
 
 class Command(BaseCommand):
     help = "Configure the dedicated rebuild runtime DB role (no DDL or role creation)."
+
+    def add_arguments(self, parser):
+        parser.add_argument("--schema")
 
     def handle(self, **options):
         if not connection.settings_dict["NAME"].startswith("optics_rebuild_"):
@@ -37,9 +41,9 @@ class Command(BaseCommand):
             cursor.execute(sql.SQL("GRANT USAGE ON SCHEMA public TO {}").format(sql.Identifier(ROLE)))
             for table in ("directory_company", "directory_companydomain", "django_migrations"):
                 cursor.execute(sql.SQL("GRANT SELECT ON TABLE public.{} TO {}").format(sql.Identifier(table), sql.Identifier(ROLE)))
-            for schema in Company.objects.exclude(schema_name="public").values_list("schema_name", flat=True):
-                cursor.execute(sql.SQL("GRANT USAGE ON SCHEMA {} TO {}").format(sql.Identifier(schema), sql.Identifier(ROLE)))
-                cursor.execute(sql.SQL("GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA {} TO {}").format(sql.Identifier(schema), sql.Identifier(ROLE)))
-                cursor.execute(sql.SQL("GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA {} TO {}").format(sql.Identifier(schema), sql.Identifier(ROLE)))
-                cursor.execute(sql.SQL("REVOKE INSERT, UPDATE, DELETE ON TABLE {}.django_migrations FROM {}").format(sql.Identifier(schema), sql.Identifier(ROLE)))
+            companies = Company.objects.exclude(schema_name="public").exclude(state=Company.State.FAILED)
+            if options.get("schema"):
+                companies = companies.filter(schema_name=options["schema"])
+            for schema in companies.values_list("schema_name", flat=True):
+                grant_tenant_runtime(cursor, schema, ROLE)
         self.stdout.write("Configured rebuild runtime role; no credential values printed. Re-run after provisioning new tenant schemas.")

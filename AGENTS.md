@@ -20,6 +20,7 @@ Before every implementation task, read `docs/rebuild/README.md`, `docs/rebuild/P
 - Keep business operations in explicit services shared by HTML views and integration APIs. No financial or stock posting side effects in model save().
 - Tenant and branch authorization must be explicit and tested. Resolve identity and tenancy before creating the initial application migrations (R02).
 - ADR 0003 is binding: each account belongs to exactly one company; identity/auth/sessions live only in tenant schemas, not public. Read ACCESS_MODEL.md and ACCESS_VERIFICATION.md before models or adapters. Pure-policy tests do not prove database/session isolation; R04 must execute I01-I20 as applicable and retain stage-specific checks for later modules.
+- ADR 0005: role templates are immutable; use access.services for grants, branch access, member state, and ownership. Do not add raw role CRUD or rely on Django admin/superuser flags for ERP authorization. Provisioning is deployment-only and must remain unavailable to public HTTP. Never expose password-link tokens in logs or URL query strings.
 - Financial posting and stock operations require atomicity, concurrency tests, idempotency, and an auditable reversal path. Never delete posted documents to undo transactions.
 - External calls use adapters and background delivery with retry/idempotency; never hold database locks across network calls.
 - Do not claim ZATCA or insurance compliance from mocks. Record official specifications and sandbox verification separately.

@@ -1,0 +1,1 @@
+<section lang="ar" dir="rtl"><h2>سجل التدقيق</h2><table><thead><tr><th>الوقت</th><th>العملية</th><th>المرجع</th></tr></thead><tbody>{% for event in events %}<tr><td>{{ event.created_at }}</td><td>{{ event.action }}</td><td>{{ event.target_id }}</td></tr>{% empty %}<tr><td colspan="3">لا توجد أحداث.</td></tr>{% endfor %}</tbody></table></section>

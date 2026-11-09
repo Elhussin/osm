@@ -8,7 +8,7 @@
     {"id":"R01","status":"done","depends_on":["R00"],"evidence":["T001","T003","T004"]},
     {"id":"R02","status":"done","depends_on":["R01"],"evidence":["T005"]},
     {"id":"R03","status":"done","depends_on":["R02"],"evidence":["T007","T008"],"ci_run":"https://github.com/Elhussin/osm/actions/runs/42575805281","verified_code_commit":"67a30e0299f73bead0d9bd5a430d907e1b2efac3"},
-    {"id":"R04","status":"pending","depends_on":["R03"],"evidence":[]},
+    {"id":"R04","status":"in_progress","depends_on":["R03"],"evidence":["T009"],"pending_checks":["GitHub Actions run for R04 changes"]},
     {"id":"R05","status":"pending","depends_on":["R04"],"evidence":[]},
     {"id":"R06","status":"pending","depends_on":["R05"],"evidence":[]},
     {"id":"R07","status":"pending","depends_on":["R06"],"evidence":[]},

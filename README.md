@@ -21,7 +21,9 @@ pwsh -NoProfile -File scripts/check-rebuild.ps1
 pwsh -NoProfile -File scripts/check-discovery.ps1
 ```
 
-أضيف أساس Django وPostgreSQL مستقل واجتاز R03 محليًا وعلى GitHub Actions، مع 9 اختبارات أساس و44 اختبار سياسة. لا واجهات ERP أو دخول بعد. القرار المعتمد: كل حساب يتبع شركة واحدة فقط، ولكل شركة مخططها ومستخدموها وجلساتها. المستودع الجديد https://github.com/Elhussin/osm.git؛ دفع الفرع codex/r03-foundation بإذن المستخدم دون دمجه في main. راجع [دليل التشغيل](docs/rebuild/RUNBOOK.md).
+أضيف أساس Django وPostgreSQL مستقل واجتاز R03 محليًا وعلى GitHub Actions. القرار المعتمد: كل حساب يتبع شركة واحدة فقط، ولكل شركة مخططها ومستخدموها وجلساتها. المستودع الجديد https://github.com/Elhussin/osm.git؛ العمل على فرع codex/r03-foundation دون دمجه في main. راجع [دليل التشغيل](docs/rebuild/RUNBOOK.md).
+
+تحديث R04: أضيفت خدمات إنشاء الشركات والأعضاء والفروع والتعيينات والتدقيق، مع دخول HTML أولي وروابط دعوة/reset آمنة. نجحت محليًا 33 حالة Django/PostgreSQL و44 حالة سياسة؛ تصميم ERP وشاشات الإدارة المتكاملة R05. التفاصيل والحدود في docs/rebuild/decisions/0005-access-services.md.
 
 اختبارات السياسة بمفسر Python صالح من جذر المستودع:
 
