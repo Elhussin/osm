@@ -1,5 +1,8 @@
 from pathlib import Path
+from io import BytesIO
 import uuid
+from PIL import Image
+import zxingcpp
 from django.contrib.auth import get_user_model
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.db import connection
@@ -232,6 +235,62 @@ class InventoryBrowserTests(StaticLiveServerTestCase):
                 self.assertEqual(response.status, 404)
             await page.goto(self.live_server_url + "/inventory/operations/")
             await expect(page.get_by_text("لا توجد أرصدة مطابقة.", exact=True)).to_be_visible()
+            await browser.close()
+
+    async def test_barcode_labels_decode_print_media_and_pagination(self):
+        async with async_playwright() as p:
+            browser = await p.chromium.launch()
+            context = await browser.new_context(viewport={"width": 1440, "height": 1000}, device_scale_factor=3)
+            page = await context.new_page()
+            await self.login(page)
+            await page.goto(self.live_server_url + f"/catalog/variants/{self.template_id}/")
+            await page.get_by_role("link", name="ملصقات الباركود", exact=True).click()
+            await page.get_by_label("عدد الملصقات", exact=True).fill("13")
+            await page.get_by_role("button", name="معاينة الملصقات", exact=True).click()
+            await expect(page.locator(".barcode-label")).to_have_count(13)
+            await expect(page.locator(".label-sheet")).to_have_count(2)
+            image = await page.locator(".barcode-image").first.screenshot()
+            decoded = zxingcpp.read_barcode(Image.open(BytesIO(image)))
+            self.assertIsNotNone(decoded)
+            self.assertEqual(decoded.text, "LENS-0")
+            self.assertEqual(decoded.format, zxingcpp.BarcodeFormat.Code128)
+            await page.evaluate("window.print = () => { window.__printRequested = true; }")
+            await page.get_by_role("button", name="طباعة الملصقات", exact=True).click()
+            self.assertTrue(await page.evaluate("window.__printRequested"))
+            await page.emulate_media(media="print")
+            await expect(page.locator(".print-tools")).to_be_hidden()
+            geometry = await page.locator(".barcode-label").first.evaluate("el => ({width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height,image:el.querySelector('img').getBoundingClientRect().width,inside:el.clientWidth-parseFloat(getComputedStyle(el).paddingLeft)-parseFloat(getComputedStyle(el).paddingRight)})")
+            self.assertAlmostEqual(geometry["width"], 90 * 96 / 25.4, delta=0.3)
+            self.assertAlmostEqual(geometry["height"], 43 * 96 / 25.4, delta=0.3)
+            self.assertLessEqual(geometry["image"], geometry["inside"] + 0.3)
+            await page.locator(".label-sheet").first.screenshot(path=str(ARTIFACTS / "barcode-labels-print.png"))
+            await page.emulate_media(media="screen")
+            await page.goto(self.live_server_url + f"/catalog/variants/{self.template_id}/labels/")
+            await page.get_by_label("عدد الملصقات", exact=True).fill("5")
+            await page.get_by_label("قالب الطباعة", exact=True).select_option("wide")
+            await page.get_by_role("button", name="معاينة الملصقات", exact=True).click()
+            await expect(page.locator(".barcode-label")).to_have_count(5)
+            await expect(page.locator(".label-sheet")).to_have_count(2)
+            await page.emulate_media(media="print")
+            width = await page.locator(".barcode-label").first.evaluate("el => el.getBoundingClientRect().width")
+            self.assertAlmostEqual(width, 270 * 96 / 25.4, delta=0.3)
+            await page.locator(".label-sheet").first.screenshot(path=str(ARTIFACTS / "barcode-labels-wide-print.png"))
+            await browser.close()
+
+    async def test_barcode_labels_mobile_nojs_catalog_reader(self):
+        async with async_playwright() as p:
+            browser = await p.chromium.launch()
+            context = await browser.new_context(viewport={"width": 390, "height": 844}, java_script_enabled=False)
+            page = await context.new_page()
+            await self.login(page, "reader")
+            await page.goto(self.live_server_url + f"/catalog/variants/{self.template_id}/labels/")
+            await page.get_by_label("عدد الملصقات", exact=True).fill("2")
+            await page.get_by_role("button", name="معاينة الملصقات", exact=True).click()
+            await expect(page.locator(".barcode-label")).to_have_count(2)
+            await expect(page.locator(".code-value").first).to_have_text("LENS-0")
+            await expect(page.locator("#print-labels")).to_be_hidden()
+            self.assertTrue(await page.evaluate("document.documentElement.scrollWidth <= innerWidth"))
+            await page.screenshot(path=str(ARTIFACTS / "barcode-labels-mobile-nojs.png"), full_page=True)
             await browser.close()
 
     async def test_mobile_no_javascript_existing_cells_only_and_scroll(self):

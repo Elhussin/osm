@@ -114,7 +114,8 @@
         "T024",
         "T026",
         "T028",
-        "T029"
+        "T029",
+        "T030"
       ],
       "steps": [
         {
@@ -155,6 +156,17 @@
           "id": "R08-M04",
           "title": "Batch/expiry and device serial tracking",
           "status": "pending"
+        },
+        {
+          "id": "R08-M05",
+          "title": "Barcode label preview and browser printing",
+          "status": "in_progress",
+          "depends_on_steps": [
+            "R08-M03"
+          ],
+          "evidence": [
+            "T030"
+          ]
         }
       ]
     },
@@ -215,5 +227,5 @@
       "evidence": []
     }
   ],
-  "next_step": "R08-M04"
+  "next_step": "R08-M05"
 }

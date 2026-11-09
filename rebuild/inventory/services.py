@@ -99,6 +99,8 @@ def receive_matrix(actor_id, **values):
     template, lines = _plan(actor_id, payload, authorized=True)
     new_variants = [line["variant"] for line in lines if line["new"]]
     if new_variants:
+        if Variant.objects.filter(barcode__in=[variant.sku for variant in new_variants]).exists():
+            raise ValidationError("رمز متغير جديد يتعارض مع باركود محفوظ. أعد فتح المصفوفة والمحاولة.")
         Variant.objects.bulk_create(new_variants)
     document = StockReceipt.objects.create(branch_id=payload["branch_id"], kind="receipt", operation_key=payload["operation_key"],
         payload_digest=fingerprint, reference=payload["reference"], reason=payload["reason"], created_by_id=actor_id)

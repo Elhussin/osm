@@ -1,0 +1,1 @@
+@page{size:A4 portrait;margin:10mm}.label-sheet{width:210mm;min-height:297mm;grid-template-columns:repeat(2,90mm)}@media print{.label-sheet{width:190mm;height:277mm;min-height:0}}

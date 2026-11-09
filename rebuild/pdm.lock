@@ -5,7 +5,7 @@
 groups = ["default", "browser"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.1"
-content_hash = "sha256:641bb70c558516bc3620601101ee4f86af6cd05ad8df12b8d712f3a9e0bab271"
+content_hash = "sha256:b134e7009e86aa61a2d88c3bd5d2a0828ce648ac4a3dfe12061bf1f5129a5d10"
 
 [[metadata.targets]]
 requires_python = ">=3.12,<3.13"
@@ -178,6 +178,17 @@ files = [
 ]
 
 [[package]]
+name = "python-barcode"
+version = "0.16.1"
+requires_python = ">=3.9"
+summary = "Create standard barcodes with Python. No external modules needed. (optional Pillow support included)."
+groups = ["default"]
+files = [
+    {file = "python_barcode-0.16.1-py3-none-any.whl", hash = "sha256:5776567478c9a0dae473374bb86631ba0b5ea99aaf302763b364e367ac51f367"},
+    {file = "python_barcode-0.16.1.tar.gz", hash = "sha256:665ed09516b0088b5593061c5ac8662caa0b08d56bdad328388b1cab39939ac5"},
+]
+
+[[package]]
 name = "python-dotenv"
 version = "1.2.4"
 requires_python = ">=3.10"
@@ -220,4 +231,20 @@ marker = "sys_platform == \"win32\""
 files = [
     {file = "tzdata-2026.6-py2.py3-none-any.whl", hash = "sha256:0a10eec6e13ef16b627fabed9a5f2ba61a62b1c67f327305f4e7e412a70b4aec"},
     {file = "tzdata-2026.6.tar.gz", hash = "sha256:85d2cd9c09f81f0bb29db27759fc83af4f1e620efb814f8c5bf8b4cc4feece6d"},
+]
+
+[[package]]
+name = "zxing-cpp"
+version = "3.1.1"
+requires_python = ">=3.9"
+summary = "Python bindings for the zxing-cpp barcode library"
+groups = ["browser"]
+files = [
+    {file = "zxing_cpp-3.1.1-cp312-abi3-macosx_10_13_x86_64.whl", hash = "sha256:09dea611a7c9dc7c713a82303b15b733dc71abb1a77454b26b779e33671cef05"},
+    {file = "zxing_cpp-3.1.1-cp312-abi3-macosx_11_0_arm64.whl", hash = "sha256:037cbcaeb0cb12497fc15ced23f6b778fce8a6a1d1bbffddbffd004c6225744d"},
+    {file = "zxing_cpp-3.1.1-cp312-abi3-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:f4dae01111f323f46736fc21f05c14dcaaac06cea5fdc8fd994ba19f6f918c6e"},
+    {file = "zxing_cpp-3.1.1-cp312-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:9cf67341949946307d086b302cefd453fb47bc6d6ddc7d088839e9481982757b"},
+    {file = "zxing_cpp-3.1.1-cp312-abi3-win_amd64.whl", hash = "sha256:29f98a91148171460b47a942d137ecc90c4b8097636f23cca65263a56bb025d3"},
+    {file = "zxing_cpp-3.1.1-cp312-abi3-win_arm64.whl", hash = "sha256:04a8f8b78779ab9b637853a0329770791cfc3095d232c768dc4824b63901ebd0"},
+    {file = "zxing_cpp-3.1.1.tar.gz", hash = "sha256:1051a521b21a9fe206702ad4186aeb195154e3e1badcd99576d030723f36382b"},
 ]

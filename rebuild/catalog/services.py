@@ -58,6 +58,11 @@ def create_variant(actor_id, *, product_id, sku, barcode="", unit, base_price, s
         raise ValidationError("يوجد متغير بالمواصفات ووحدة البيع نفسيهما. استخدمه أو غيّر المواصفات.")
     variant = Variant(product=product, sku=code(sku), barcode=code(barcode, 80) if barcode else None, unit=unit,
         base_price=money(base_price), specifications=packed, fingerprint=fingerprint, created_by_id=actor_id, **stock_matrix_fields(packed))
+    aliases = Q(barcode=variant.sku)
+    if variant.barcode:
+        aliases |= Q(sku=variant.barcode)
+    if Variant.objects.filter(aliases).exists():
+        raise ValidationError("رمز SKU أو الباركود يتعارض مع هوية متغير آخر. استخدم رمزًا فريدًا.")
     variant.full_clean()
     variant.save()
     audit(actor_id, "catalog.variant_created", variant.pk)
