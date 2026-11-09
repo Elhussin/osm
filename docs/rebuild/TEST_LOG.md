@@ -327,3 +327,14 @@ Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test
 نجحت check وlock --check وmigrations-check باتصال PostgreSQL مصرح. طبق migrate-all inventory.0003 على optics_rebuild_dev فقط، ثم configure-runtime وverify-runtime. اختبار downgrade/forward بين inventory.0002 و0003 حافظ على هوية وكميات ولقطات حركات receipt وissue واشتق branch؛ لم يعدل ترحيل سابق أو قاعدة legacy. اختبار SET LOCAL ROLE منع UPDATE/DELETE على StockOperation والحركات، مع نقل وعكس وجرد فعليين بالدور المحدود. كل بيانات الاختبار صناعية في test_optics_rebuild_dev المستقلة التي دمرتها Django؛ لا SQLite.
 
 نجح فحص الخطة والحصر781 وdiff --check، وفحص UTF-8 وغياب ملفات البيئة/الأدوات/الصور/الوثائق الخام ومطابقة أسرار البيئة المحلية في30 ملفًا مجهزًا. لا ملفات محذوفة. يبقى M03 in_progress حتى CI، وR08 ككل in_progress؛ التالي بعدها M04 للتتبع وليس R09. حدود ADR 0011: نقل فوري لصنف واحد، وجرد لرصيد قائم، لا شحن/استلام مؤجل أو اعتماد ثنائي أو تجميد جرد كامل أو تقييم/ترحيل مالي أو مزود خارجي أو نشر.
+
+## T029 | passed
+Task: R08
+Date: 2026-11-10
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs/42700119188/jobs
+
+نجح التشغيل https://github.com/Elhussin/osm/actions/runs/42700119188 للـcommitaf75ad92c8ff5f3abe1d65e5d33d4cf71f37fd5e، وجميع مراحل job129442291901 success. تحقق run مستقلًا: completed/success والـhead_sha مطابق. استخرجت الملخص العددي فقط من السجل دون مفاتيح أو روابط تخزين موقعة أو السجل الكامل:135 اختبار Django/PostgreSQL خلال403.942 ثانية،48 سياسة خلال0.009 ثانية،17 Chromium خلال65.355 ثانية؛200 حالة فريدة كاملة على CI.
+
+شمل تثبيت lock وفحوص الإعدادات والترحيلات، migrate-shared ومنح runtime والتحقق منه، والاختبارات والمتصفح وفحص الخطة والحصر781. لا إعادة تشغيل CI أو تخفيف اختبار لتجاوز فشل؛ إخفاقات الواجهة المحلية محفوظة في T027، وتصحيحها مختبر في T028 وعلى CI. لا SQLite أو بيانات حقيقية أو ملفات بيئة/صور/أدوات/وثائق وصيل خام في التغيير.
+
+أغلقت R08-M03 فقط بدليلي T028/T029؛ بقيت R08 in_progress والتالي R08-M04 للأصناف المخزنية المتبقية والدفعات/الصلاحية والتسلسلات، وفق بوابة النطاق المضافة إلى R08_CHECKLIST. لا محاسبة أو تقييم مالي أو شحن/استلام مؤجل أو دمج main أو نشر. نجحت `pwsh -NoProfile -File scripts/check-rebuild.ps1` و`pwsh -NoProfile -File scripts/check-discovery.ps1` و`git diff --check` أيضًا لتحديث الإغلاق التوثيقي؛ لا إعادة للاختبارات الوظيفية لتغييرات الوثائق وحدها.

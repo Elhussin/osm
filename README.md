@@ -42,3 +42,5 @@ python -m unittest discover -s rebuild/tests -v
 اكتملت R08-M01: عرض وإدخال مخزون العدسات بمصفوفة SPH/CYL مفصولة بالعائلة والوحدة، مع لصق ومعاينة وإضافة بلا تكرار وعكس محفوظ. نجحت166 حالة فريدة محليًا وعلى [CI](https://github.com/Elhussin/osm/actions/runs/42673309187/attempts/2). R08 ككل مستمرة؛ التالي R08-M02 للحجز والصرف. التفاصيل في [ADR 0009](docs/rebuild/decisions/0009-stock-lens-matrices.md).
 
 اكتملت R08-M02: حجز وصرف وتحرير جزئي وإلغاء المتبقي وعكس صرف محفوظ، مع منع التكرار وتجاوز المتاح. نجحت182 حالة فريدة محليًا وعلى [CI](https://github.com/Elhussin/osm/actions/runs/42681586976). R08 مستمرة؛ التالي R08-M03 للتحويل والجرد ثم M04 للتتبع. التفاصيل في [ADR 0010](docs/rebuild/decisions/0010-stock-reservations.md).
+
+اكتملت R08-M03: تحويل فوري بين فرعين وجرد بإصدار متوقع وعكس محفوظ مع حماية المحجوز. نجحت200 حالة فريدة محليًا وعلى [CI](https://github.com/Elhussin/osm/actions/runs/42700119188). R08 مستمرة؛ التالي M04 للأصناف المخزنية المتبقية والدفعات والصلاحية والتسلسلات. التفاصيل في [ADR 0011](docs/rebuild/decisions/0011-stock-transfers-and-counts.md).

@@ -113,7 +113,8 @@
         "T022",
         "T024",
         "T026",
-        "T028"
+        "T028",
+        "T029"
       ],
       "steps": [
         {
@@ -142,10 +143,13 @@
         {
           "id": "R08-M03",
           "title": "Transfers and stock counts with reversals",
-          "status": "in_progress",
+          "status": "done",
           "evidence": [
-            "T028"
-          ]
+            "T028",
+            "T029"
+          ],
+          "ci_run": "https://github.com/Elhussin/osm/actions/runs/42700119188",
+          "verified_code_commit": "af75ad92c8ff5f3abe1d65e5d33d4cf71f37fd5e"
         },
         {
           "id": "R08-M04",
@@ -211,5 +215,5 @@
       "evidence": []
     }
   ],
-  "next_step": "R08-M03"
+  "next_step": "R08-M04"
 }
