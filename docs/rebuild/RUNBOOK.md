@@ -39,6 +39,6 @@ OSM_REBUILD_DB_MODE افتراضيًا runtime. أوامر migrate-shared/manage
 ## التحقق المستمر
 - `pdm run test`: 9 اختبارات أساس حاليًا؛ اختبار PostgreSQL واحد يتضمن ستة فحوص للمخططات وكلمات المرور والجلسات والتوجيه واستعادة السياق.
 - `pdm run test-policy`: 44 اختبار سياسة مجردة؛ لا يعوض اختبارات قاعدة البيانات.
-- `.github/workflows/rebuild.yml` جاهز للتشغيل عند دفع التغييرات. لم يشغّل في GitHub بعد؛ لا نتيجة بعيدة موثقة.
+- نجح `.github/workflows/rebuild.yml` فعليًا على GitHub للـcommit 67a30e0: [تشغيل R03](https://github.com/Elhussin/osm/actions/runs/42575805281). يستمر التشغيل على كل تعديل مطابق لمسارات workflow.
 - تغييرات اعتماديات: عبر PDM فقط، لا تعديل lock يدويًا. لا تستخدم ملف requirements القديم.
 - نتائج هذه الجلسة وحدودها في TEST_LOG.md. R04 سيضيف خدمات provisioning والأدوار والفروع ومنع التصعيد وروابط الدعوات والاسترداد.

@@ -84,3 +84,14 @@ Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test
 - نجحت فحوص الخطة والحصر وgit diff --check وفحص تجاهل أسرار وأدوات البيئة. أُوقف خادم التطوير بعد اختبار HTTP؛ بقيت حاوية قاعدة التطوير الجديدة متاحة دون تغيير الحاويات الأخرى.
 
 القيود: لا login UI أو أدوار/فروع مخزنة أو provisioning إنتاج كامل بعد. اختبارات المخططات لا تغطي كامل I01–I20. أضيفت .github/workflows/rebuild.yml لكن لم تدفع التغييرات أو يشغل GitHub Actions؛ شرط CI الأخضر ما زال مفتوحًا، ولذلك R03 لم تُغلق. لا SQLite ولا اتصال بقواعد أو بيانات legacy أو وصيل ضمن هذه الاختبارات.
+
+## T008 | passed
+Task: R03
+Date: 2026-11-09
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs/42575805281/jobs
+
+أذن المستخدم صراحة بالـcommit والدفع في هذه الجلسة. أُنشئ الفرع codex/r03-foundation ودفع commit 67a30e0299f73bead0d9bd5a430d907e1b2efac3 إلى Elhussin/osm. راجعنا 72 ملفًا مجهزًا: لا بيئات خاصة أو ملفات وصيل خام أو قيم أسرار .env الجديدة. أضيف .gitattributes لتوحيد نهايات الأسطر في ملفات البناء والتوثيق والاختبارات، ونجح diff --cached --check بعد ذلك.
+
+الدليل البعيد: https://github.com/Elhussin/osm/actions/runs/42575805281 — status completed / conclusion success، وjob foundation وجميع خطواته success. شمل Ubuntu/PostgreSQL16، تثبيت PDM2.29.7، تثبيت من lock دون تحديثه، check/migrations-check/migrate-shared/configure-runtime/verify-runtime، واختبارات Django والسياسة وفحوص الخطة والحصر. قُرئ الدليل عبر GitHub REST باستخدام مصادقة Git القائمة دون عرض الاعتماد.
+
+بهذا اكتملت بوابة R03 وأصبحت المهمة التالية R04. لا دمج في main، ولا نشر إنتاج أو استخدام بيانات legacy. بيانات CI صناعية. هذا الدليل لا يثبت متطلبات R04 التي لم تنفذ بعد.

@@ -21,7 +21,7 @@ pwsh -NoProfile -File scripts/check-rebuild.ps1
 pwsh -NoProfile -File scripts/check-discovery.ps1
 ```
 
-أضيف أساس Django وPostgreSQL مستقل واختُبر محليًا في R03، مع 9 اختبارات أساس و44 اختبار سياسة. لا واجهات ERP أو دخول بعد؛ تشغيل CI البعيد ما زال مطلوبًا. القرار المعتمد: كل حساب يتبع شركة واحدة فقط، ولكل شركة مخططها ومستخدموها وجلساتها. أكد المستخدم نقل الكود إلى مستودع جديد، وorigin يشير الآن إلى https://github.com/Elhussin/osm.git. لم ندفع تغييرات تلقائيًا. راجع [دليل التشغيل](docs/rebuild/RUNBOOK.md).
+أضيف أساس Django وPostgreSQL مستقل واجتاز R03 محليًا وعلى GitHub Actions، مع 9 اختبارات أساس و44 اختبار سياسة. لا واجهات ERP أو دخول بعد. القرار المعتمد: كل حساب يتبع شركة واحدة فقط، ولكل شركة مخططها ومستخدموها وجلساتها. المستودع الجديد https://github.com/Elhussin/osm.git؛ دفع الفرع codex/r03-foundation بإذن المستخدم دون دمجه في main. راجع [دليل التشغيل](docs/rebuild/RUNBOOK.md).
 
 اختبارات السياسة بمفسر Python صالح من جذر المستودع:
 
@@ -29,4 +29,4 @@ pwsh -NoProfile -File scripts/check-discovery.ps1
 python -m unittest discover -s rebuild/tests -v
 ```
 
-سيستمر استخدام PDM لإدارة اعتماديات Python وتشغيل أوامر الإصدار الجديد؛ إعداد البيئة الجديدة في R03. راجع قرار `docs/rebuild/decisions/0002-pdm-and-configuration.md` لفصل إدارة الاعتماديات عن إعدادات التطبيق.
+يستخدم الإصدار الجديد PDM لإدارة اعتماديات Python وتشغيل أوامر المشروع. راجع قرار `docs/rebuild/decisions/0002-pdm-and-configuration.md` لفصل إدارة الاعتماديات عن إعدادات التطبيق.
