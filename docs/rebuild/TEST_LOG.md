@@ -554,3 +554,22 @@ Command: pwsh -NoProfile -File rebuild/pdm.ps1 run verify-runtime
 Command: pwsh -NoProfile -File rebuild/pdm.ps1 lock --check
 
 نجحت فحوص الإعداد/الترحيلات/lock، وطبق finance.0003/0004 على قاعدة التطوير المستقلة ثم حدثت المنح ونجح runtime. لا legacy أو حذف volumes أو إعادة كتابة ترحيل قديم أو بيانات حقيقية. لا تقارير ميزان/دفتر أستاذ M04 أو ربط تلقائي للفاتورة/المخزون/الضريبة أو ZATCA من هذا الجزء. تبقى M03 in_progress إلى CI الكامل. ستعاد فحوص الخطة والحصر وgit diff --check قبل الحفظ.
+
+## T046 | passed
+Task: R09
+Date: 2026-11-10
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs?branch=codex%2Fr03-foundation&per_page=5
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs/42863298461/jobs
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/jobs/129994863471/logs
+
+نجح التشغيل https://github.com/Elhussin/osm/actions/runs/42863298461 للـcommit dbd459d045fcbef144cf1ef8ff1dd796f59cc289؛ تحقق completed/success وSHA مطابق، وجميع مراحل job129994863471 ناجحة دون مرحلة فاشلة. استخرجت أعداد الاختبارات ومدتها فقط مع إزالة Authorization عند redirect، دون طباعة أسرار أو سجل البيئة:199 Django/PostgreSQL خلال1212.601 ثانية،48 سياسة خلال0.008 ثانية،28 Chromium خلال159.502 ثانية؛275 حالة فريدة كاملة.
+
+نجحت مراحل تثبيت lock والإعداد والترحيلات والمنح واختبارات القاعدة والسياسات والمتصفح والخطة والحصر. أغلقت R09-M03 وحدها وفق ADR 0016 وR09_CHECKLIST وأدلة T045/T046، مع حفظ فشل T044 المصحح. R09 تبقى in_progress؛ التالي M04 لدفتر الحسابات وميزان المراجعة والمطابقة، ومعاييرها موثقة دون ادعاء تنفيذها. لا SQLite أو بيانات حقيقية أو تغييرات legacy أو حذف ملفات/ترحيلات، ولا اتصال/امتثال ZATCA أو تأمين أو دمج main أو نشر.
+
+Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
+Command: pwsh -NoProfile -File scripts/check-discovery.ps1
+Command: git diff --check
+
+فحوص إغلاق التوثيق تسجل نتيجتها بعد التنفيذ أدناه. لا تغيير للكود الوظيفي المختبر على CI في إغلاق الوثائق.
+
+نجحت فحوص الإغلاق: check-rebuild بكل حالات الحماية، وcheck-discovery مع781 ملف legacy و10 مواصفات قبول و6 حدود تصنيف، وgit diff --check دون أخطاء مسافات. فحص الحصر ثابت وليس بديلًا للاختبارات الوظيفية الناجحة أعلاه.

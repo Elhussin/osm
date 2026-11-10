@@ -196,7 +196,8 @@
         "T040",
         "T042",
         "T043",
-        "T045"
+        "T045",
+        "T046"
       ],
       "steps": [
         {
@@ -222,12 +223,15 @@
           "verified_code_commit": "23ca02b8f67be12a374f615a9abbefaf2f26b3cf"
         },
         {
-          "status": "in_progress",
+          "status": "done",
           "title": "Atomic journal posting, reversal and unused-period correction guards",
           "id": "R09-M03",
           "evidence": [
-            "T045"
-          ]
+            "T045",
+            "T046"
+          ],
+          "ci_run": "https://github.com/Elhussin/osm/actions/runs/42863298461",
+          "verified_code_commit": "dbd459d045fcbef144cf1ef8ff1dd796f59cc289"
         },
         {
           "status": "pending",
@@ -285,5 +289,5 @@
       "evidence": []
     }
   ],
-  "next_step": "R09-M03"
+  "next_step": "R09-M04"
 }

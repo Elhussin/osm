@@ -25,3 +25,5 @@ AccountingPeriod نطاق تاريخ شامل البداية والنهاية، 
 شاشتا دليل وفترات، بحث وقوائم20/صفحة، ونماذج إنشاء وتسمية/تفعيل/تعطيل وإغلاق/إعادة فتح وتاريخ عملية. عزل الشركة قبل lookup/count والخيارات؛ لا حقل schema أو فرع/صنف مرحل من المتصفح. HTML RTL يعمل دون JavaScript. PostgreSQL يختبر التداخل والتكرار والمنح والتزامن وrollback؛ متصفح للهاتف وسطح المكتب. نتائج TEST_LOG وSTATUS هي الإثبات.
 
 المراجع التقنية: [Django5.2 ExclusionConstraint](https://docs.djangoproject.com/en/5.2/ref/contrib/postgres/constraints/) و[PostgreSQL16 range types](https://www.postgresql.org/docs/16/rangetypes.html). قواعد الدليل والإغلاق هنا قرارات المنتج، لا ادعاء معيار ضريبي أو اعتماد محاسبي حكومي.
+
+استكملت M03 مسار إلغاء الفترة غير المستخدمة وحماية الفترات المرتبطة بالقيود وفق ADR 0016 وأدلة T045/T046؛ لا تعديل تواريخ أو حذف سجل.
