@@ -1,0 +1,1 @@
+{% if tracking.lot %}<span>دفعة: <bdi class="tracking-code">{{ tracking.lot }}</bdi> · صلاحية: <bdi class="tracking-code">{{ tracking.expires_on }}</bdi></span>{% elif tracking.serial %}<span>تسلسل: <bdi class="tracking-code">{{ tracking.serial }}</bdi></span>{% endif %}

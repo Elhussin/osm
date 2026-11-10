@@ -384,3 +384,27 @@ Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs/42750090649/
 نجحت اختبارات الملصقات بالمقاسات نفسها وسماحية0.3px وفك مستقل للرمز، مع انتظار load وورقتي CSS والخطوط. لم يحذف assertion أو تضف مهلة عشوائية لتجاوز الفشل. اجتاز CI تثبيت lock وفحوص الإعدادات والترحيلات والمنح والاختبارات والمتصفح والخطة والحصر781؛ لا SQLite أو اختبار طابعة حقيقية أو GS1. حفظ فشل T031 وتعذر الإعادة المحلية T032؛ لم تنفذ حالات إعادة التحقق المحلية عند تصحيح مزامنة الاختبار بسبب غياب المحرك، والإثبات النهائي لهذا التصحيح من CI مستقل.
 
 أغلقت R08-M05 فقط بدليلي T030/T033. بقيت R08 in_progress وM04 pending، والتالية للأصناف المخزنية المتبقية والدفعات/الصلاحية والتسلسلات. يجب إعادة فحص محرك Docker المحلي قبل اختبارات M04. لا دمج main أو نشر أو حذف legacy أو تغيير هوية محفوظة أو أرصدة بسبب الطباعة. نجحت `pwsh -NoProfile -File scripts/check-rebuild.ps1` و`pwsh -NoProfile -File scripts/check-discovery.ps1` و`git diff --check` لتحديث الإغلاق التوثيقي؛ لا تعاد الاختبارات الوظيفية لتغييرات الوثائق وحدها.
+
+## T034 | failed
+Task: R08
+Date: 2026-11-10
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k TrackingTests
+
+فحص Docker الأول داخل sandbox رفض pipe، ثم الفحص المصرح أظهر المحرك متاحًا والحاوية optics-rebuild-db-1 متوقفة. شغلت الحاوية القائمة فقط، دون حذف أو إنشاء volumes أو قواعد legacy. نفذت15 حالة PostgreSQL للتتبع خلال75.641 ثانية:14 ناجحة وخطأ واحد، إذ طلب اختبار موضع من فرع آخر بلا رصيد للصنف فأرجعت الخدمة StockBalance.DoesNotExist بدل ValidationError. صححت مسار غياب الرصيد إلى تحقق واضح دون إنشاء رصيد أو تخفيف إذن.
+
+نجحت الإعادة15/15 خلال156.296 ثانية، مع مطابقة الإجمالي/الحركات/الحجوزات وتفصيل التتبع. تغطي الأصناف غير المتتبعة والدفعات والصلاحية والتسلسل والعكس والتزامن والمنح والترحيل. الأدلة الكاملة والمتصفح وCI لازمة قبل الإغلاق؛ لا يستبدل هذا السجل فشل المحاولة الأولى.
+
+## T035 | passed
+Task: R08
+Date: 2026-11-10
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser
+
+نجحت مجموعة Chromium كاملة21/21 خلال154.744 ثانية مع PLAYWRIGHT_BROWSERS_PATH الموجه إلى rebuild/.tools/browsers، على PostgreSQL مستقل. تشمل الحالتين الجديدتين الدخول من قائمة المخزون، واستلام دفعة وحجزها وصرفها وإلغاء المتبقي ونقلها وجردها وعكسهما، والهاتف390 دون JavaScript للإطار والدفعة المنتهية والجهاز ذي التسلسل الطويل وتاريخ الفرع بعد انتقاله. راجعت صورتَي tracking-lot-desktop.png وtracking-serial-mobile-nojs.png الصناعيتين؛ لا تجاوز عرض الهاتف، والجدول داخل منطقة تمرير. الملفات محلية مستبعدة ولا بيانات حقيقية.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k migration_backfills_receipt -k backfill_preserves_existing -k bulk_matrix_creates_twelve -k replays_and_changed_payloads -k replays_changed_payloads -k reversal_rejects_used -k runtime_cannot_change_or_delete_posted -k signed_preview_confirm_edit_and_repeat -k database_balance_and_movement_constraints
+
+نجحت9/9 اختبارات انحدار موجهة خلال115.392 ثانية، تشمل استعادة أحدث migration بعد اختبار التاريخ، ومفاتيح طلبات M01–M03 القديمة والقيود والمنح وميزانية استعلامات المصفوفة. لا تعد إعادة هذه الحالات إضافة إلى العدد الفريد. نجح check وmigrations-check وlock --check؛ وشغلت migrate-all وconfigure-runtime وverify-runtime على قاعدة إعادة البناء التطويرية المستقلة بنجاح. لا مساس بقاعدة legacy أو إعادة تهيئة volumes. نجح فحص الخطة والحصر781 وgit diff --check. M04 تبقى قيد التنفيذ حتى الدليل النهائي على CI؛ لا تدعي هذه النتيجة تشغيل المجموعة الوظيفية كاملة محليًا.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k TrackingTests
+
+نجحت المجموعة النهائية15/15 خلال130.838 ثانية بعد تقوية فحص سحب الصلاحية على replay ناجح للموظف، وقيود وحدانية الدفعة/الفرع والمنح. تشمل اختبار انتقال تسلسل واحد وسلسلة عكسه دون استبداله بوحدة أخرى، وتنافس آخر وحدة/تسلسل ومفتاح مطابق. تحفظ T034 المحاولة الأولى الفاشلة وتصحيحها. لم يعتمد نتيجة إعادة موجهة فقد مخرجها؛ هذه إعادة المجموعة النهائية ذات النتيجة المحفوظة محليًا. الإجمالي المحلي لهذه الدفعة45 حالة فريدة موجهة:15 تتبع و9 انحدار و21 متصفح؛ المجموعة الكاملة تنتظر CI.

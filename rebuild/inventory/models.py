@@ -41,6 +41,7 @@ class StockMovement(models.Model):
     reservation_event = models.OneToOneField("ReservationEvent", null=True, on_delete=models.PROTECT, related_name="movement")
     operation = models.ForeignKey("StockOperation", null=True, on_delete=models.PROTECT, related_name="movements")
     branch = models.ForeignKey("access.Branch", on_delete=models.PROTECT)
+    position = models.ForeignKey("StockPosition", null=True, on_delete=models.PROTECT)
     variant = models.ForeignKey("catalog.Variant", on_delete=models.PROTECT)
     delta = models.BigIntegerField()
     before = models.BigIntegerField()
@@ -58,6 +59,7 @@ class StockOperation(models.Model):
     source = models.ForeignKey("access.Branch", on_delete=models.PROTECT, related_name="stock_operations_from")
     destination = models.ForeignKey("access.Branch", null=True, on_delete=models.PROTECT, related_name="stock_operations_to")
     variant = models.ForeignKey("catalog.Variant", on_delete=models.PROTECT)
+    position = models.ForeignKey("StockPosition", null=True, on_delete=models.PROTECT)
     quantity = models.BigIntegerField()
     reverses = models.OneToOneField("self", null=True, on_delete=models.PROTECT, related_name="reversal")
     operation_key = models.UUIDField(unique=True)
@@ -81,6 +83,7 @@ class StockReservation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     branch = models.ForeignKey("access.Branch", on_delete=models.PROTECT)
     variant = models.ForeignKey("catalog.Variant", on_delete=models.PROTECT)
+    position = models.ForeignKey("StockPosition", null=True, on_delete=models.PROTECT)
     quantity = models.BigIntegerField()
     held = models.BigIntegerField()
     issued = models.BigIntegerField(default=0)
@@ -114,3 +117,39 @@ class ReservationEvent(models.Model):
 
     class Meta:
         constraints = [models.UniqueConstraint(fields=["reservation", "version"], name="inventory_reservation_event_version"), models.CheckConstraint(condition=Q(quantity__gte=0, held_after__gte=0, issued_after__gte=0, released_after__gte=0) & (Q(kind="reverse_issue", reverses__isnull=False, quantity__gt=0) | Q(kind__in=["reserve", "issue", "release"], reverses__isnull=True, quantity__gt=0) | Q(kind="cancel", reverses__isnull=True)), name="inventory_reservation_event_valid")]
+
+
+class StockLot(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    variant = models.ForeignKey("catalog.Variant", on_delete=models.PROTECT)
+    code = models.CharField(max_length=80)
+    expires_on = models.DateField()
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["variant", "code"], name="inventory_lot_identity_unique")]
+
+
+class StockPosition(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    variant = models.ForeignKey("catalog.Variant", on_delete=models.PROTECT)
+    branch = models.ForeignKey("access.Branch", on_delete=models.PROTECT)
+    lot = models.ForeignKey(StockLot, null=True, on_delete=models.PROTECT)
+    serial = models.CharField(max_length=80, null=True, unique=True)
+    on_hand = models.BigIntegerField(default=0)
+    reserved = models.BigIntegerField(default=0)
+    version = models.PositiveIntegerField(default=1)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["lot", "branch"], condition=Q(lot__isnull=False), name="inventory_lot_branch_unique"),
+            models.CheckConstraint(condition=Q(lot__isnull=False, serial__isnull=True) | Q(lot__isnull=True, serial__isnull=False), name="inventory_position_identity"),
+            models.CheckConstraint(condition=Q(on_hand__gte=0, reserved__gte=0) & Q(reserved__lte=F("on_hand")) & (Q(serial__isnull=True) | Q(on_hand__lte=1)), name="inventory_position_quantities"),
+        ]
+
+    @property
+    def available(self):
+        return self.on_hand - self.reserved

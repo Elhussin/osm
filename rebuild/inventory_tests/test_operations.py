@@ -239,7 +239,7 @@ class OperationTests(TransactionTestCase):
                 operation_key=uuid.uuid4(), reason="Synthetic issue before migration")
             before = list(StockMovement.objects.order_by("id").values("id", "delta", "before", "after", "variant_snapshot"))
             MigrationExecutor(connection).migrate([("inventory", "0002_stockreservation_alter_stockmovement_receipt_and_more")])
-            MigrationExecutor(connection).migrate([("inventory", "0003_stockoperation_and_more")])
+            MigrationExecutor(connection).migrate(MigrationExecutor(connection).loader.graph.leaf_nodes("inventory"))
             self.assertEqual(list(StockMovement.objects.order_by("id").values("id", "delta", "before", "after", "variant_snapshot")), before)
             self.assertEqual(set(StockMovement.objects.values_list("branch_id", flat=True)), {self.main.pk})
 

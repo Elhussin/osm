@@ -9,6 +9,7 @@ from access.authorization import allowed, visible_branches
 from workspace.forms import StyledForm
 from workspace.views import secured, page, listing
 from .models import StockBalance
+from .tracking import PLAIN_KINDS
 from .reservations import reservations_for, reserve_stock, change_reservation
 
 
@@ -32,7 +33,7 @@ class ReserveForm(StyledForm):
     def __init__(self, *args, actor_id, search="", **kwargs):
         super().__init__(*args, **kwargs)
         balances = StockBalance.objects.filter(branch__in=visible_branches(actor_id, "stock.reserve"), variant__active=True,
-            variant__product__active=True, variant__product__kind="stock_lens").select_related("branch", "variant__product").order_by("branch__name", "variant__sku")
+            variant__product__active=True, variant__product__kind__in=PLAIN_KINDS).select_related("branch", "variant__product").order_by("branch__name", "variant__sku")
         if search:
             balances = balances.filter(Q(variant__sku__icontains=search) | Q(variant__barcode__icontains=search) | Q(variant__product__name__icontains=search))
         self.fields["balance"].queryset = balances.filter(pk__in=balances.values("pk")[:100])

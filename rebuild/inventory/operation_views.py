@@ -11,6 +11,7 @@ from access.policy import permits, ResourceScope
 from workspace.forms import StyledForm
 from workspace.views import secured, page, listing
 from .models import StockBalance
+from .tracking import PLAIN_KINDS
 from .operations import post_operation, reverse_operation, operations_for
 from .reservation_views import attempt
 
@@ -44,7 +45,7 @@ class ReversalForm(StyledForm):
 
 
 def balances_for(actor_id):
-    return StockBalance.objects.filter(branch__in=visible_branches(actor_id, "stock.read"), variant__product__kind="stock_lens").select_related("branch", "variant__product")
+    return StockBalance.objects.filter(branch__in=visible_branches(actor_id, "stock.read"), variant__product__kind__in=PLAIN_KINDS).select_related("branch", "variant__product")
 
 
 @require_http_methods(["GET"])

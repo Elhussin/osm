@@ -7,6 +7,7 @@ from access.authorization import require, visible_branches
 from access.services import lock_access, audit
 from .matrix import digest
 from .models import StockBalance, StockOperation, StockMovement
+from .tracking import check_stockable, operation_positions, position_state, apply_operation_positions, snapshot as variant_snapshot
 
 MAX_BALANCE = 9223372036854775807
 
@@ -52,11 +53,13 @@ def _state(balance):
     return {"on_hand": balance.on_hand, "reserved": balance.reserved, "version": balance.version}
 
 
-def _write(actor_id, *, kind, variant, source_id, destination_id, quantity, key, fingerprint, reason, reference, deltas, balances, reverses=None):
+def _write(actor_id, *, kind, variant, source_id, destination_id, quantity, key, fingerprint, reason, reference, deltas, balances, reverses=None, positions=None, position_id=None):
+    positions = positions or {}
     before = {str(b.branch_id): _state(b) for b in balances.values()}
+    for branch_id, position in positions.items():
+        before[str(branch_id)]["position"] = position_state(position, branch_id)
     entries = []
-    snapshot = reverses.variant_snapshot if reverses else {"product": variant.product.name, "sku": variant.sku, "unit": variant.unit,
-        "unit_label": variant.unit_label, "specifications": variant.specifications}
+    snapshot = reverses.variant_snapshot if reverses else variant_snapshot(variant, positions.get(source_id))
     for branch_id, delta in deltas.items():
         balance = balances[branch_id]
         after = balance.on_hand + delta
@@ -65,13 +68,17 @@ def _write(actor_id, *, kind, variant, source_id, destination_id, quantity, key,
         if after > MAX_BALANCE:
             raise ValidationError("الرصيد يتجاوز سعة التخزين.")
         if delta:
-            entries.append(StockMovement(branch_id=branch_id, variant=variant, before=balance.on_hand, delta=delta, after=after,
+            entries.append(StockMovement(branch_id=branch_id, variant=variant, position=positions.get(branch_id), before=balance.on_hand, delta=delta, after=after,
                 reserved_after=balance.reserved, variant_snapshot=snapshot))
         balance.on_hand = after
         balance.version += 1
+    apply_operation_positions(positions, deltas)
+    after = {str(b.branch_id): _state(b) for b in balances.values()}
+    for branch_id, position in positions.items():
+        after[str(branch_id)]["position"] = position_state(position, branch_id)
     document = StockOperation.objects.create(kind=kind, source_id=source_id, destination_id=destination_id, variant=variant, quantity=quantity,
         operation_key=key, payload_digest=fingerprint, reference=reference, reason=reason, before_values=before,
-        after_values={str(b.branch_id): _state(b) for b in balances.values()}, variant_snapshot=snapshot, created_by_id=actor_id, reverses=reverses)
+        after_values=after, position_id=position_id, variant_snapshot=snapshot, created_by_id=actor_id, reverses=reverses)
     StockBalance.objects.bulk_update(list(balances.values()), ["on_hand", "version"])
     for entry in entries:
         entry.operation = document
@@ -81,7 +88,7 @@ def _write(actor_id, *, kind, variant, source_id, destination_id, quantity, key,
 
 
 @transaction.atomic
-def post_operation(actor_id, *, source_balance_id, kind, quantity, expected_version, operation_key, reason, reference="", destination_id=None):
+def post_operation(actor_id, *, source_balance_id, kind, quantity, expected_version, operation_key, reason, reference="", destination_id=None, position_id=None, expected_position_version=None):
     lock_access()
     if kind not in {"transfer", "count"}:
         raise ValidationError("إجراء غير معروف.")
@@ -96,27 +103,32 @@ def post_operation(actor_id, *, source_balance_id, kind, quantity, expected_vers
         raise ValidationError("التحويل يحتاج فرعين مختلفين؛ الجرد لفرع واحد.")
     quantity = _number(quantity, minimum=1 if kind == "transfer" else 0)
     version = _number(expected_version, minimum=1, maximum=2147483647)
+    identity = {"position": str(position_id), "position_version": _number(expected_position_version, minimum=1, maximum=2147483647)} if position_id else {}
     key, fingerprint, reason, reference, previous = _request(actor_id, operation_key, reason, reference, kind=kind,
-        balance=source.pk, destination=destination_id, quantity=quantity, version=version)
+        balance=source.pk, destination=destination_id, quantity=quantity, version=version, **identity)
     if previous:
         return previous
     variant = source.variant
-    if variant.product.kind != "stock_lens" or not variant.active or not variant.product.active:
-        raise ValidationError("العملية متاحة للعدسات المخزنية النشطة فقط.")
+    check_stockable(variant)
     balances = {b.branch_id: b for b in StockBalance.objects.select_for_update().filter(variant=variant, branch_id__in=branches).order_by("branch_id")}
     source = balances[source.branch_id]
     if source.version != version:
         raise ValidationError("تغير الرصيد منذ فتح العملية. حدّث الصفحة وأعد العدّ أو مراجعة التحويل.")
+    positions = operation_positions(variant, source.branch_id, destination_id, position_id, actor_id=actor_id)
+    position = positions.get(source.branch_id)
+    if position and position.version != identity["position_version"]:
+        raise ValidationError("تغير رصيد الدفعة أو الوحدة. أعد فتح العملية.")
+    available = position.available if position else source.available
     if kind == "transfer":
-        if source.available < quantity:
+        if available < quantity:
             raise ValidationError("الكمية المطلوبة تتجاوز المتاح للتحويل.")
         if destination_id not in balances:
             balances[destination_id] = StockBalance.objects.create(variant=variant, branch_id=destination_id)
         deltas = {source.branch_id: -quantity, destination_id: quantity}
     else:
-        deltas = {source.branch_id: quantity - source.on_hand}
+        deltas = {source.branch_id: quantity - (position.on_hand if position else source.on_hand)}
     return _write(actor_id, kind=kind, variant=variant, source_id=source.branch_id, destination_id=destination_id, quantity=quantity,
-        key=key, fingerprint=fingerprint, reason=reason, reference=reference, deltas=deltas, balances=balances)
+        key=key, fingerprint=fingerprint, reason=reason, reference=reference, deltas=deltas, balances=balances, positions=positions, position_id=position_id)
 
 
 @transaction.atomic
@@ -138,5 +150,6 @@ def reverse_operation(actor_id, *, operation_id, operation_key, reason):
     deltas = {branch: 0 for branch in branches}
     for entry in original.movements.all():
         deltas[entry.branch_id] = -entry.delta
+    positions = operation_positions(original.variant, original.source_id, original.destination_id, original.position_id, actor_id=actor_id, reverse=True)
     return _write(actor_id, kind="reversal", variant=original.variant, source_id=original.source_id, destination_id=original.destination_id,
-        quantity=original.quantity, key=key, fingerprint=fingerprint, reason=reason, reference=reference, deltas=deltas, balances=balances, reverses=original)
+        quantity=original.quantity, key=key, fingerprint=fingerprint, reason=reason, reference=reference, deltas=deltas, balances=balances, reverses=original, positions=positions, position_id=original.position_id)

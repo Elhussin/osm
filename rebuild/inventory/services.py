@@ -9,6 +9,7 @@ from catalog.models import Product, Variant
 from catalog.specifications import canonical_specs, stock_matrix_fields
 from .models import StockBalance, StockReceipt, StockMovement
 from .matrix import normalize_cells, digest
+from .tracking import position_for, change_position, TRACKED_KINDS
 
 
 def receipts_for(actor_id):
@@ -150,12 +151,18 @@ def reverse_receipt(actor_id, *, receipt_id, operation_key, reason):
     existing = StockReceipt.objects.filter(reverses=document).first()
     if existing:
         raise ValidationError("عُكست هذه الإضافة مسبقًا. افتح مستند العكس الموجود.")
-    entries = list(document.movements.order_by("variant_id"))
+    entries = list(document.movements.select_related("variant__product").order_by("variant_id"))
     balances = {balance.variant_id: balance for balance in StockBalance.objects.select_for_update().filter(branch_id=document.branch_id, variant_id__in=[e.variant_id for e in entries]).order_by("variant_id")}
+    positions = {}
     for entry in entries:
         balance = balances.get(entry.variant_id)
         if balance is None or balance.on_hand - entry.delta < balance.reserved:
             raise ValidationError("لا يمكن العكس: بعض الكمية مستخدم أو محجوز. لم يُعدل أي رصيد.")
+        if entry.position_id or entry.variant.product.kind in TRACKED_KINDS:
+            position = position_for(entry.variant, document.branch_id, entry.position_id)
+            if position.on_hand - entry.delta < position.reserved:
+                raise ValidationError("الكمية من الدفعة أو الوحدة مستخدمة أو محجوزة؛ لا يمكن عكسها من رصيد آخر.")
+            positions[entry.pk] = position
     reversal = StockReceipt.objects.create(branch=document.branch, kind="reversal", reverses=document, operation_key=operation_key, payload_digest=fingerprint, reason=reason, created_by_id=actor_id)
     movements = []
     for entry in entries:
@@ -163,7 +170,9 @@ def reverse_receipt(actor_id, *, receipt_id, operation_key, reason):
         before = balance.on_hand
         balance.on_hand -= entry.delta
         balance.version += 1
-        movements.append(StockMovement(receipt=reversal, branch_id=document.branch_id, variant_id=entry.variant_id, delta=-entry.delta, before=before, after=balance.on_hand, reserved_after=balance.reserved, variant_snapshot=entry.variant_snapshot))
+        position = positions.get(entry.pk)
+        change_position(position, delta=-entry.delta)
+        movements.append(StockMovement(receipt=reversal, branch_id=document.branch_id, position=position, variant_id=entry.variant_id, delta=-entry.delta, before=before, after=balance.on_hand, reserved_after=balance.reserved, variant_snapshot=entry.variant_snapshot))
     StockBalance.objects.bulk_update(list(balances.values()), ["on_hand", "version"])
     StockMovement.objects.bulk_create(movements)
     audit(actor_id, "stock.receipt_reversed", reversal.pk)

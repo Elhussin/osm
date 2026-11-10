@@ -5,9 +5,15 @@ from workspace import views as workspace
 from clinical import views as clinical
 from catalog import views as catalog
 from inventory import views as inventory
-from inventory import reservation_views, operation_views, label_views
+from inventory import reservation_views, operation_views, label_views, tracking_views
 
 urlpatterns = [
+    path("inventory/", tracking_views.home, name="inventory-home"),
+    path("inventory/receiving/", tracking_views.receiving_catalog, name="stock-receiving-catalog"),
+    path("inventory/receiving/<uuid:variant_id>/", tracking_views.receiving, name="stock-receive"),
+    path("inventory/positions/", tracking_views.positions, name="stock-positions"),
+    path("inventory/positions/<uuid:position_id>/<str:action>/", tracking_views.position_action, name="stock-position-action"),
+    path("inventory/trace/", tracking_views.trace, name="stock-trace"),
     path("catalog/variants/<uuid:variant_id>/labels/", label_views.labels, name="variant-labels"),
     path("inventory/operations/", operation_views.operation_list, name="stock-operations"),
     path("inventory/operations/new/<int:balance_id>/<str:kind>/", operation_views.operation_new, name="stock-operation-new"),

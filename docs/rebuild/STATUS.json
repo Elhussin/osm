@@ -4,8 +4,7 @@
   "next_task": "R08",
   "blockers": [
     "R13: supplied Waseel v2 docs reviewed locally; resolve W01-W07 in docs/rebuild/waseel/REVIEW.md, including claims/customer endpoints, auth response and sandbox activation. Sample credentials have not been used or validated.",
-    "R10: device choices Q03-Q04 deferred by user; cash shift requirements Q05 remain open. First release is online-only.",
-    "R08-M04 local verification: recheck Docker Desktop Linux engine before PostgreSQL tests; it was unavailable during T032. M05 final verification passed independently on CI T033."
+    "R10: device choices Q03-Q04 deferred by user; cash shift requirements Q05 remain open. First release is online-only."
   ],
   "tasks": [
     {
@@ -117,7 +116,8 @@
         "T028",
         "T029",
         "T030",
-        "T033"
+        "T033",
+        "T035"
       ],
       "steps": [
         {
@@ -157,7 +157,10 @@
         {
           "id": "R08-M04",
           "title": "Batch/expiry and device serial tracking",
-          "status": "pending"
+          "status": "in_progress",
+          "evidence": [
+            "T035"
+          ]
         },
         {
           "id": "R08-M05",
