@@ -408,3 +408,17 @@ Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k migration_backfills_r
 Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k TrackingTests
 
 نجحت المجموعة النهائية15/15 خلال130.838 ثانية بعد تقوية فحص سحب الصلاحية على replay ناجح للموظف، وقيود وحدانية الدفعة/الفرع والمنح. تشمل اختبار انتقال تسلسل واحد وسلسلة عكسه دون استبداله بوحدة أخرى، وتنافس آخر وحدة/تسلسل ومفتاح مطابق. تحفظ T034 المحاولة الأولى الفاشلة وتصحيحها. لم يعتمد نتيجة إعادة موجهة فقد مخرجها؛ هذه إعادة المجموعة النهائية ذات النتيجة المحفوظة محليًا. الإجمالي المحلي لهذه الدفعة45 حالة فريدة موجهة:15 تتبع و9 انحدار و21 متصفح؛ المجموعة الكاملة تنتظر CI.
+
+## T036 | passed
+Task: R08
+Date: 2026-11-10
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs?branch=codex%2Fr03-foundation&per_page=5
+
+نجح التشغيل https://github.com/Elhussin/osm/actions/runs/42767528416 للـcommit1133eb8a608ef1f2b6d26aecf1f9215c5d1d48a2؛ تحقق completed/success وhead_sha مطابق. لا دمج main أو نشر إنتاج. استخرجت ملخص الاختبارات فقط من سجل job129667411137 عبر GET actions/jobs/129667411137/logs مع إزالة Authorization عند redirect، دون طباعة مفاتيح أو روابط تخزين موقعة أو سجل البيئة:159 Django/PostgreSQL خلال585.354 ثانية،48 سياسة خلال0.008 ثانية،21 Chromium خلال91.254 ثانية؛ الإجمالي228 حالة فريدة كاملة.
+
+نجح CI بتثبيت lock وفحوص الإعدادات والترحيلات والمنح والاختبارات والمتصفح والخطة والحصر. T035 يوثق التحقق المحلي الموجه، وT034 يحتفظ بالفشل الأول وتصحيحه. لا SQLite أو بيانات حقيقية أو اختبار طابعة فعلية أو تقييم محاسبي ضمن النتيجة. اكتملت معايير M04 في R08_CHECKLIST وADR 0013؛ أغلقت R08 بجميع M01–M05 بعد الأدلة. المهمة التالية R09 لنواة المحاسبة؛ تبقى قرارات الصندوق/الأجهزة وقواعد المال النهائية مفتوحة في OPEN_QUESTIONS، وفجوات وصيل R13 في REVIEW. عائق Docker المحلي السابق زال دون حذف بيانات.
+
+Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
+Command: pwsh -NoProfile -File scripts/check-discovery.ps1
+
+أعيد فحص الخطة والحصر وgit diff --check عند إغلاق التوثيق. تغييرات الإغلاق توثيقية فقط؛ لا تعاد الاختبارات الوظيفية بلا تعديل كود.

@@ -1,7 +1,7 @@
 {
   "updated": "2026-11-10",
   "current_task": "R08",
-  "next_task": "R08",
+  "next_task": "R09",
   "blockers": [
     "R13: supplied Waseel v2 docs reviewed locally; resolve W01-W07 in docs/rebuild/waseel/REVIEW.md, including claims/customer endpoints, auth response and sandbox activation. Sample credentials have not been used or validated.",
     "R10: device choices Q03-Q04 deferred by user; cash shift requirements Q05 remain open. First release is online-only."
@@ -104,7 +104,7 @@
     },
     {
       "id": "R08",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "R07"
       ],
@@ -117,7 +117,8 @@
         "T029",
         "T030",
         "T033",
-        "T035"
+        "T035",
+        "T036"
       ],
       "steps": [
         {
@@ -157,10 +158,13 @@
         {
           "id": "R08-M04",
           "title": "Batch/expiry and device serial tracking",
-          "status": "in_progress",
+          "status": "done",
           "evidence": [
-            "T035"
-          ]
+            "T035",
+            "T036"
+          ],
+          "ci_run": "https://github.com/Elhussin/osm/actions/runs/42767528416",
+          "verified_code_commit": "1133eb8a608ef1f2b6d26aecf1f9215c5d1d48a2"
         },
         {
           "id": "R08-M05",
@@ -176,7 +180,9 @@
           "ci_run": "https://github.com/Elhussin/osm/actions/runs/42750090649",
           "verified_code_commit": "5881ae72eecbcb97442eda5efb9d65452724a287"
         }
-      ]
+      ],
+      "ci_run": "https://github.com/Elhussin/osm/actions/runs/42767528416",
+      "verified_code_commit": "1133eb8a608ef1f2b6d26aecf1f9215c5d1d48a2"
     },
     {
       "id": "R09",
@@ -234,6 +240,5 @@
       ],
       "evidence": []
     }
-  ],
-  "next_step": "R08-M04"
+  ]
 }
