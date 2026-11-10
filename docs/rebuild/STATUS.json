@@ -194,7 +194,8 @@
       "evidence": [
         "T039",
         "T040",
-        "T042"
+        "T042",
+        "T043"
       ],
       "steps": [
         {
@@ -209,16 +210,19 @@
           "verified_code_commit": "806b8147b69b30d063ced26168d3ebb1e526c2cb"
         },
         {
-          "status": "in_progress",
+          "status": "done",
           "title": "Chart of accounts and accounting periods",
           "id": "R09-M02",
           "evidence": [
-            "T042"
-          ]
+            "T042",
+            "T043"
+          ],
+          "ci_run": "https://github.com/Elhussin/osm/actions/runs/42811623939",
+          "verified_code_commit": "23ca02b8f67be12a374f615a9abbefaf2f26b3cf"
         },
         {
           "status": "pending",
-          "title": "Atomic journal posting and reversal",
+          "title": "Atomic journal posting, reversal and unused-period correction guards",
           "id": "R09-M03"
         },
         {
@@ -277,5 +281,5 @@
       "evidence": []
     }
   ],
-  "next_step": "R09-M02"
+  "next_step": "R09-M03"
 }

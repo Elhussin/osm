@@ -504,3 +504,19 @@ Command: pwsh -NoProfile -File rebuild/pdm.ps1 run configure-runtime
 Command: pwsh -NoProfile -File rebuild/pdm.ps1 run verify-runtime
 
 نجحت فحوص lock والإعداد والترحيلات. طبق finance.0002 على قاعدة التطوير المستقلة، ثم حدثت منح runtime ونجح التحقق؛ لا legacy أو حذف volume أو إعادة كتابة ترحيل. يستكمل ذلك فحص التاريخ المتعذر في T041. نجح فحص الخطة والحصر781 وgit diff --check. لا ترحيل قيد أو رصيد افتتاحي أو ميزان مراجعة أو اختبار إغلاق/ترحيل متزامن قبل M03، ولا امتثال أو اتصال ZATCA. M02 تبقى in_progress حتى CI الكامل؛ M03/M04 لم تنفذا.
+
+## T043 | passed
+Task: R09
+Date: 2026-11-10
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs?branch=codex%2Fr03-foundation&per_page=5
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs/42811623939/jobs
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/jobs/129814218374/logs
+
+نجح التشغيل https://github.com/Elhussin/osm/actions/runs/42811623939 للـcommit23ca02b8f67be12a374f615a9abbefaf2f26b3cf؛ تحقق completed/success وSHA مطابق، وجميع مراحل job129814218374 ناجحة. استخرجت أعداد الاختبارات ومدتها فقط من السجل مع إزالة Authorization عند redirect، دون طباعة أسرار أو رابط تخزين موقع أو سجل البيئة:179 Django/PostgreSQL خلال827.288 ثانية،48 سياسة خلال0.008 ثانية،25 Chromium خلال130.900 ثانية؛252 حالة فريدة كاملة.
+
+نجحت مراحل تثبيت lock والإعدادات والترحيلات والمنح والمجموعة الكاملة والمتصفح والخطة والحصر. أغلقت R09-M02 وفق معايير R09_CHECKLIST وADR 0015 وأدلة T042/T043، مع حفظ تعذر الفحص الأول T041. لا إغلاق R09 كلها؛ التالي M03 للقيود والترحيل والعكس. مسار تصحيح/إلغاء فترة لم تستخدم بعد ما زال متبقيًا في M03، مع فحص علاقتها بأي قيد والتنافس؛ لا ادعاء تنفيذه أو جواز تعديل تاريخ مستخدم. لا أرصدة افتتاحية أو قيد مرحل أو ميزان مراجعة أو اختبار SDK/هيئة أو إنتاج من هذا الجزء. لا SQLite أو بيانات حقيقية أو تغييرات legacy أو دمج main أو نشر.
+
+Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
+Command: pwsh -NoProfile -File scripts/check-discovery.ps1
+
+أعيد فحص الخطة والحصر وgit diff --check عند إغلاق التوثيق. الإغلاق توثيقي فقط؛ لا تغيير للكود المختبر على CI ولا إعادة للمجموعة الوظيفية بسبب تحديث الوثائق وحده.
