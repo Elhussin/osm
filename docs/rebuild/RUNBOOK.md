@@ -160,3 +160,6 @@ Chromium معزول، والصور الصناعية في rebuild/.tools/ui-artif
 لتصحيح فترة أُنشئت خطأ، ألغها من قسم إلغاء فترة غير مستخدمة ثم أنشئ فترة بديلة برمز جديد. حالة الملغى نهائية وتاريخه محفوظ؛ لا إلغاء إن وجد أي إصدار مسودة أو قيد مرتبط، ولو ألغيت المسودة لاحقًا. لا SQL يدوي لتغيير التاريخ أو كسر الارتباط.
 
 بعد migrate-all شغل configure-runtime ثم verify-runtime؛ الجديدة finance.0003/0004 ومشغلاتها داخل كل tenant. وظائف التحقق SECURITY INVOKER وsearch_path=pg_catalog وتحتاج منح EXECUTE المطبقة من configure-runtime. لا تعطل المشغلات لتجاوز فشل التوازن. الاختبار الموجه pdm run test -k Journal، والمتصفح pdm run test-browser -k JournalBrowserTests؛ الموازين والمطابقة M04.
+
+## تقارير المحاسبة R09-M04
+مسارا /finance/reports/trial-balance/ و/finance/reports/ledger/ يحتاجان ledger.read مع وصول فرع صريح. اختر مدة وفرعًا أو كل الفروع المصرح بها؛ دفتر الحساب يحتاج رمز حساب ترحيل، ويشمل المعطل ذي التاريخ. المجاميع لكل الصفحات، وبحث الميزان يرشح الصفوف فقط. تعرض المطابقة فرق الرأس والأسطر دون إصلاح أو كتابة. لا قيد لمسودة أو ترحيل فوترة تلقائي، ولا إقرار ضريبي. تحقق موجه: pdm run test -k LedgerReportTests ثم pdm run test-browser -k LedgerReportBrowserTests، والمجموعة الكاملة قبل الإغلاق.

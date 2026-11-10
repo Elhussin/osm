@@ -197,7 +197,8 @@
         "T042",
         "T043",
         "T045",
-        "T046"
+        "T046",
+        "T049"
       ],
       "steps": [
         {
@@ -234,9 +235,12 @@
           "verified_code_commit": "dbd459d045fcbef144cf1ef8ff1dd796f59cc289"
         },
         {
-          "status": "pending",
+          "status": "in_progress",
           "title": "Accounting workflows, trial balance and verification",
-          "id": "R09-M04"
+          "id": "R09-M04",
+          "evidence": [
+            "T049"
+          ]
         }
       ]
     },

@@ -9,8 +9,11 @@ from inventory import reservation_views, operation_views, label_views, tracking_
 from finance import views as finance
 from finance import setup_views as accounting
 from finance import journal_views as journals
+from finance import report_views as reports
 
 urlpatterns = [
+    path("finance/reports/trial-balance/", reports.trial, name="finance-trial-balance"),
+    path("finance/reports/ledger/", reports.ledger, name="finance-ledger"),
     path("finance/journals/", journals.journal_list, name="journal-drafts"),
     path("finance/journals/new/", journals.draft_edit, name="journal-new"),
     path("finance/journals/<uuid:draft_id>/", journals.draft_detail, name="journal-draft"),

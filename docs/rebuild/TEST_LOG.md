@@ -573,3 +573,42 @@ Command: git diff --check
 فحوص إغلاق التوثيق تسجل نتيجتها بعد التنفيذ أدناه. لا تغيير للكود الوظيفي المختبر على CI في إغلاق الوثائق.
 
 نجحت فحوص الإغلاق: check-rebuild بكل حالات الحماية، وcheck-discovery مع781 ملف legacy و10 مواصفات قبول و6 حدود تصنيف، وgit diff --check دون أخطاء مسافات. فحص الحصر ثابت وليس بديلًا للاختبارات الوظيفية الناجحة أعلاه.
+
+## T047 | failed
+Task: R09
+Date: 2026-11-10
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k LedgerReportTests
+
+التشغيل الأول9 حالات على PostgreSQL انتهى FAILED(errors=9) خلال4969.337 ثانية كما أبلغ مشغل الاختبار. نجحت التحققات داخل الحالات لكن فشلت tearDown في الحالات التسع: استعارة دالة JournalTests.tearDown التي تستعمل super() لصنف غير وارث منه أدت TypeError. صححت دالة تنظيف مستقلة تعيد الاتصال إلى public ثم super().tearDown() في الصنف الفعلي، دون تغيير سلوك التقارير لإخفاء الفشل. النتيجة ليست نجاحًا؛ تلزم إعادة المجموعة كاملة وإثبات runtime والمتصفح وCI قبل إغلاق M04.
+
+## T048 | failed
+Task: R09
+Date: 2026-11-10
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser -k LedgerReportBrowserTests
+
+فشل أول تشغيل Chromium بحالتين خلال34.147 ثانية، بسبب توقع النقطة العشرية حرفيًا 123.45 بينما تنسيق Django العربي يعرض 123,45 بمنزلتين. الأرقام المحاسبية مطابقة في اختبارات PostgreSQL؛ صحح اختبار العرض لقبول الفاصل المحلي دون تغيير الحسابات أو إخفاء فشل التشغيل. تلزم إعادة حالتي المتصفح كاملة وروابط المصدر والهاتف والتحقق البصري قبل الإغلاق.
+
+## T049 | passed
+Task: R09
+Date: 2026-11-10
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k LedgerReportTests
+
+نجحت الإعادة الكاملة10/10 خلال100.263 ثانية على PostgreSQL مستقل بعد إصلاح تنظيف الاختبار T047. تشمل المثال المرجعي: تمويل200 في أول نوفمبر ومصروف30 في آخره وعكس في آخر ديسمبر، وافتتاحي/ختامي/حركة وحدود شاملة؛ بقاء الأصل وعكسه وحساب معطل ذي تاريخ وصفري بعد حركة، ومنع المسودات والفروع المحجوبة والمستقبل من التجميع. المجموع19999999999999999.98 من مستندين صالحين دقيق تحت Decimal عالمي precision2؛ طبيعة حساب المصروف المخالفة لا تقلب حركة القيد. دفتر21 سطرًا يثبت رصيد الصفحات2.00 ثم2.10 وترتيبًا ثابتًا، والبحث يرشح صف الميزان دون تغيير مجاميع النطاق. عزل شركتين وفروع وسحب وصول ودور حتى superuser ورفض فلاتر/تواريخ/رمز حقن وPOST، وقراءة تحت دور PostgreSQL المقيد دون تعديل أي مستند/سطر/عملية. نشر متزامن وقراءات متعددة تنتج كل مرة لقطة متوازنة كاملة قبل أو بعد، مع تعليمة WITH واحدة لكل تقرير أرقام دون SELECT FOR UPDATE أو أثر كتابة.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k ledger_opening_inclusive_dates_and_later_reversal_reference_example -k http_permissions_company_scope_bad_filters_and_get_only
+
+نجحت الإعادة النهائية الموجهة2/2 خلال18.232 ثانية بعد تعزيز إثبات فترة بلا حركة ذات افتتاحي وختامي200، وصفحة دفتر أولية دون أخطاء قبل إدخال الحساب. تحفظ تواريخ الميزان الافتراضية في روابط الصفحات؛ لم يتغير حساب SQL بعد الإعادة الكاملة. لا تضاف الإعادات إلى العدد الفريد.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser -k LedgerReportBrowserTests
+
+نجحت الإعادة بعد تصحيح الفاصل المحلي2/2 خلال15.688 ثانية، ثم الإعادة النهائية2/2 خلال14.462 ثانية بعد تحسين عرض المرشحات للهاتف وإضافة assertion عرض حقل الفرع>=240px. PLAYWRIGHT_BROWSERS_PATH إلى .tools/browsers. سطح المكتب يبحث الميزان ثم ينتقل لدفتر الحساب ولمصدره دون كشف فرع آخر؛ هاتف390 دون JavaScript يثبت افتتاحي123.45 وعكس ديسمبر ورصيدًا صفريًا، وعدم تجاوز عرض الجسم، ورفض المدة المعكوسة دون عرض تقرير قديم. راجعت trial-balance-desktop.png وledger-mobile-nojs.png الصناعيتين المستبعدتين؛ مرشحات الهاتف كاملة العرض والجدول داخل تمرير أفقي. T048 يحفظ الفشل الأول، ولا يدعى نجاحه.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 lock --check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run migrations-check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run verify-runtime
+Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
+Command: pwsh -NoProfile -File scripts/check-discovery.ps1
+Command: git diff --check
+
+نجحت فحوص lock والإعداد والترحيلات (No changes detected) وruntime، والخطة والحصر781 وفحص المسافات. لا تغييرات نماذج أو ترحيلات جديدة أو ملفات legacy أو حذف أو بيانات حقيقية.12 حالة جديدة فريدة؛ الإغلاق ينتظر CI الكامل ولا يعد هذا تشغيلًا كاملًا للوحدات السابقة. M04 وR09 تبقيان in_progress، لا SDK/امتثال/اتصال هيئة أو فاتورة أو تقييم مخزون تلقائي من التقارير. حدود عدد الحسابات/التصدير/الأداء الأوسع موثقة ADR0017 وR14.

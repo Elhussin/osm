@@ -1,0 +1,20 @@
+{% extends 'base.html' %}{% block content %}
+<header class="page-heading"><h1 id="page-title" tabindex="-1">ميزان المراجعة والمطابقة</h1><div class="row-actions"><a class="button button-secondary" href="{% url 'finance-ledger' %}">دفتر الحساب</a><a class="button button-secondary" href="{% url 'finance-accounts' %}">دليل الحسابات</a></div></header>
+<section class="panel padded">{% include 'finance/report_filters.html' %}</section>
+{% if report %}
+<section class="panel padded" aria-label="مطابقة النطاق"><h2>مطابقة النطاق المصرح</h2>
+<p>{% if report.summary.balanced %}المجاميع متطابقة ومتوازنة{% else %}توجد فروق تستدعي المراجعة{% endif %} · عدد القيود ضمن المدة: {{ report.summary.entry_count }}</p>
+<div class="table-scroll" tabindex="0" aria-label="مجاميع المطابقة"><table><thead><tr><th>المصدر</th><th>مدين</th><th>دائن</th></tr></thead><tbody>
+<tr><th>رؤوس القيود ضمن المدة</th><td>{{ report.summary.header_debit|floatformat:2 }}</td><td>{{ report.summary.header_credit|floatformat:2 }}</td></tr>
+<tr><th>الأسطر ضمن المدة</th><td>{{ report.summary.total_debit|floatformat:2 }}</td><td>{{ report.summary.total_credit|floatformat:2 }}</td></tr>
+<tr><th>فرق الرأس والأسطر</th><td>{{ report.summary.debit_difference|floatformat:2 }}</td><td>{{ report.summary.credit_difference|floatformat:2 }}</td></tr>
+<tr><th>مجموع الأرصدة الافتتاحية</th><td>{{ report.summary.opening_debit|floatformat:2 }}</td><td>{{ report.summary.opening_credit|floatformat:2 }}</td></tr>
+<tr><th>مجموع الأرصدة الختامية</th><td>{{ report.summary.closing_debit|floatformat:2 }}</td><td>{{ report.summary.closing_credit|floatformat:2 }}</td></tr>
+</tbody></table></div><p class="muted">المجاميع لكل النطاق المحدد، وتشمل جميع الصفحات ولا تتغير ببحث الحساب. لا تتضمن مجموعات الدليل أو مسودات القيود.</p></section>
+<section id="listing" class="panel padded"><form method="get" class="filters">
+<input type="hidden" name="starts_on" value="{{ report.starts_on|date:'Y-m-d' }}"><input type="hidden" name="ends_on" value="{{ report.ends_on|date:'Y-m-d' }}"><input type="hidden" name="branch_id" value="{{ form.branch_id.value|default:'' }}">
+<label for="report-search">بحث الحساب<input class="control" id="report-search" name="q" maxlength="100" value="{{ q }}"></label><button class="button button-secondary">بحث</button></form>
+<div class="table-scroll" tabindex="0" aria-label="ميزان المراجعة"><table><thead><tr><th>الحساب</th><th>افتتاحي مدين</th><th>افتتاحي دائن</th><th>حركة مدين</th><th>حركة دائن</th><th>ختامي مدين</th><th>ختامي دائن</th></tr></thead><tbody>
+{% for row in page_obj %}<tr><td><a class="text-link" href="{% url 'finance-ledger' %}?account_code={{ row.code|urlencode }}&amp;starts_on={{ report.starts_on|date:'Y-m-d' }}&amp;ends_on={{ report.ends_on|date:'Y-m-d' }}&amp;branch_id={{ form.branch_id.value|default:''|urlencode }}"><bdi>{{ row.code }}</bdi> {{ row.name }}</a>{% if not row.active %} · معطل{% endif %}</td><td>{{ row.opening_debit|floatformat:2 }}</td><td>{{ row.opening_credit|floatformat:2 }}</td><td>{{ row.debit|floatformat:2 }}</td><td>{{ row.credit|floatformat:2 }}</td><td>{{ row.closing_debit|floatformat:2 }}</td><td>{{ row.closing_credit|floatformat:2 }}</td></tr>
+{% empty %}<tr><td colspan="7">لا توجد حسابات ذات حركة مطابقة حتى نهاية المدة.</td></tr>{% endfor %}
+</tbody></table></div>{% include 'workspace/pagination.html' %}</section>{% endif %}{% endblock %}
