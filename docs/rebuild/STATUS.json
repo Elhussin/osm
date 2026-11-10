@@ -192,16 +192,20 @@
         "R08"
       ],
       "evidence": [
-        "T039"
+        "T039",
+        "T040"
       ],
       "steps": [
         {
-          "status": "in_progress",
+          "status": "done",
           "title": "Fiscal seller profile and explicit ZATCA readiness gates",
           "id": "R09-M01",
           "evidence": [
-            "T039"
-          ]
+            "T039",
+            "T040"
+          ],
+          "ci_run": "https://github.com/Elhussin/osm/actions/runs/42805028665",
+          "verified_code_commit": "806b8147b69b30d063ced26168d3ebb1e526c2cb"
         },
         {
           "status": "pending",
@@ -269,5 +273,5 @@
       "evidence": []
     }
   ],
-  "next_step": "R09-M01"
+  "next_step": "R09-M02"
 }

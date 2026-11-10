@@ -456,3 +456,19 @@ Command: pwsh -NoProfile -File rebuild/pdm.ps1 run configure-runtime
 Command: pwsh -NoProfile -File rebuild/pdm.ps1 run verify-runtime
 
 فحوص lock والإعداد والترحيلات ناجحة، وترحيل finance.0001 طبق على قاعدة إعادة البناء التطويرية القائمة دون legacy أو حذف volume؛ حدثت المنح وفحص runtime. هذا يستكمل فحص الاتساق المتعذر في T037. أضيف finance_tests إلى أمر test العام، دون اعتماديات جديدة. لا اختبار XML أو SDK أو sandbox/simulation/إنتاج أو حساب VAT/زكاة أو إصدار فاتورة؛ هذه أدلة إعداد محلي فقط. M01 تبقى in_progress إلى نتيجة CI الكاملة، وM02–M04 معلقة.
+
+## T040 | passed
+Task: R09
+Date: 2026-11-10
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs?branch=codex%2Fr03-foundation&per_page=5
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs/42805028665/jobs
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/jobs/129791848002/logs
+
+نجح التشغيل https://github.com/Elhussin/osm/actions/runs/42805028665 للـcommit806b8147b69b30d063ced26168d3ebb1e526c2cb؛ تحقق completed/success وSHA مطابق، وجميع مراحل job129791848002 ناجحة. استخرجت أعداد الاختبارات ومدتها فقط من السجل مع إزالة Authorization عند redirect، دون إخراج مفاتيح أو روابط تخزين موقعة أو سجل البيئة:167 Django/PostgreSQL خلال653.740 ثانية،48 سياسة خلال0.005 ثانية،23 Chromium خلال100.254 ثانية؛238 حالة فريدة كاملة.
+
+اجتاز CI تثبيت lock وفحوص الإعدادات والترحيلات والمنح والمجموعة الكاملة والخطة والحصر. أغلقت R09-M01 فقط بعد T039/T040؛ لا إغلاق R09، والتالي R09-M02 للحسابات والفترات. يحفظ T037 تعذر فحص السجل الأول وT038 فشل tearDown، ولا يطمسهما نجاح الإعادة. لا اختبار XML أو توقيع أو SDK أو sandbox/simulation أو إنتاج أو صحة تسجيل منشأة؛ المتبقي Z01–Z06 في zatca/REVIEW. اكتمال الملف أو238 حالة لا يثبت امتثال ZATCA. لم تفعّل فواتير أو اتصال هيئة أو تدمج main أو تنشر إنتاجًا.
+
+Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
+Command: pwsh -NoProfile -File scripts/check-discovery.ps1
+
+فحص الخطة والحصر وgit diff --check أعيد عند إغلاق التوثيق. تحديثات الإغلاق توثيقية فقط ولا تغير الكود الذي اختبره CI.
