@@ -8,8 +8,17 @@ from inventory import views as inventory
 from inventory import reservation_views, operation_views, label_views, tracking_views
 from finance import views as finance
 from finance import setup_views as accounting
+from finance import journal_views as journals
 
 urlpatterns = [
+    path("finance/journals/", journals.journal_list, name="journal-drafts"),
+    path("finance/journals/new/", journals.draft_edit, name="journal-new"),
+    path("finance/journals/<uuid:draft_id>/", journals.draft_detail, name="journal-draft"),
+    path("finance/journals/<uuid:draft_id>/edit/", journals.draft_edit, name="journal-edit"),
+    path("finance/journals/<uuid:draft_id>/revisions/<int:version>/", journals.revision_detail, name="journal-revision"),
+    path("finance/entries/", journals.entries, name="journal-entries"),
+    path("finance/entries/<uuid:entry_id>/", journals.entry_detail, name="journal-entry"),
+    path("finance/entries/<uuid:entry_id>/reverse/", journals.entry_reverse, name="journal-reverse"),
     path("finance/accounts/", accounting.accounts, name="finance-accounts"),
     path("finance/accounts/new/", accounting.account_new, name="finance-account-new"),
     path("finance/accounts/<uuid:account_id>/", accounting.account_detail, name="finance-account"),

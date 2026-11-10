@@ -520,3 +520,37 @@ Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
 Command: pwsh -NoProfile -File scripts/check-discovery.ps1
 
 أعيد فحص الخطة والحصر وgit diff --check عند إغلاق التوثيق. الإغلاق توثيقي فقط؛ لا تغيير للكود المختبر على CI ولا إعادة للمجموعة الوظيفية بسبب تحديث الوثائق وحده.
+
+## T044 | failed
+Task: R09
+Date: 2026-11-10
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k Journal
+
+نفذت20 حالة على PostgreSQL خلال206.607 ثانية:19 ناجحة وخطأ واحد في test_scoped_http_lists_lookups_revision_branch_choices_and_csrf. الاختبار قيّم queryset خيارات الفرع بعد انتهاء HTTP وإعادة الاتصال إلى public، فظهرت relation access_branch does not exist. تصحيح الاختبار لفحص خيارات HTML التي رُسمت بالفعل داخل سياق الشركة؛ لا إعادة استعمال queryset خارج سياقه أو تغيير middleware لإبقاء مخطط الشركة بعد الطلب. النتيجة ليست نجاح مجموعة كاملة وتلزم إعادة الحالة.
+
+نجحت حالات التوازن المؤجل عند commit ورفض رأس بلا أسطر/تغيير مجموع أو حذف أسطر، والمنح الفعلية تحت دور محدود، والعكس والتكرار والتزامن والإغلاق/الترحيل والإلغاء/إنشاء المسودة والذرية والتاريخ. تبقى الإعادة والمتصفح وCI قبل إغلاق M03؛ لا ترحيل إلى legacy أو بيانات حقيقية.
+
+## T045 | passed
+Task: R09
+Date: 2026-11-10
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k Journal
+
+نجحت الإعادة النهائية20/20 خلال111.621 ثانية من عملية جديدة بعد تصحيح اختبار HTML وإضافة حماية المسودة النهائية:3 حالات نقية للمبالغ و17 قاعدة/HTTP/تزامن على PostgreSQL مستقل. تشمل Decimal تحت precision عالمي منخفض ورفض float والقيم الخاصة/الدقة الزائدة/تجاوز السعة، والمسودة غير المتوازنة والإصدارات والترحيل واللقطات والعكس في فترة لاحقة بحساب معطل، والتكرار وسحب الدور/الفرع حتى replay، والتنافس على النشر/الإلغاء/الأرقام والعكس وإغلاق/ترحيل وإلغاء فترة/إنشاء مسودة، وrollback للعداد والحالة والأسطر والعملية والتدقيق. SQL عند commit يرفض رأسًا بلا أسطر وتعديل مجموع/حذف أسطر، والمنح تمنع تعديل السجل المرحل، ومشغل حالة المسودة يرفض ردّ المرحل/الملغى إلى draft تحت runtime. ترحيل تاريخ M01/M02 محفوظ. يحفظ T044 الخطأ الأول ولا يعدل middleware لإخفائه.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k scoped_http_lists_lookups_revision_branch_choices_and_csrf -k migration_preserves_existing_fiscal_revision -k postgres_constraints_and_runtime_immutable_identity
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser -k JournalBrowserTests -k AccountingSetupBrowserTests
+
+نجح التحقق الموجه السابق3/3 خلال19.980 ثانية، و5/5 متصفح خلال39.013 ثانية؛ يشمل حالتي انحدار DB وحالتي متصفح لدليل الحسابات/الفترات السابق، ولا تضاف الإعادات إلى العدد الفريد. لا يعتمد التشغيل المبكر وحده لإثبات حماية الحالة النهائية التي أضيفت؛ الإعادة النهائية20 حالة أعلاه ومجموعة المتصفح التالية هما إثبات النسخة النهائية.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser -k JournalBrowserTests
+
+نجحت الإعادة النهائية3/3 Chromium خلال23.251 ثانية مع PLAYWRIGHT_BROWSERS_PATH إلى .tools/browsers. سطح المكتب: رفض ترحيل غير المتوازن ثم إصدار مصحح وترحيل ولقطة حساب ثابتة بعد إعادة التسمية، وإغلاق الفترة الأصلية وعكس في لاحقة. هاتف390 دون JavaScript: إضافة سطر دون حفظ مع بقاء البيانات، وترحيل3 أسطر وعكس، وإلغاء مسودة وحفظ الإصدارات، وإلغاء فترة غير مستخدمة وإنشاء بديلة ورفض فترة مستخدمة، وحجب معرفات فرع آخر. راجعت journal-posted-desktop.png وjournal-reversal-mobile-nojs.png الصناعيتين؛ الجسم لا يتجاوز390px والجداول داخل تمرير أفقي. الصور والسجلات مستبعدة؛ لا بيانات حقيقية. الحالات الجديدة الفريدة23، والانحدار السابق4 حالات إضافية لا يغير العدد الكلي المتوقع على CI.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run migrations-check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run migrate-all
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run configure-runtime
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run verify-runtime
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 lock --check
+
+نجحت فحوص الإعداد/الترحيلات/lock، وطبق finance.0003/0004 على قاعدة التطوير المستقلة ثم حدثت المنح ونجح runtime. لا legacy أو حذف volumes أو إعادة كتابة ترحيل قديم أو بيانات حقيقية. لا تقارير ميزان/دفتر أستاذ M04 أو ربط تلقائي للفاتورة/المخزون/الضريبة أو ZATCA من هذا الجزء. تبقى M03 in_progress إلى CI الكامل. ستعاد فحوص الخطة والحصر وgit diff --check قبل الحفظ.

@@ -52,7 +52,7 @@ class AccountChangeForm(RequestForm):
 
 class PeriodChangeForm(RequestForm):
     expected_version = forms.IntegerField(min_value=1, widget=forms.HiddenInput)
-    action = forms.ChoiceField(widget=forms.HiddenInput, choices=[("close", "إغلاق"), ("reopen", "إعادة فتح")])
+    action = forms.ChoiceField(widget=forms.HiddenInput, choices=[("close", "إغلاق"), ("reopen", "إعادة فتح"), ("void", "إلغاء")])
 
 
 def attempt(form, action):
@@ -120,7 +120,7 @@ def periods(request):
     q = request.GET.get("q", "")[:100].strip()
     if q:
         rows = rows.filter(Q(code__icontains=q) | Q(name__icontains=q))
-    if request.GET.get("status") in {"open", "closed"}:
+    if request.GET.get("status") in {"open", "closed", "void"}:
         rows = rows.filter(state=request.GET["status"])
     return page(request, "finance/periods.html", title="الفترات المالية", active_page="ledger", can_edit=allowed(request.user.pk, "ledger.post"), **listing(request, rows))
 
@@ -141,13 +141,18 @@ def period_new(request):
 @secured("ledger.read")
 def period_detail(request, period_id):
     period = get_object_or_404(AccountingPeriod, pk=period_id)
-    can_edit = allowed(request.user.pk, "ledger.post")
-    form = PeriodChangeForm(request.POST if request.method == "POST" else None, initial={"expected_version": period.version, "operation_key": uuid.uuid4(), "action": "close" if period.state == "open" else "reopen"})
+    can_edit = allowed(request.user.pk, "ledger.post") and period.state != "void"
+    is_void = request.method == "POST" and "void-action" in request.POST
+    form = PeriodChangeForm(request.POST if request.method == "POST" and not is_void else None, initial={"expected_version": period.version, "operation_key": uuid.uuid4(), "action": "close" if period.state == "open" else "reopen"})
+    void_form = PeriodChangeForm(request.POST if is_void else None, prefix="void", initial={"expected_version": period.version, "operation_key": uuid.uuid4(), "action": "void"})
+    void_form.fields["reason"].label = "سبب إلغاء الفترة"
+    void_form.fields["reason"].widget.attrs["aria-label"] = "سبب إلغاء الفترة"
     if request.method == "POST":
         require(request.user.pk, "ledger.post")
-        if form.is_valid():
-            operation = attempt(form, lambda: change_period(request.user.pk, period_id=period.pk, **form.cleaned_data))
+        submitted = void_form if is_void else form
+        if submitted.is_valid():
+            operation = attempt(submitted, lambda: change_period(request.user.pk, period_id=period.pk, **submitted.cleaned_data))
             if operation:
                 messages.success(request, "حُفظت حالة الفترة وتاريخها.")
                 return redirect("finance-period", period_id=period.pk)
-    return page(request, "finance/period.html", title=period.name, active_page="ledger", period=period, form=form, can_edit=can_edit, status=422 if form.errors else 200, **listing(request, period.operations.order_by("-created_at", "id")))
+    return page(request, "finance/period.html", title=period.name, active_page="ledger", period=period, form=form, void_form=void_form, can_edit=can_edit, status=422 if form.errors or void_form.errors else 200, **listing(request, period.operations.order_by("-created_at", "id")))

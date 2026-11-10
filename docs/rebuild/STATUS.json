@@ -195,7 +195,8 @@
         "T039",
         "T040",
         "T042",
-        "T043"
+        "T043",
+        "T045"
       ],
       "steps": [
         {
@@ -221,9 +222,12 @@
           "verified_code_commit": "23ca02b8f67be12a374f615a9abbefaf2f26b3cf"
         },
         {
-          "status": "pending",
+          "status": "in_progress",
           "title": "Atomic journal posting, reversal and unused-period correction guards",
-          "id": "R09-M03"
+          "id": "R09-M03",
+          "evidence": [
+            "T045"
+          ]
         },
         {
           "status": "pending",

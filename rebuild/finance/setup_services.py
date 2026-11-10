@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 from access.authorization import require, current_company
 from access.services import lock_access, audit
-from .models import Account, AccountingPeriod, SetupOperation
+from .models import Account, AccountingPeriod, SetupOperation, JournalRevision, JournalEntry
 
 
 def _text(value, limit, *, code=False):
@@ -150,7 +150,7 @@ def create_period(actor_id, *, code, name, starts_on, ends_on, operation_key, re
     request = _request(actor_id, kind="period_created", operation_key=operation_key, reason=reason, code=code, name=name, starts_on=start, ends_on=end)
     if request[3]:
         return request[3]
-    if AccountingPeriod.objects.filter(code=code).exists() or AccountingPeriod.objects.filter(starts_on__lte=end, ends_on__gte=start).exists():
+    if AccountingPeriod.objects.filter(code=code).exists() or AccountingPeriod.objects.filter(starts_on__lte=end, ends_on__gte=start).exclude(state="void").exists():
         raise ValidationError("رمز الفترة مكرر أو تاريخها يتداخل مع فترة محفوظة؛ البداية والنهاية شاملتان.")
     period = AccountingPeriod(code=code, name=name, starts_on=start, ends_on=end, created_by_id=actor_id)
     period.full_clean()
@@ -161,10 +161,10 @@ def create_period(actor_id, *, code, name, starts_on, ends_on, operation_key, re
 @transaction.atomic
 def change_period(actor_id, *, period_id, action, expected_version, operation_key, reason):
     _authorize(actor_id)
-    if not isinstance(action, str) or action not in {"close", "reopen"}:
+    if not isinstance(action, str) or action not in {"close", "reopen", "void"}:
         raise ValidationError("إجراء الفترة غير صالح.")
     version = _version(expected_version)
-    kind = "period_closed" if action == "close" else "period_reopened"
+    kind = {"close": "period_closed", "reopen": "period_reopened", "void": "period_voided"}[action]
     request = _request(actor_id, kind=kind, operation_key=operation_key, reason=reason, period_id=period_id, version=version)
     if request[3]:
         return request[3]
@@ -172,9 +172,13 @@ def change_period(actor_id, *, period_id, action, expected_version, operation_ke
         period = AccountingPeriod.objects.select_for_update().get(pk=period_id)
     except (AccountingPeriod.DoesNotExist, ValueError, ValidationError):
         raise ValidationError("الفترة غير متاحة في الشركة الحالية.") from None
-    state = "closed" if action == "close" else "open"
+    state = {"close": "closed", "reopen": "open", "void": "void"}[action]
     if period.version != version:
         raise ValidationError("تغيرت الفترة منذ فتح الصفحة؛ راجع الإصدار الحالي.")
+    if period.state == "void":
+        raise ValidationError("الفترة ملغاة نهائيًا؛ لا إعادة فتح أو تعديل لها.")
+    if action == "void" and (JournalRevision.objects.filter(period=period).exists() or JournalEntry.objects.filter(period=period).exists()):
+        raise ValidationError("لا تلغى فترة مرتبطة بأي إصدار قيد، ولو ألغيت المسودة لاحقًا.")
     if period.state == state:
         raise ValidationError("حالة الفترة مطابقة بالفعل.")
     before = period_snapshot(period)
