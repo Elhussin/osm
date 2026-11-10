@@ -66,6 +66,12 @@ class InventoryBrowserTests(StaticLiveServerTestCase):
         await page.locator('[name="q_0_0"]').focus()
         await page.keyboard.press("Control+V")
 
+    async def label_layout_ready(self, page):
+        await page.wait_for_load_state("load")
+        await expect(page.locator('link[rel="stylesheet"]')).to_have_count(2)
+        await page.wait_for_function("Array.from(document.querySelectorAll('link[rel=stylesheet]')).every(link => link.sheet !== null)")
+        await page.evaluate("document.fonts.ready")
+
     async def test_desktop_excel_paste_preview_edit_commit_grouping_and_reverse(self):
         async with async_playwright() as p:
             browser = await p.chromium.launch()
@@ -249,6 +255,7 @@ class InventoryBrowserTests(StaticLiveServerTestCase):
             await page.get_by_role("button", name="معاينة الملصقات", exact=True).click()
             await expect(page.locator(".barcode-label")).to_have_count(13)
             await expect(page.locator(".label-sheet")).to_have_count(2)
+            await self.label_layout_ready(page)
             image = await page.locator(".barcode-image").first.screenshot()
             decoded = zxingcpp.read_barcode(Image.open(BytesIO(image)))
             self.assertIsNotNone(decoded)
@@ -271,6 +278,7 @@ class InventoryBrowserTests(StaticLiveServerTestCase):
             await page.get_by_role("button", name="معاينة الملصقات", exact=True).click()
             await expect(page.locator(".barcode-label")).to_have_count(5)
             await expect(page.locator(".label-sheet")).to_have_count(2)
+            await self.label_layout_ready(page)
             await page.emulate_media(media="print")
             width = await page.locator(".barcode-label").first.evaluate("el => el.getBoundingClientRect().width")
             self.assertAlmostEqual(width, 270 * 96 / 25.4, delta=0.3)
@@ -287,6 +295,7 @@ class InventoryBrowserTests(StaticLiveServerTestCase):
             await page.get_by_label("عدد الملصقات", exact=True).fill("2")
             await page.get_by_role("button", name="معاينة الملصقات", exact=True).click()
             await expect(page.locator(".barcode-label")).to_have_count(2)
+            await self.label_layout_ready(page)
             await expect(page.locator(".code-value").first).to_have_text("LENS-0")
             await expect(page.locator("#print-labels")).to_be_hidden()
             self.assertTrue(await page.evaluate("document.documentElement.scrollWidth <= innerWidth"))
