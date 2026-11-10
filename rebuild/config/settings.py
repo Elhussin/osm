@@ -30,6 +30,7 @@ TENANT_APPS = (
     "clinical.apps.ClinicalConfig",
     "catalog.apps.CatalogConfig",
     "inventory.apps.InventoryConfig",
+    "finance.apps.FinanceConfig",
 )
 INSTALLED_APPS = list(SHARED_APPS) + list(TENANT_APPS)
 TENANT_MODEL = "directory.Company"

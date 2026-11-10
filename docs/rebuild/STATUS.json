@@ -1,10 +1,11 @@
 {
   "updated": "2026-11-10",
-  "current_task": "R08",
+  "current_task": "R09",
   "next_task": "R09",
   "blockers": [
     "R13: supplied Waseel v2 docs reviewed locally; resolve W01-W07 in docs/rebuild/waseel/REVIEW.md, including claims/customer endpoints, auth response and sandbox activation. Sample credentials have not been used or validated.",
-    "R10: device choices Q03-Q04 deferred by user; cash shift requirements Q05 remain open. First release is online-only."
+    "R10: device choices Q03-Q04 deferred by user; cash shift requirements Q05 remain open. First release is online-only.",
+    "R10/R13 ZATCA: Z01-Z06 in docs/rebuild/zatca/REVIEW.md require official XML/data dictionary/API/SDK review, tax classification and provider-environment evidence before invoicing/integration activation; local fiscal profile does not prove compliance."
   ],
   "tasks": [
     {
@@ -186,11 +187,38 @@
     },
     {
       "id": "R09",
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "R08"
       ],
-      "evidence": []
+      "evidence": [
+        "T039"
+      ],
+      "steps": [
+        {
+          "status": "in_progress",
+          "title": "Fiscal seller profile and explicit ZATCA readiness gates",
+          "id": "R09-M01",
+          "evidence": [
+            "T039"
+          ]
+        },
+        {
+          "status": "pending",
+          "title": "Chart of accounts and accounting periods",
+          "id": "R09-M02"
+        },
+        {
+          "status": "pending",
+          "title": "Atomic journal posting and reversal",
+          "id": "R09-M03"
+        },
+        {
+          "status": "pending",
+          "title": "Accounting workflows, trial balance and verification",
+          "id": "R09-M04"
+        }
+      ]
     },
     {
       "id": "R10",
@@ -240,5 +268,6 @@
       ],
       "evidence": []
     }
-  ]
+  ],
+  "next_step": "R09-M01"
 }

@@ -7,5 +7,7 @@
 <a href="{% url 'account-branches' %}" {% if active_page == 'branches' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-branch"/></svg>الفروع والمستودعات</a>
 {% if can_roles %}<a href="{% url 'roles' %}" {% if active_page == 'roles' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-shield"/></svg>الأدوار والصلاحيات</a>{% endif %}
 {% if can_audit %}<a href="{% url 'account-audit' %}" {% if active_page == 'audit' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-audit"/></svg>سجل التدقيق</a>{% endif %}
-{% if can_ownership %}<p class="nav-label">إعدادات الشركة</p><a href="{% url 'ownership' %}" {% if active_page == 'ownership' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-shield"/></svg>ملكية الشركة</a>{% endif %}
+{% if can_fiscal or can_ownership %}<p class="nav-label">إعدادات الشركة</p>{% endif %}
+{% if can_fiscal %}<a href="{% url 'fiscal-setup' %}" {% if active_page == 'fiscal' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-audit"/></svg>الملف الضريبي</a>{% endif %}
+{% if can_ownership %}<a href="{% url 'ownership' %}" {% if active_page == 'ownership' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-shield"/></svg>ملكية الشركة</a>{% endif %}
 </nav>

@@ -422,3 +422,37 @@ Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
 Command: pwsh -NoProfile -File scripts/check-discovery.ps1
 
 أعيد فحص الخطة والحصر وgit diff --check عند إغلاق التوثيق. تغييرات الإغلاق توثيقية فقط؛ لا تعاد الاختبارات الوظيفية بلا تعديل كود.
+
+## T037 | blocked
+Task: R09
+Date: 2026-11-10
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run manage-migration makemigrations finance
+
+وُلد finance.0001 بنجاح، لكن فحص اتساق سجل الترحيلات أظهر Permission denied على اتصال PostgreSQL127.0.0.1:55432 من sandbox. توليد الملف ليس دليل نجاح الترحيل أو عزل DB؛ يعاد الفحص والاختبار باتصال مصرح على قاعدة إعادة البناء فقط. لا SQLite أو قاعدة legacy بديلًا. توثيق المصادر ZATCA راجع رسميًا؛ تعذر جلب XML PDF عبر الويب مرتين وذُكر كفجوة Z01 دون ادعاء قراءته.
+
+## T038 | failed
+Task: R09
+Date: 2026-11-10
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k Fiscal
+
+نفذت8 حالات على PostgreSQL خلال86.012 ثانية وانتهت errors=7؛ إجراءات الحالات مرّت لكن tearDown المستعار من WorkspaceTests استخدم super() مع صنف مختلف، فأفشل نتيجة المجموعة. لا تسجل نجاحًا. استبدل tearDown بدالة محلية تعيد الاتصال إلى public وتستدعي super الخاص بصنف الاختبار الصحيح، وصحح النظير في اختبار المتصفح قبل تشغيله. لم تتغير assertions أو صلاحيات خدمة الملف. الإعادة واجبة لتوثيق نجاح كامل.
+
+## T039 | passed
+Task: R09
+Date: 2026-11-10
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k Fiscal
+
+نجحت8/8 حالات خلال94.501 ثانية على PostgreSQL مستقل بعد تصحيح tearDown؛ تحفظ T038 النتيجة الفاشلة السابقة. تشمل النسخ واللقطات وعدم تفعيل الإرسال مع اكتمال الملف، والتسجيل والبنية ورفض حقول اتصال حرة، والتكرار وإعادة التفويض بعد سحب الدور حتى مع superuser، وتنافس المفتاح/الإصدار وrollback والعزل وغياب جدول finance من public. اختبرت قيود DB بتغيير واحد لكل حالة مع إصدار ومفتاح جديدين كي لا تخفي الوحدانية سبب الرفض، ودور PostgreSQL مقيد ينشئ نسخة ثم يمنع UPDATE/DELETE.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser -k FiscalBrowserTests
+
+نجحت2/2 Chromium خلال22.149 ثانية مع PLAYWRIGHT_BROWSERS_PATH إلى .tools/browsers. سطح المكتب: دخول من القائمة وإكمال ملف مسجل مع بقاء حالة غير مفعل. الهاتف390 دون JavaScript: حفظ أولي وتصحيح بإصدار جديد وبقاء الأصل ومنع وصول الكاشير. لا overflow للجسم. راجعت صورتَي fiscal-setup-desktop.png وfiscal-setup-mobile-nojs.png الصناعيتين المستبعدتين؛ لا بيانات منشأة حقيقية.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 lock --check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run migrations-check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run migrate-all
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run configure-runtime
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run verify-runtime
+
+فحوص lock والإعداد والترحيلات ناجحة، وترحيل finance.0001 طبق على قاعدة إعادة البناء التطويرية القائمة دون legacy أو حذف volume؛ حدثت المنح وفحص runtime. هذا يستكمل فحص الاتساق المتعذر في T037. أضيف finance_tests إلى أمر test العام، دون اعتماديات جديدة. لا اختبار XML أو SDK أو sandbox/simulation/إنتاج أو حساب VAT/زكاة أو إصدار فاتورة؛ هذه أدلة إعداد محلي فقط. M01 تبقى in_progress إلى نتيجة CI الكاملة، وM02–M04 معلقة.

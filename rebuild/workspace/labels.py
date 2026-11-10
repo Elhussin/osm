@@ -14,6 +14,7 @@ ACTION_LABELS = {
     "stock.read": "عرض المخزون", "stock.reserve": "حجز المخزون", "stock.transfer": "تحويل المخزون", "insurance.read": "عرض ملفات التأمين", "insurance.prepare": "إعداد طلبات التأمين", "insurance.submit": "إرسال طلبات التأمين", "reports.read": "عرض التقارير", "data.export": "تصدير البيانات",
 }
 EVENT_LABELS = {
+    "finance.profile_saved": "حفظ إصدار الملف الضريبي",
     "stock.transfer_posted": "تحويل مخزون بين الفروع", "stock.count_posted": "اعتماد جرد مخزون", "stock.operation_reversed": "عكس تحويل أو جرد",
     "stock.reserve": "حجز مخزون", "stock.issue": "صرف مخزون محجوز", "stock.release": "تحرير حجز مخزون", "stock.cancel": "إلغاء المتبقي من حجز", "stock.reverse_issue": "عكس صرف مخزون",
     "stock.received": "استلام مخزون", "stock.receipt_reversed": "عكس إضافة مخزون",

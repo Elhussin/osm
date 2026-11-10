@@ -6,8 +6,10 @@ from clinical import views as clinical
 from catalog import views as catalog
 from inventory import views as inventory
 from inventory import reservation_views, operation_views, label_views, tracking_views
+from finance import views as finance
 
 urlpatterns = [
+    path("account/fiscal/", finance.fiscal_setup, name="fiscal-setup"),
     path("inventory/", tracking_views.home, name="inventory-home"),
     path("inventory/receiving/", tracking_views.receiving_catalog, name="stock-receiving-catalog"),
     path("inventory/receiving/<uuid:variant_id>/", tracking_views.receiving, name="stock-receive"),
