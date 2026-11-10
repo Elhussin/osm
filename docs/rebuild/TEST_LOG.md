@@ -472,3 +472,35 @@ Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
 Command: pwsh -NoProfile -File scripts/check-discovery.ps1
 
 فحص الخطة والحصر وgit diff --check أعيد عند إغلاق التوثيق. تحديثات الإغلاق توثيقية فقط ولا تغير الكود الذي اختبره CI.
+
+## T041 | blocked
+Task: R09
+Date: 2026-11-10
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run manage-migration makemigrations finance
+
+تولد finance.0002 إضافيًا، لكن فحص تاريخ الترحيلات داخل sandbox تعذر بسبب Permission denied لاتصال PostgreSQL127.0.0.1:55432. لا يعتبر توليد الملف نجاح ترحيل؛ التحقق يعاد باتصال مصرح على قاعدة إعادة البناء المستقلة. لا حذف/إعادة كتابة ترحيلات أو SQLite أو legacy.
+
+## T042 | passed
+Task: R09
+Date: 2026-11-10
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k AccountingSetupTests
+
+نجحت12/12 حالة PostgreSQL خلال209.642 ثانية: الشجرة والتصنيف والطبيعة المقابلة والعمق والحالات والإصدارات، والفترات الشاملة والتجاور والتداخل حتى بعد الإغلاق، وإعادة الفتح، والتكرار والتنافس وrollback والعزل وCSRF والمنح وترحيل تاريخ الملف الضريبي. قيد EXCLUDE USING gist فعلي على daterange مع &&؛ لا SQLite أو extension إضافي في migration.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k period_close_reopen_version_and_history -k replays_and_revoked_accountant_and_admin_flags -k http_scopes_choices_permissions_forged_identity_and_csrf -k postgres_constraints_and_runtime_immutable_identity
+
+بعد تقوية assertions نجحت4/4 خلال85.999 ثانية: replay إغلاق ناجح وإعادة تفويض بعد سحب دور المحاسب، ومنع معرف شركة أخرى وغياب الجداول من public، وإنشاء فترة جديدة بدور PostgreSQL المقيد. لا تضاف الحالات المعادة للعدد الفريد.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k http_scopes_choices_permissions_forged_identity_and_csrf
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser -k AccountingSetupBrowserTests
+
+اختيار الأب النهائي بالرمز وlookup فريد محدود داخل الشركة؛ نجحت إعادة HTTP1/1 خلال20.420 ثانية بعد تعديله، وChromium2/2 خلال33.795 ثانية مع PLAYWRIGHT_BROWSERS_PATH إلى .tools/browsers. إعادة المتصفح الأولية2/2 خلال52.762 ثانية لا تعتمد لإثبات تعديل الأب الأخير؛ الإعادة النهائية من عملية جديدة بعد التعديل. سطح المكتب أنشأ مجموعة وحسابًا بطبيعة مقابلة وغيّر الاسم واختبر منع تعطيل المجموعة قبل الابن ثم تفعيلهما والبحث بالمسار. هاتف390 دون JavaScript بحساب محاسب أنشأ فترة ورفض تداخل الحد الأخير وأغلق وأعاد الفتح وحفظ التاريخ، مع رفض الكاشير. راجعت accounting-chart-desktop.png وaccounting-period-mobile-nojs.png الصناعيتين المستبعدتين؛ لا تجاوز عرض الجسم والجدول داخل تمرير أفقي. العدد المحلي الفريد للجزء14 حالة، وليس مجموع الإعادات.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 lock --check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run migrations-check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run migrate-all
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run configure-runtime
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run verify-runtime
+
+نجحت فحوص lock والإعداد والترحيلات. طبق finance.0002 على قاعدة التطوير المستقلة، ثم حدثت منح runtime ونجح التحقق؛ لا legacy أو حذف volume أو إعادة كتابة ترحيل. يستكمل ذلك فحص التاريخ المتعذر في T041. نجح فحص الخطة والحصر781 وgit diff --check. لا ترحيل قيد أو رصيد افتتاحي أو ميزان مراجعة أو اختبار إغلاق/ترحيل متزامن قبل M03، ولا امتثال أو اتصال ZATCA. M02 تبقى in_progress حتى CI الكامل؛ M03/M04 لم تنفذا.

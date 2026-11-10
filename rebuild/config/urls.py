@@ -7,8 +7,15 @@ from catalog import views as catalog
 from inventory import views as inventory
 from inventory import reservation_views, operation_views, label_views, tracking_views
 from finance import views as finance
+from finance import setup_views as accounting
 
 urlpatterns = [
+    path("finance/accounts/", accounting.accounts, name="finance-accounts"),
+    path("finance/accounts/new/", accounting.account_new, name="finance-account-new"),
+    path("finance/accounts/<uuid:account_id>/", accounting.account_detail, name="finance-account"),
+    path("finance/periods/", accounting.periods, name="finance-periods"),
+    path("finance/periods/new/", accounting.period_new, name="finance-period-new"),
+    path("finance/periods/<uuid:period_id>/", accounting.period_detail, name="finance-period"),
     path("account/fiscal/", finance.fiscal_setup, name="fiscal-setup"),
     path("inventory/", tracking_views.home, name="inventory-home"),
     path("inventory/receiving/", tracking_views.receiving_catalog, name="stock-receiving-catalog"),

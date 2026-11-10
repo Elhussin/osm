@@ -11,14 +11,14 @@ def grant_tenant_runtime(cursor, schema, role):
     cursor.execute("SELECT to_regclass(%s)", [schema + ".access_auditevent"])
     if cursor.fetchone()[0]:
         cursor.execute(sql.SQL("REVOKE UPDATE, DELETE ON TABLE {}.access_auditevent FROM {}").format(schema_id, role_id))
-    for table in ("clinical_prescriptionrevision", "clinical_examimage", "inventory_stockreceipt", "inventory_stockmovement", "inventory_reservationevent", "inventory_stockoperation", "inventory_stocklot", "finance_fiscalprofilerevision"):
+    for table in ("clinical_prescriptionrevision", "clinical_examimage", "inventory_stockreceipt", "inventory_stockmovement", "inventory_reservationevent", "inventory_stockoperation", "inventory_stocklot", "finance_fiscalprofilerevision", "finance_setupoperation"):
         cursor.execute("SELECT to_regclass(%s)", [schema + "." + table])
         if cursor.fetchone()[0]:
             cursor.execute(sql.SQL("REVOKE UPDATE, DELETE ON TABLE {}.{} FROM {}").format(schema_id, sql.Identifier(table), role_id))
     cursor.execute("SELECT to_regclass(%s)", [schema + ".inventory_stockbalance"])
     if cursor.fetchone()[0]:
         cursor.execute(sql.SQL("REVOKE DELETE ON TABLE {}.inventory_stockbalance FROM {}").format(schema_id, role_id))
-    for table, columns in {"inventory_stockposition": ("on_hand", "reserved", "version", "branch_id"), "inventory_stockreservation": ("held", "issued", "released", "cancelled", "version"), "catalog_product": ("name", "brand", "model", "active", "version"), "catalog_variant": ("base_price", "active", "version"), "catalog_pricerule": ("active",)}.items():
+    for table, columns in {"finance_account": ("name", "active", "version"), "finance_accountingperiod": ("state", "version"), "inventory_stockposition": ("on_hand", "reserved", "version", "branch_id"), "inventory_stockreservation": ("held", "issued", "released", "cancelled", "version"), "catalog_product": ("name", "brand", "model", "active", "version"), "catalog_variant": ("base_price", "active", "version"), "catalog_pricerule": ("active",)}.items():
         cursor.execute("SELECT to_regclass(%s)", [schema + "." + table])
         if cursor.fetchone()[0]:
             cursor.execute(sql.SQL("REVOKE UPDATE, DELETE ON TABLE {}.{} FROM {}").format(schema_id, sql.Identifier(table), role_id))

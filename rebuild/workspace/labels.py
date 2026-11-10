@@ -14,6 +14,8 @@ ACTION_LABELS = {
     "stock.read": "عرض المخزون", "stock.reserve": "حجز المخزون", "stock.transfer": "تحويل المخزون", "insurance.read": "عرض ملفات التأمين", "insurance.prepare": "إعداد طلبات التأمين", "insurance.submit": "إرسال طلبات التأمين", "reports.read": "عرض التقارير", "data.export": "تصدير البيانات",
 }
 EVENT_LABELS = {
+    "finance.account_created": "إنشاء حساب محاسبي", "finance.account_renamed": "تغيير اسم حساب", "finance.account_activated": "تفعيل حساب", "finance.account_disabled": "تعطيل حساب",
+    "finance.period_created": "إنشاء فترة مالية", "finance.period_closed": "إغلاق فترة مالية", "finance.period_reopened": "إعادة فتح فترة مالية",
     "finance.profile_saved": "حفظ إصدار الملف الضريبي",
     "stock.transfer_posted": "تحويل مخزون بين الفروع", "stock.count_posted": "اعتماد جرد مخزون", "stock.operation_reversed": "عكس تحويل أو جرد",
     "stock.reserve": "حجز مخزون", "stock.issue": "صرف مخزون محجوز", "stock.release": "تحرير حجز مخزون", "stock.cancel": "إلغاء المتبقي من حجز", "stock.reverse_issue": "عكس صرف مخزون",

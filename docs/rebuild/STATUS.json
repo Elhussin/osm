@@ -193,7 +193,8 @@
       ],
       "evidence": [
         "T039",
-        "T040"
+        "T040",
+        "T042"
       ],
       "steps": [
         {
@@ -208,9 +209,12 @@
           "verified_code_commit": "806b8147b69b30d063ced26168d3ebb1e526c2cb"
         },
         {
-          "status": "pending",
+          "status": "in_progress",
           "title": "Chart of accounts and accounting periods",
-          "id": "R09-M02"
+          "id": "R09-M02",
+          "evidence": [
+            "T042"
+          ]
         },
         {
           "status": "pending",
