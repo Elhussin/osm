@@ -193,6 +193,8 @@ class RetailTaxTests(TransactionTestCase):
         form = self.get("/sales/quotes/new/")
         self.assertContains(form, f'value="{self.branch.pk}"')
         self.assertNotContains(form, f'value="{self.other.pk}"')
+        self.assertContains(form, "MAIN)")
+        self.assertEqual(self.post("/sales/quotes/new/", {"action": "add", "lines-TOTAL_FORMS": "999999"}).status_code, 400)
 
     def parallel(self, calls):
         barrier = Barrier(2)

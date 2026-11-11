@@ -78,6 +78,8 @@ class RetailTaxBrowserTests(StaticLiveServerTestCase):
             await self.fill_line(page, 0)
             await page.get_by_role("button", name="إضافة بند", exact=True).click()
             await expect(page.locator("#id_lines-0-unit_amount")).to_have_value("115")
+            await expect(page.locator(".field-error")).to_have_count(0)
+            await expect(page.locator("#id_branch_id option:checked")).to_contain_text("MAIN")
             await self.fill_line(page, 1)
             await page.locator("#id_document_discount_value").fill("23")
             await page.screenshot(path=str(fixtures.ARTIFACTS / "retail-tax-phone-form.png"), full_page=True)

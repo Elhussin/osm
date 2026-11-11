@@ -1,6 +1,7 @@
 import uuid
 from django import forms
 from django.forms import formset_factory
+from django.http import HttpResponseBadRequest
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
@@ -41,6 +42,7 @@ class QuoteForm(StyledForm):
     def __init__(self, *args, actor_id, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["branch_id"].queryset = visible_branches(actor_id, "invoice.read").filter(pk__in=visible_branches(actor_id, "invoice.create"))
+        self.fields["branch_id"].label_from_instance = lambda branch: f"{branch.name} ({branch.code})"
 
 
 class LineForm(StyledForm):
@@ -107,18 +109,18 @@ def quote_new(request):
     rows = Lines(request.POST if request.method == "POST" else None, prefix="lines")
     if request.method == "POST" and request.POST.get("action") == "add":
         # Add one row without JavaScript, without persisting a quote or altering entered values.
-        data = request.POST.copy()
         try:
-            count = int(data.get("lines-TOTAL_FORMS", "0"))
+            count = int(request.POST.get("lines-TOTAL_FORMS", "0"))
+            if not 1 <= count <= 40:
+                raise ValueError
         except ValueError:
-            count = 40
-        if 1 <= count < 40:
-            data["lines-TOTAL_FORMS"] = str(count + 1)
-            data[f"lines-{count}-quantity"] = "1"
-            data[f"lines-{count}-price_basis"] = "gross"
-            data[f"lines-{count}-discount_kind"] = "amount"
-            data[f"lines-{count}-discount_value"] = "0"
-            rows = Lines(data, prefix="lines")
+            return HttpResponseBadRequest("عدد بنود غير صالح")
+        header = {name: request.POST.get(name, "") for name in QuoteForm.base_fields}
+        initial = [{name: request.POST.get(f"lines-{index}-{name}", "") for name in LineForm.base_fields} | {"DELETE": request.POST.get(f"lines-{index}-DELETE") == "on"} for index in range(count)]
+        if count < 40:
+            initial.append(dict(quantity=1, price_basis="gross", discount_kind="amount", discount_value="0"))
+        form = QuoteForm(actor_id=request.user.pk, initial=header)
+        rows = Lines(initial=initial, prefix="lines")
         return page(request, "sales/quote_form.html", title="معاينة مبالغ البيع", active_page="quotes", form=form, rows=rows)
     if request.method == "POST" and form.is_valid() and rows.is_valid():
         values = form.cleaned_data.copy()
