@@ -1,5 +1,20 @@
 # سجل الاختبارات
 
+## T061 | passed
+Task: R10
+Step: R10-M04
+Date: 2026-11-11
+Command: GitHub Actions Rebuild foundation — pdm run check; pdm run migrations-check; pdm run migrate-shared; pdm run configure-runtime; pdm run verify-runtime
+Command: pdm run test
+Command: pdm run test-policy
+Command: pdm run test-browser
+Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
+Command: pwsh -NoProfile -File scripts/check-discovery.ps1
+
+نجح التشغيل الكامل https://github.com/Elhussin/osm/actions/runs/42997368170 للـcommit266bbebcd46114f605d84dd947a9ba2270ff14cd، job130444701870. تحققت من completed/success واستخرجت العد والزمن من سجل المهمة:282 Django/PostgreSQL خلال2354.386s، و48 سياسة خلال0.006s، و38 Chromium خلال242.904s؛ المجموع368 حالة فريدة. نجحت جميع خطوات الإعداد والـlock والترحيل والمنح والمتصفح وفحص الخطة والحصر؛ لا خطوة فاشلة. يشمل ذلك21 حالة M04 جديدة مع كل الوحدات السابقة، وترحيلات sales.0005–0007 والكود النهائي الذي راجع بصريًا.
+
+أغلقت R10-M04 وحدها وفق ADR0021 وT060/T061؛ R10 تبقى in_progress، والتالي M05 للفواتير والترحيل المحاسبي. أبقي T059 للفشل المصحح، ولا تضاعف إعادات التشغيل المحلية عدد الحالات. لا فاتورة أو تحصيل أو صرف أو قيد مالي أو اتصال مزود من M04؛ حفظ الطلب وحجزه لا يثبتان امتثال ZATCA أو SDK. بوابات Z01–Z06 واختيار الأجهزة في مراحلها، ولا بيانات حقيقية أو أسرار أو حذف أو تغيير legacy أو تبعيات أو دمج main أو نشر إنتاج. تحديث الإغلاق توثيقي فقط؛ مرجع الكود المختبر مثبت أعلاه.
+
 ## T060 | passed
 Task: R10
 Step: R10-M04

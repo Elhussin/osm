@@ -263,7 +263,9 @@
         "T054",
         "T055",
         "T057",
-        "T058"
+        "T058",
+        "T060",
+        "T061"
       ],
       "steps": [
         {
@@ -306,7 +308,7 @@
           "verified_code_commit": "c19ec3f0e1fc1fe26466c083fb1def0603d7625f"
         },
         {
-          "status": "in_progress",
+          "status": "done",
           "title": "Cash orders, prescription snapshots, pricing and reservation",
           "depends_on_steps": [
             "R10-M02",
@@ -314,8 +316,11 @@
           ],
           "id": "R10-M04",
           "evidence": [
-            "T060"
-          ]
+            "T060",
+            "T061"
+          ],
+          "ci_run": "https://github.com/Elhussin/osm/actions/runs/42997368170",
+          "verified_code_commit": "266bbebcd46114f605d84dd947a9ba2270ff14cd"
         },
         {
           "status": "pending",
@@ -384,5 +389,5 @@
       "evidence": []
     }
   ],
-  "next_step": "R10-M04"
+  "next_step": "R10-M05"
 }
