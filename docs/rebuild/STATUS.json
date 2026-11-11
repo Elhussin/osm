@@ -6,7 +6,7 @@
     "R13: supplied Waseel v2 docs reviewed locally; resolve W01-W07 in docs/rebuild/waseel/REVIEW.md, including claims/customer endpoints, auth response and sandbox activation. Sample credentials have not been used or validated.",
     "R10: device choices Q03-Q04 deferred by user. Q05 register shifts, custody, handover and count review verified in M02; payment-derived cash and reconciliation remain M06. First release is online-only.",
     "R10/R13 ZATCA: Z01-Z06 in docs/rebuild/zatca/REVIEW.md require official XML/data dictionary/API/SDK review, tax classification and provider-environment evidence before invoicing/integration activation; local fiscal profile does not prove compliance.",
-    "R10-M03: user confirmed line discounts followed by an additional order discount on final VAT-inclusive retail amounts. ADR0020 and CALCULATION_RULES define the tested technical scope and rounding support limit; real product classification approval, SDK and complete XML verification remain gated. Full regression verification pending."
+    "R10-M03 technical previews verified by T057/T058. Approve the real tax matrix and complete XML/SDK verification before invoicing activation; rounding differences beyond one halala remain outside the supported preview scope. Existing catalog prices remain tax-exclusive."
   ],
   "tasks": [
     {
@@ -261,7 +261,9 @@
         "T051",
         "T052",
         "T054",
-        "T055"
+        "T055",
+        "T057",
+        "T058"
       ],
       "steps": [
         {
@@ -290,15 +292,18 @@
           "verified_code_commit": "ae551f951bfad195ca7c6a609e71883c0987c996"
         },
         {
-          "status": "in_progress",
+          "status": "done",
           "title": "Reviewed tax classification, amounts and invoice snapshots",
           "depends_on_steps": [
             "R10-M01"
           ],
           "id": "R10-M03",
           "evidence": [
-            "T057"
-          ]
+            "T057",
+            "T058"
+          ],
+          "ci_run": "https://github.com/Elhussin/osm/actions/runs/42977551766",
+          "verified_code_commit": "c19ec3f0e1fc1fe26466c083fb1def0603d7625f"
         },
         {
           "status": "pending",
@@ -376,5 +381,5 @@
       "evidence": []
     }
   ],
-  "next_step": "R10-M03"
+  "next_step": "R10-M04"
 }

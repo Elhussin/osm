@@ -1,5 +1,22 @@
 # سجل الاختبارات
 
+## T058 | passed
+Task: R10
+Step: R10-M03
+Date: 2026-11-11
+Command: GitHub Actions Rebuild foundation — pdm run check; pdm run migrations-check; pdm run migrate-shared; pdm run configure-runtime; pdm run verify-runtime
+Command: pdm run test
+Command: pdm run test-policy
+Command: pdm run test-browser
+Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
+Command: pwsh -NoProfile -File scripts/check-discovery.ps1
+
+نجح التشغيل الكامل https://github.com/Elhussin/osm/actions/runs/42977551766 للـcommit c19ec3f0e1fc1fe26466c083fb1def0603d7625f، job130380057977. استخرجت العد والزمن من سجل المهمة بعد completed/success:263 Django/PostgreSQL خلال1915.547s، و48 سياسة خلال0.006s، و36 Chromium خلال224.564s؛ المجموع347 حالة فريدة. نجحت جميع خطوات الإعداد والـlock والترحيل والمنح وفحص الخطة والحصر؛ لا خطوة فاشلة. يشمل ذلك اختبارات الوحدات السابقة مع24 حالة M03 الجديدة، وتصحيح الواجهة النهائي.
+
+التشغيل الأول42976260775 للـcommit3d7d1e8 ألغي بعد استبداله بتصحيح الواجهة؛ نتيجته cancelled وليست passed أو فشل اختبار. لا يحتسب ضمن نجاح الإصدار النهائي. أبقي T056 للفشل المصحح وT057 للأدلة المحلية. أغلقت R10-M03 التقنية وحدها، وR10 تبقى in_progress؛ التالي M04 للطلب والعميل والوصفة والتسعير والحجز.
+
+القيود: معاينة SAR وتصنيف داخلي وحساب ضمن ADR0020 وحد فرق التقريب ±0.01. لا مصفوفة أصناف حقيقية معتمدة أو صحة تسجيل أو XML/SDK/توقيع/اتصال هيئة أو بيع/ترحيل/تحصيل من هذا الجزء؛ Z01 جزئية وZ02–Z06 مفتوحة في مراحلها. لا تعديل legacy أو حذف أو أسرار أو تبعيات أو دمج main أو نشر إنتاج. تحديث الإغلاق توثيقي فقط؛ مرجع الكود المختبر مثبت أعلاه.
+
 ## T056 | failed
 Task: R10
 Step: R10-M03
