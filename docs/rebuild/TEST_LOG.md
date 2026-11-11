@@ -713,3 +713,24 @@ Command: pwsh -NoProfile -File scripts/check-discovery.ps1
 Command: git diff --check
 
 نجحت الإعدادات والترحيلات (No changes detected) وlock، وطبق sales.0002/0003 على قاعدة التطوير المستقلة ثم حدثت المنح ونجح runtime. نجح فحص الخطة والحصر781 و10 مواصفات و6 حدود تصنيف وفحص المسافات. لا تغيير قوالب أدوار أو تبعيات أو ملفات legacy أو حذف أو نسخ أسرار/وسائط/بيانات حقيقية. M02 وR10 تبقيان in_progress إلى CI الكامل. المتوقع النقدي هنا العهدة الافتتاحية فقط؛ ربط الدفعات والمطابقة مع الدفتر ووقف التحصيل أثناء التسليم يثبت مجددًا في M06. M03–M07 وبوابات الضريبة/الفوترة والاتصال ما زالت مطلوبة؛ لا تسوية دفتر تلقائية أو امتثال/اتصال هيئة أو تأمين أو دمج main أو نشر إنتاج.
+
+## T055 | passed
+Task: R10
+Date: 2026-11-11
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs?branch=codex%2Fr03-foundation&per_page=5
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs/42962912458/jobs
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/jobs/130333419012/logs
+
+نجح التشغيل https://github.com/Elhussin/osm/actions/runs/42962912458 للـcommit ae551f951bfad195ca7c6a609e71883c0987c996؛ تحقق completed/success وSHA مطابق، وجميع مراحل job130333419012 ناجحة دون مرحلة فاشلة. استخرجت أعداد الاختبارات ومدتها فقط مع إزالة Authorization عند redirect ودون أسرار أو سجل البيئة أو رابط تخزين موقع:241 Django/PostgreSQL خلال1615.748 ثانية،48 سياسة خلال0.008 ثانية،34 Chromium خلال209.505 ثانية؛323 حالة فريدة كاملة.
+
+نجحت مراحل lock والإعداد والترحيلات والمنح والمجموعة الكاملة والسياسات والمتصفح والخطة والحصر. أغلقت R10-M02 فقط وفق ADR0019 وR10_CHECKLIST وT054/T055، بعد اكتمال M01. R10 تبقى in_progress؛ التالي M03 للمبالغ والتصنيف الضريبي والأسعار النهائية الشاملة عند الانطباق. لا دفع بيع أو تغير توقع من دفعات قبل M06، ولا قيد تسوية تلقائي من اعتماد الفرق. لا SQLite أو تغييرات legacy أو حذف أو بيانات/أسرار/وسائط حقيقية أو تغيير قوالب أو دمج main/نشر أو ادعاء امتثال/اتصال هيئة/تأمين.
+
+متابعة قراءة مستقلة أثناء انتظار CI: نجح جلب XML Standard وData Dictionary من رابطَي الهيئة الرسميين في zatca/SOURCES.json باستخدام Invoke-WebRequest -TimeoutSec 45 إلى rebuild/.tools/zatca-reference؛ تحقق توقيع PDF وحاوية ZIP وحجم كل ملف وSHA256 مع السجل ببرنامج Python المرفق. PDF1078080 بايت، وXLSX179857 بايت. أداة الويب قرأت إصدار XML1.2 وفهرسه؛ XLSX غير مدعوم فيها، فاستُخدمت مهارة Spreadsheets وأداة artifact-tool المرفقة قراءةً فقط للمقدمة Introduction!A1:D10 وB9:C14 وعناوين Data dictionary!A1:AB3. ثبت الإصدار1.2 بتاريخ2023-05-19، وبقيت البصمة مطابقة بعد القراءة. الملفات والمفتش المرحلي مستبعدة من Git؛ التتبع الملتزم metadata وروابط وبصمات ونطاق قراءة محدود فقط. لم تقرأ كل صفوف/أمثلة القاموس أو تحول القواعد لاختبارات ولم يشغل SDK؛ Z01/M03 ما زالت مفتوحة. هذا التحضير ليس من323 اختبارًا ولا يغير الكود المثبت على CI.
+
+Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
+Command: pwsh -NoProfile -File scripts/check-discovery.ps1
+Command: git diff --check
+
+إغلاق توثيقي دون تغيير الكود الوظيفي المثبت على CI؛ تسجل نتيجة فحوص الإغلاق التالية بعد تنفيذها. لا تعاد المجموعة الوظيفية بسبب الوثائق وحدها.
+
+نجحت فحوص الإغلاق: check-rebuild بكل حالات حماية التبعيات والأدلة وإغلاق parent، وcheck-discovery مع781 ملف legacy و10 مواصفات و6 حدود تصنيف، وgit diff --check دون أخطاء مسافات. سجل مصادر الهيئة يثبت إتاحة ونطاق قراءة محدودًا، وليس امتثالًا أو اختبار SDK.
