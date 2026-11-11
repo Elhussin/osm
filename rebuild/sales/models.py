@@ -135,3 +135,57 @@ class TaxQuote(models.Model):
 
     class Meta:
         constraints = [models.CheckConstraint(condition=Q(currency="SAR", as_of__gte="2020-07-01", net__gte=0, vat__gte=0, tax_inclusive=F("net")+F("vat"), payable=F("tax_inclusive")+F("payable_rounding"), payable__gte=0, payable_rounding__gte="-0.01", payable_rounding__lte="0.01"), name="sales_tax_quote_totals")]
+
+
+class SaleOrder(models.Model):
+    STATES = [("draft", "مسودة"), ("confirmed", "مؤكد"), ("cancelled", "ملغى")]
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    branch = models.ForeignKey("access.Branch", on_delete=models.PROTECT)
+    customer = models.ForeignKey("clinical.Customer", on_delete=models.PROTECT)
+    shift = models.ForeignKey(CashShift, on_delete=models.PROTECT)
+    state = models.CharField(max_length=10, choices=STATES, default="draft")
+    version = models.PositiveIntegerField(default=1)
+    current_revision = models.ForeignKey("OrderRevision", null=True, on_delete=models.PROTECT, related_name="current_for")
+    confirmed_quote = models.OneToOneField(TaxQuote, null=True, on_delete=models.PROTECT, related_name="confirmed_order")
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [models.CheckConstraint(condition=Q(version__gte=1, state__in=["draft", "confirmed", "cancelled"]) & (Q(state="draft", confirmed_quote__isnull=True) | Q(state="confirmed", confirmed_quote__isnull=False) | Q(state="cancelled")), name="sales_order_state")]
+
+
+class OrderRevision(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    order = models.ForeignKey(SaleOrder, on_delete=models.PROTECT, related_name="revisions")
+    version = models.PositiveIntegerField()
+    quote = models.OneToOneField(TaxQuote, on_delete=models.PROTECT, related_name="order_revision")
+    prescription_revision = models.ForeignKey("clinical.PrescriptionRevision", null=True, on_delete=models.PROTECT)
+    snapshot = models.JSONField()
+    positions = models.JSONField(default=list)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["order", "version"], name="sales_order_revision_version"), models.CheckConstraint(condition=Q(version__gte=1), name="sales_order_revision_positive")]
+
+
+class OrderEvent(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    order = models.ForeignKey(SaleOrder, on_delete=models.PROTECT, related_name="events")
+    version = models.PositiveIntegerField()
+    kind = models.CharField(max_length=12, choices=[("saved", "حفظ مسودة"), ("confirmed", "تأكيد وحجز"), ("cancelled", "إلغاء وتحرير")])
+    operation_key = models.UUIDField(unique=True)
+    payload_digest = models.CharField(max_length=64)
+    reason = models.CharField(max_length=300)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["order", "version"], name="sales_order_event_version"), models.CheckConstraint(condition=Q(version__gte=1, kind__in=["saved", "confirmed", "cancelled"]), name="sales_order_event_kind")]
+
+
+class OrderHold(models.Model):
+    revision = models.ForeignKey(OrderRevision, on_delete=models.PROTECT, related_name="holds")
+    position = models.PositiveSmallIntegerField()
+    reservation = models.OneToOneField("inventory.StockReservation", on_delete=models.PROTECT, related_name="sale_hold")
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["revision", "position"], name="sales_order_hold_line"), models.CheckConstraint(condition=Q(position__gte=1, position__lte=40), name="sales_order_hold_position")]

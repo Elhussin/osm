@@ -1,7 +1,7 @@
 import uuid
 from django import forms
 from django.forms import formset_factory
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, Http404, HttpResponse
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
@@ -16,6 +16,7 @@ from finance.setup_views import attempt
 from .models import TaxTreatmentRevision
 from .tax_codes import REASONS
 from .taxes import require_tax_reader, revise_treatment, quotes_for, create_tax_quote
+from clinical.services import customers_for
 
 
 class TreatmentForm(StyledForm):
@@ -105,8 +106,36 @@ def quote_list(request):
 @secured()
 def quote_new(request):
     require(request.user.pk, "catalog.read")
-    form = QuoteForm(request.POST if request.method == "POST" else None, actor_id=request.user.pk, initial={"as_of": timezone.localdate(), "operation_key": uuid.uuid4()})
-    rows = Lines(request.POST if request.method == "POST" else None, prefix="lines")
+    order = None
+    selected_customer = None
+    initial = {"as_of": timezone.localdate(), "operation_key": uuid.uuid4()}
+    line_initial = None
+    try:
+        for parameter in ("order", "customer"):
+            if request.GET.get(parameter):
+                uuid.UUID(request.GET[parameter])
+    except (ValueError, AttributeError):
+        raise Http404 from None
+    if request.GET.get("order"):
+        from .orders import orders_for
+        order = get_object_or_404(orders_for(request.user.pk).select_related("customer", "current_revision__quote"), pk=request.GET["order"], state="draft")
+        require(request.user.pk, "invoice.create", [order.branch_id])
+        if request.GET.get("order_version") != str(order.version):
+            return HttpResponse("تغير الطلب؛ أعد فتحه وراجع آخر إصدار.", status=409)
+        selected_customer = order.customer
+        initial.update(branch_id=order.branch_id)
+        initial.update(document_discount_kind=order.current_revision.quote.payload["document_discount_input"]["kind"], document_discount_value=order.current_revision.quote.payload["document_discount_input"]["value"])
+        line_initial = order.current_revision.quote.payload["inputs"]
+    elif request.GET.get("customer"):
+        selected_customer = get_object_or_404(customers_for(request.user.pk), pk=request.GET["customer"], active=True)
+    form = QuoteForm(request.POST if request.method == "POST" else None, actor_id=request.user.pk, initial=initial)
+    if selected_customer:
+        form.fields["customer_identifier"].widget = forms.HiddenInput()
+        form.fields["customer_identifier"].required = False
+        form.fields["branch_id"].queryset = form.fields["branch_id"].queryset.filter(customerbranchaccess__customer=selected_customer)
+        if order:
+            form.fields["branch_id"].queryset = form.fields["branch_id"].queryset.filter(pk=order.branch_id)
+    rows = Lines(request.POST if request.method == "POST" else None, initial=line_initial, prefix="lines")
     if request.method == "POST" and request.POST.get("action") == "add":
         # Add one row without JavaScript, without persisting a quote or altering entered values.
         try:
@@ -121,13 +150,18 @@ def quote_new(request):
             initial.append(dict(quantity=1, price_basis="gross", discount_kind="amount", discount_value="0"))
         form = QuoteForm(actor_id=request.user.pk, initial=header)
         rows = Lines(initial=initial, prefix="lines")
-        return page(request, "sales/quote_form.html", title="معاينة مبالغ البيع", active_page="quotes", form=form, rows=rows)
+        if selected_customer:
+            form.fields["customer_identifier"].widget = forms.HiddenInput()
+            form.fields["branch_id"].queryset = form.fields["branch_id"].queryset.filter(customerbranchaccess__customer=selected_customer)
+            if order:
+                form.fields["branch_id"].queryset = form.fields["branch_id"].queryset.filter(pk=order.branch_id)
+        return page(request, "sales/quote_form.html", title="معاينة مبالغ البيع", active_page="quotes", form=form, rows=rows, selected_customer=selected_customer)
     if request.method == "POST" and form.is_valid() and rows.is_valid():
         values = form.cleaned_data.copy()
         identifier = values.pop("customer_identifier")
         branch = values.pop("branch_id")
-        customer_id = None
-        if identifier:
+        customer_id = selected_customer.pk if selected_customer else None
+        if identifier and selected_customer is None:
             require(request.user.pk, "customer.read", [branch.pk])
             customer = Customer.objects.filter(identifier=identifier, active=True, branch_links__branch=branch).first()
             if customer is None:
@@ -138,8 +172,11 @@ def quote_new(request):
             result = attempt(form, lambda: create_tax_quote(request.user.pk, branch_id=branch.pk, customer_id=customer_id,
                 lines=[{key: value for key, value in row.items() if key != "DELETE"} for row in rows.cleaned_data if row and not row.get("DELETE")], **values))
             if result:
+                if order:
+                    from django.urls import reverse
+                    return redirect(reverse("sales-order-save", kwargs={"order_id": order.pk, "quote_id": result.pk}) + "?version=" + str(order.version))
                 return redirect("sales-quote", quote_id=result.pk)
-    return page(request, "sales/quote_form.html", title="معاينة مبالغ البيع", active_page="quotes", form=form, rows=rows, status=422 if form.errors or rows.errors or rows.non_form_errors() else 200)
+    return page(request, "sales/quote_form.html", title="معاينة مبالغ البيع", active_page="quotes", form=form, rows=rows, selected_customer=selected_customer, status=422 if form.errors or rows.errors or rows.non_form_errors() else 200)
 
 
 @require_http_methods(["GET"])

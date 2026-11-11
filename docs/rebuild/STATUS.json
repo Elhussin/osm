@@ -306,13 +306,16 @@
           "verified_code_commit": "c19ec3f0e1fc1fe26466c083fb1def0603d7625f"
         },
         {
-          "status": "pending",
+          "status": "in_progress",
           "title": "Cash orders, prescription snapshots, pricing and reservation",
           "depends_on_steps": [
             "R10-M02",
             "R10-M03"
           ],
-          "id": "R10-M04"
+          "id": "R10-M04",
+          "evidence": [
+            "T060"
+          ]
         },
         {
           "status": "pending",

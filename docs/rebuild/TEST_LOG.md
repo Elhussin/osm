@@ -1,5 +1,54 @@
 # سجل الاختبارات
 
+## T060 | passed
+Task: R10
+Step: R10-M04
+Date: 2026-11-11
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k CashOrderTests --failfast
+
+نجحت18/18 حالة خلال537.373s على PostgreSQL بقاعدة الاختبار المستقلة test_optics_rebuild_dev. يشمل ذلك المسودة والتأكيد والإلغاء والتكرار والمفاتيح الفرعية المحجوزة مسبقًا وآخر كمية وrollback وتغيّر العميل والسعر والتصنيف والفحص والوردية، وصورة الفحص وغيابها، والخدمة وعدسة التصنيع، والتتبع المنتهي والبحث المقيد، وعزل الشركة والفرع والعميل وغياب الجداول من public، والمنح وتشغيل تأكيد/إلغاء تحت runtime مقيد. لم تضف صلاحيات مخزون عامة للكاشير، ومنعت خدمات المخزون اليدوية من تغيير حجز الطلب.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k test_foreign_patient_bindings_and_sql_hold_transition_guards -k ReservationTests --failfast
+
+نجحت14/14 خلال391.548s:13 اختبار حجز سابق تثبت بقاء الصرف والتحرير والعكس والتنافس والتكرار والصلاحيات وHTTP/CSRF والمنح والذرية، واختبار M04 إضافي يرفض عميلًا أو فحصًا لعميل آخر، ويثبت خطأ order hold scope mismatch لحجز فرع/بند غير مطابق وخطأ invalid order transition لمحاولة إعادة فتح الطلب المؤكد. إجمالي M04 الجديد حتى هذه النقطة19 حالة PostgreSQL/HTTP؛ لا يحتسب أي تشغيل T059 الفاشل نجاحًا.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser -k CashOrderBrowserTests -k RetailTaxBrowserTests --failfast
+
+نجحت4/4 Chromium خلال98.956s: تدفق طلب سطح المكتب من العميل بلا معرف خارجي إلى التسعير والمسودة وإعادة التسعير230 والتأكيد والإلغاء، وهاتف390 دون JavaScript حتى التأكيد، واختبارا M03 السابقان للتصنيف والخصمين. الصور الصناعية المستبعدة cash-order-desktop-confirmed.png وcash-order-phone-confirmed.png راجعت بصريًا؛ الجداول داخل تمرير أفقي ولا تجاوز عرض body.
+
+المراجعة كشفت عرض التأكيد كخيار افتراضي بعد التأكيد؛ صحح GET ليعرض الإلغاء فقط، مع بقاء إعادة طلب التأكيد المحفوظ عبر POST للخدمة التي تعيد التفويض. أعيد اختبار HTTP ذي الصلة1/1 خلال30.760s، ومتصفح الطلب2/2 خلال50.441s مع تأكيد اختيار cancel بعد التأكيد، وأعيدت مراجعة الصورتين. لا تغيير محرك الحساب أو المخزون من تصحيح العرض. الإجمالي المحلي36 حالة فريدة مرتبطة بالتغيير، منها21 حالة M04 جديدة و15 حالة سابقة؛ إعادة التشغيل لا تضاعف العد.
+
+ضبطت تسمية confirmed إلى «مؤكد» حتى لا يوحي الطلب غير المخزني بحجز فعلي أو تنفيذ جاهز؛ القيم المخزنة draft/confirmed/cancelled ثابتة. ولد وطبق ترحيل وصف الحقل sales.0007، ونجح migrations-check، وأعيد متصفح الطلب2/2 خلال60.415s ثم مراجعة صورتي سطح المكتب والهاتف النهائيتين. أعيد configure-runtime وverify-runtime بعد آخر ترحيل بنجاح. يثبت الحجز من OrderHold وأحداث المخزون، وليس من تسمية الحالة.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k test_http_customer_without_identifier_order_csrf_and_forgery --failfast
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser -k CashOrderBrowserTests --failfast
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run migrations-check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run migrate-all
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run configure-runtime
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run verify-runtime
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 lock --check
+Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
+Command: pwsh -NoProfile -File scripts/check-discovery.ps1
+Command: git diff --check
+
+نجحت الإعدادات وNo changes detected والـlock والمنح وفحص الخطة والحصر781 و10 مواصفات و6 حدود تصنيف والمسافات. طبق sales.0005/0006 على قاعدة التطوير المستقلة، ثم حدثت المنح ونجح verify-runtime. لا تغيير legacy أو تبعيات أو حذف أو أسرار. هذا إثبات محلي محدد؛ M04 تبقى in_progress إلى التحقق الشامل، دون فاتورة أو تحصيل أو SDK أو اتصال بالهيئة.
+
+## T059 | failed
+Task: R10
+Step: R10-M04
+Date: 2026-11-11
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run manage makemigrations sales
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run python manage.py makemigrations sales
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k CashOrderTests
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k test_cashier_confirm_and_cancel_without_general_inventory_permission --failfast
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k CashOrderTests --failfast
+
+أمر توليد الترحيل الأول استخدم اسم script غير موجود manage؛ صحح إلى run python manage.py، ونجح التوليد وفحص Django. أول13 حالة انتهت152.642s بأخطاء إنشاء مخطط الاختبار: تعبير CASE في حارس PL/pgSQL احتاج أقواسًا داخل IF؛ لا حالات وظيفية ناجحة من هذا التشغيل. صححت الصياغة، ثم نجح مسار التأكيد والإلغاء المنفرد1/1 خلال28.306s.
+
+تشغيل failfast التالي توقف بعد6 حالات خلال188.747s بخطأ اختبار العزل: helper جلب نموذج الشركة A داخل B قبل استدعاء الخدمة. صحح الاختبار لاستدعاء الخدمة بمعرف المستند مباشرة، مع توقع PermissionDenied. تشغيل تالٍ توقف بعد9 حالات خلال276.335s بسبب NoReverseMatch لعرض إصدار الطلب؛ أضيف القالب أثناء تشغيل العملية التي كانت قد حملت URLs القديمة. لا يحتسب هذا التشغيل نجاحًا للكود النهائي؛ جمدت الكود والقوالب والروابط وأعدت المجموعة من عملية جديدة متسقة. ظلت M04 in_progress؛ نتائج التحقق النهائي تسجل منفصلة بعد ظهورها.
+
 ## T058 | passed
 Task: R10
 Step: R10-M03

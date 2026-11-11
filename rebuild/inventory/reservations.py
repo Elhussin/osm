@@ -67,6 +67,11 @@ def _event(actor_id, reservation, balance, *, kind, quantity, key, fingerprint, 
 def reserve_stock(actor_id, *, branch_id, variant_id, quantity, operation_key, reason, reference="", position_id=None):
     lock_access()
     _authorize(actor_id, branch_id, "stock.reserve")
+    return _reserve_stock(actor_id, branch_id=branch_id, variant_id=variant_id, quantity=quantity, operation_key=operation_key, reason=reason, reference=reference, position_id=position_id)
+
+
+def _reserve_stock(actor_id, *, branch_id, variant_id, quantity, operation_key, reason, reference="", position_id=None):
+    """Private core: caller holds AccessLock and has authorized the owning workflow."""
     quantity = _integer(quantity, "الكمية عدد صحيح موجب حتى1000000.")
     if not isinstance(reference, str) or len(reference.strip()) > 100:
         raise ValidationError("المرجع حتى100 حرف.")
@@ -93,10 +98,24 @@ def reserve_stock(actor_id, *, branch_id, variant_id, quantity, operation_key, r
 @transaction.atomic
 def change_reservation(actor_id, *, reservation_id, kind, expected_version, operation_key, reason, quantity=None, issue_id=None):
     lock_access()
-    if kind not in {"issue", "release", "cancel", "reverse_issue"}:
+    reservation = StockReservation.objects.get(pk=reservation_id)
+    _authorize(actor_id, reservation.branch_id, "stock.reverse" if kind == "reverse_issue" else "stock.issue" if kind == "issue" else "stock.reserve")
+    from sales.models import OrderHold
+    from django.db import connection
+    # Migration verification may temporarily run an older inventory schema.
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT to_regclass(%s)", [connection.schema_name + ".sales_orderhold"])
+        has_orders = cursor.fetchone()[0] is not None
+    if has_orders and OrderHold.objects.filter(reservation_id=reservation_id).exists():
+        raise ValidationError("الحجز مرتبط بطلب بيع؛ استخدم مسار المبيعات.")
+    return _change_reservation(actor_id, reservation_id=reservation_id, kind=kind, expected_version=expected_version, operation_key=operation_key, reason=reason, quantity=quantity, issue_id=issue_id)
+
+
+def _change_reservation(actor_id, *, reservation_id, kind, expected_version, operation_key, reason, quantity=None, issue_id=None):
+    """Private core for an already authorized inventory or sales operation."""
+    if kind not in ("issue", "release", "cancel", "reverse_issue"):
         raise ValidationError("إجراء غير معروف.")
     reservation = StockReservation.objects.select_for_update().get(pk=reservation_id)
-    _authorize(actor_id, reservation.branch_id, "stock.reverse" if kind == "reverse_issue" else "stock.issue" if kind == "issue" else "stock.reserve")
     version = _integer(expected_version, "إصدار الحجز غير صالح.", maximum=2147483647)
     amount = _integer(quantity, "الكمية عدد صحيح موجب حتى1000000.") if kind in {"issue", "release"} else None
     key, fingerprint, reason, previous = _request(actor_id, operation_key, reason, kind=kind, reservation=reservation.pk,

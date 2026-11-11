@@ -23,6 +23,7 @@ EVENT_LABELS = {
     "stock.transfer_posted": "تحويل مخزون بين الفروع", "stock.count_posted": "اعتماد جرد مخزون", "stock.operation_reversed": "عكس تحويل أو جرد",
     "stock.reserve": "حجز مخزون", "stock.issue": "صرف مخزون محجوز", "stock.release": "تحرير حجز مخزون", "stock.cancel": "إلغاء المتبقي من حجز", "stock.reverse_issue": "عكس صرف مخزون",
     "stock.received": "استلام مخزون", "stock.receipt_reversed": "عكس إضافة مخزون",
+    "sales.order.saved": "حفظ طلب بيع", "sales.order.confirmed": "تأكيد طلب وحجز", "sales.order.cancelled": "إلغاء طلب وتحرير",
     "sales.tax.revised": "مراجعة تصنيف ضريبي", "sales.tax.quote_created": "حفظ معاينة مبالغ بيع",
     "catalog.product_created": "إضافة منتج", "catalog.product_updated": "تحديث منتج", "catalog.variant_created": "إضافة متغير", "catalog.variant_updated": "تحديث سعر متغير", "catalog.price_rule_created": "إضافة قاعدة سعر", "catalog.price_rule_disabled": "إيقاف قاعدة سعر",
     "customer.created": "إضافة عميل", "customer.updated": "تحديث بيانات عميل", "customer.shared": "مشاركة بيانات عميل", "prescription.created": "تسجيل فحص ووصفة", "prescription.corrected": "تصحيح وصفة بإصدار جديد", "prescription.image_viewed": "عرض صورة فحص",

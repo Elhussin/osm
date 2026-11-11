@@ -23,6 +23,7 @@ def ui_context(request):
     result["can_shifts"] = any(permits(principal, context, "payment.read", ResourceScope(context.company_id, frozenset([pk])), grants) for pk in branch_ids)
     result["can_taxes"] = flags["can_catalog"] and flags["can_ledger"]
     result["can_quotes"] = flags["can_catalog"] and any(permits(principal, context, "invoice.read", ResourceScope(context.company_id, frozenset([pk])), grants) for pk in branch_ids)
+    result["can_orders"] = result["can_quotes"] and result["can_customers"]
     branches = list(Branch.objects.filter(pk__in=branch_ids).order_by("code"))
     selected = next((b for b in branches if str(b.pk) == request.session.get("selected_branch")), None)
     result.update(flags, is_signed_in=True, user_branches=branches, selected_branch=selected)

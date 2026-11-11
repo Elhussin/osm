@@ -13,8 +13,15 @@ from finance import report_views as reports
 from sales import views as sales
 from sales import shift_views as shifts
 from sales import tax_views as taxes
+from sales import order_views as orders
 
 urlpatterns = [
+    path("sales/orders/", orders.order_list, name="sales-orders"),
+    path("sales/orders/new/<uuid:quote_id>/", orders.order_save, name="sales-order-new"),
+    path("sales/orders/<uuid:order_id>/review/<uuid:quote_id>/", orders.order_save, name="sales-order-save"),
+    path("sales/orders/<uuid:order_id>/requote/", orders.order_requote, name="sales-order-requote"),
+    path("sales/orders/<uuid:order_id>/", orders.order_detail, name="sales-order"),
+    path("sales/orders/<uuid:order_id>/revisions/<int:version>/", orders.order_revision, name="sales-order-revision"),
     path("sales/taxes/", taxes.treatments, name="sales-treatments"),
     path("sales/taxes/<uuid:variant_id>/", taxes.treatment_detail, name="sales-treatment"),
     path("sales/quotes/", taxes.quote_list, name="sales-quotes"),
