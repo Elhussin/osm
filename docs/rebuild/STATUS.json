@@ -6,7 +6,7 @@
     "R13: supplied Waseel v2 docs reviewed locally; resolve W01-W07 in docs/rebuild/waseel/REVIEW.md, including claims/customer endpoints, auth response and sandbox activation. Sample credentials have not been used or validated.",
     "R10: device choices Q03-Q04 deferred by user. Q05 resolved: one shift per cash register, assigned cashier and recorded staff handovers; implementation and verification remain R10. First release is online-only.",
     "R10/R13 ZATCA: Z01-Z06 in docs/rebuild/zatca/REVIEW.md require official XML/data dictionary/API/SDK review, tax classification and provider-environment evidence before invoicing/integration activation; local fiscal profile does not prove compliance.",
-    "R10-M03: Q10 retail price entry basis was asked and is pending, together with discount/rounding policy and official tax classification review. Existing catalog prices remain tax-exclusive per ADR0008; this does not block register configuration or shift design."
+    "R10-M03: Q10 retail entry basis resolved by user: final tax-inclusive retail price where tax applies. Discount/rounding policy and official tax classification review remain pending. Existing tax-exclusive catalog prices retain their meaning until an explicit tested conversion is implemented."
   ],
   "tasks": [
     {
