@@ -612,3 +612,22 @@ Command: pwsh -NoProfile -File scripts/check-discovery.ps1
 Command: git diff --check
 
 نجحت فحوص lock والإعداد والترحيلات (No changes detected) وruntime، والخطة والحصر781 وفحص المسافات. لا تغييرات نماذج أو ترحيلات جديدة أو ملفات legacy أو حذف أو بيانات حقيقية.12 حالة جديدة فريدة؛ الإغلاق ينتظر CI الكامل ولا يعد هذا تشغيلًا كاملًا للوحدات السابقة. M04 وR09 تبقيان in_progress، لا SDK/امتثال/اتصال هيئة أو فاتورة أو تقييم مخزون تلقائي من التقارير. حدود عدد الحسابات/التصدير/الأداء الأوسع موثقة ADR0017 وR14.
+
+## T050 | passed
+Task: R09
+Date: 2026-11-11
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs?branch=codex%2Fr03-foundation&per_page=5
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs/42889136078/jobs
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/jobs/130085281629/logs
+
+نجح التشغيل https://github.com/Elhussin/osm/actions/runs/42889136078 للـcommit707b0815b930170f6608f2efd16167d8ce5be9d7؛ تحقق completed/success وSHA مطابق، وجميع مراحل job130085281629 ناجحة دون مرحلة فاشلة. استخرجت أعداد الاختبارات ومدتها فقط من السجل مع إزالة Authorization عند redirect ودون طباعة أسرار/سجل البيئة/رابط تخزين موقع:209 Django/PostgreSQL خلال917.340 ثانية،48 سياسة خلال0.006 ثانية،30 Chromium خلال132.253 ثانية؛287 حالة فريدة كاملة.
+
+نجحت مراحل lock والإعداد والترحيلات والمنح ومجموعة PostgreSQL والسياسات والمتصفح والخطة والحصر. أغلقت R09-M04 وفق ADR0017 وR09_CHECKLIST وT049/T050، ثم R09 بعد اكتمال كل M01–M04 وتبعيتها R08. فشل T047/T048 محفوظ بإصلاحاته وإعاداته؛ لا تحسب إعادات الاختبارات ضمن العدد الفريد. التالي R10 للبيع النقدي والفوترة وفق بوابات التصنيف الضريبي؛ حسم المستخدم Q05 عند الإغلاق: وردية للصندوق بعهدة كاشير وتسليم موثق، والتنفيذ R10. الأجهزة مؤجلة وبوابات Z01–Z06/W01–W07 مستمرة. لا SQLite أو تغييرات legacy/حذف/ترحيلات جديدة/بيانات حقيقية أو نشر/دمج main أو ادعاء امتثال أو اتصال هيئة/تأمين.
+
+Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
+Command: pwsh -NoProfile -File scripts/check-discovery.ps1
+Command: git diff --check
+
+إغلاق توثيقي بعد تثبيت الكود المختبر؛ تسجل نتيجة فحوص الإغلاق التالية بعد تنفيذها، ولا تعاد مجموعة الأعمال بسبب الوثائق وحدها.
+
+نجحت فحوص إغلاق التوثيق: check-rebuild بكل حالات الحماية، وcheck-discovery مع781 ملف legacy و10 مواصفات قبول و6 حدود تصنيف، وgit diff --check دون أخطاء مسافات. حسم Q05 قرار متطلبات مستقبلي فقط، دون تغيير الكود المثبت على CI أو إضافة ورديات غير مختبرة.

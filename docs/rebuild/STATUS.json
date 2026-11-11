@@ -1,10 +1,10 @@
 {
-  "updated": "2026-11-10",
-  "current_task": "R09",
-  "next_task": "R09",
+  "updated": "2026-11-11",
+  "current_task": "R10",
+  "next_task": "R10",
   "blockers": [
     "R13: supplied Waseel v2 docs reviewed locally; resolve W01-W07 in docs/rebuild/waseel/REVIEW.md, including claims/customer endpoints, auth response and sandbox activation. Sample credentials have not been used or validated.",
-    "R10: device choices Q03-Q04 deferred by user; cash shift requirements Q05 remain open. First release is online-only.",
+    "R10: device choices Q03-Q04 deferred by user. Q05 resolved: one shift per cash register, assigned cashier and recorded staff handovers; implementation and verification remain R10. First release is online-only.",
     "R10/R13 ZATCA: Z01-Z06 in docs/rebuild/zatca/REVIEW.md require official XML/data dictionary/API/SDK review, tax classification and provider-environment evidence before invoicing/integration activation; local fiscal profile does not prove compliance."
   ],
   "tasks": [
@@ -187,7 +187,7 @@
     },
     {
       "id": "R09",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "R08"
       ],
@@ -198,7 +198,8 @@
         "T043",
         "T045",
         "T046",
-        "T049"
+        "T049",
+        "T050"
       ],
       "steps": [
         {
@@ -235,14 +236,19 @@
           "verified_code_commit": "dbd459d045fcbef144cf1ef8ff1dd796f59cc289"
         },
         {
-          "status": "in_progress",
+          "status": "done",
           "title": "Accounting workflows, trial balance and verification",
           "id": "R09-M04",
           "evidence": [
-            "T049"
-          ]
+            "T049",
+            "T050"
+          ],
+          "ci_run": "https://github.com/Elhussin/osm/actions/runs/42889136078",
+          "verified_code_commit": "707b0815b930170f6608f2efd16167d8ce5be9d7"
         }
-      ]
+      ],
+      "ci_run": "https://github.com/Elhussin/osm/actions/runs/42889136078",
+      "verified_code_commit": "707b0815b930170f6608f2efd16167d8ce5be9d7"
     },
     {
       "id": "R10",
@@ -293,5 +299,5 @@
       "evidence": []
     }
   ],
-  "next_step": "R09-M04"
+  "next_step": "R10"
 }
