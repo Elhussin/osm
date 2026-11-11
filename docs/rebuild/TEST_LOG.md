@@ -654,3 +654,22 @@ Command: pwsh -NoProfile -File scripts/check-discovery.ps1
 Command: git diff --check
 
 نجحت الإعدادات (0 مشكلات) والترحيلات (No changes detected) وlock؛ طبق sales.0001 على قاعدة التطوير المستقلة ثم حدثت المنح ونجح runtime. نجح فحص الخطة والحصر781 و10 مواصفات و6 حدود تصنيف وفحص المسافات. لا تبعيات جديدة أو تغيير lock أو قوالب أدوار أو ملفات legacy أو حذف أو نسخ أسرار/بيانات/وسائط. R10-M01 وR10 تبقيان in_progress إلى CI الكامل. التالي M02 للورديات والعهدة والتسليم والإغلاق، وحارس منع تعطيل صندوق ذي وردية يجب إثباته عند وجود النموذج في M02؛ غير منفذ هنا. M03–M07 وبوابات الضريبة/الفواتير والاتصال ما زالت مطلوبة؛ لا امتثال أو اتصال ZATCA/تأمين أو دمج main أو نشر إنتاج.
+
+## T052 | passed
+Task: R10
+Date: 2026-11-11
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs?branch=codex%2Fr03-foundation&per_page=5
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/runs/42955925012/jobs
+Command: GET https://api.github.com/repos/Elhussin/osm/actions/jobs/130310880236/logs
+
+نجح التشغيل https://github.com/Elhussin/osm/actions/runs/42955925012 للـcommit06e88e7b037e4d0059fa96e52caadb695dcfa1a1؛ تحقق completed/success وSHA مطابق، وجميع مراحل job130310880236 ناجحة دون مرحلة فاشلة. استخرجت أعداد الاختبارات ومدتها فقط مع إزالة Authorization عند redirect ودون أسرار أو سجل البيئة أو رابط تخزين موقع:221 Django/PostgreSQL خلال1371.290 ثانية،48 سياسة خلال0.008 ثانية،32 Chromium خلال184.566 ثانية؛301 حالة فريدة كاملة.
+
+نجحت مراحل lock والإعداد والترحيلات والمنح ومجموعة PostgreSQL والسياسات والمتصفح والخطة والحصر. أغلقت R10-M01 فقط وفق ADR0018 وR10_CHECKLIST وأدلة T051/T052 بعد اكتمال تبعيتها R09. R10 تبقى in_progress؛ التالي M02 للورديات والعهدة والتسليم والإغلاق، ومعايير M02–M07 موثقة لكنها غير منفذة. سؤال Q10 عن إدخال سعر التجزئة مطروح ولم تجب عنه المحادثة بعد؛ يبقى مفتوحًا قبل جزء التسعير دون افتراض تغيير أسعار الكتالوج قبل الضريبة، ولا يمنع تصميم الورديات. الأجهزة وبوابات Z01–Z06/W01–W07 مستمرة. لا SQLite أو تغيير legacy أو حذف أو نسخ بيانات/أسرار/وسائط أو تغيير قوالب أدوار أو دمج main/نشر إنتاج أو ادعاء امتثال/اتصال هيئة/تأمين.
+
+Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
+Command: pwsh -NoProfile -File scripts/check-discovery.ps1
+Command: git diff --check
+
+إغلاق الوثائق دون تغيير الكود الوظيفي المثبت على CI؛ تسجل نتيجة فحوص الإغلاق التالية بعد تنفيذها. لا تعاد المجموعة الوظيفية بسبب تحديث الوثائق وحده.
+
+نجحت فحوص الإغلاق: check-rebuild بكل حالات حماية التبعيات والأدلة وإغلاق parent، وcheck-discovery مع781 ملف legacy و10 مواصفات و6 حدود تصنيف، وgit diff --check دون أخطاء مسافات. فحص الحصر ثابت ولا يحل محل المجموعة الوظيفية الناجحة أعلاه.
