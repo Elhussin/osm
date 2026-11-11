@@ -166,3 +166,6 @@ Chromium معزول، والصور الصناعية في rebuild/.tools/ui-artif
 
 ## صناديق البيع R10-M01
 /sales/registers/ لإدارة الصناديق. يلزم company.manage وledger.read وledger.post مع payment.read ووصول الفرع؛ حساب نقدي مستقل أصل مدين نشط ومن نوع ترحيل. الرمز والفرع والحساب ثابتة؛ الاسم والحالة تتغير بتاريخ. لا فتح ورديات أو تحصيل من هذا الجزء. بعد الترحيل طبق configure-runtime ثم verify-runtime؛ تحقق الجزء: pdm run test -k CashRegisterTests، ثم pdm run test-browser -k CashRegisterBrowserTests. المجموعة الافتراضية تشمل sales_tests.
+
+## الورديات والعهدة R10-M02
+/sales/shifts/ للقراءة ضمن payment.read، وفتح وردية للنفس وجرد/تسليم مع payment.record. فرق الجرد يدخل review حتى اعتماد مشرف payment.reverse؛ لا يسوى الدفتر تلقائيًا. عند تعطيل الحائز يلغي المشرف الطلب المعلق ثم يقدم الجرد بحسابه. لا تحصيل بيع بعد، والمتوقع العهدة الافتتاحية فقط. طبق migrate-all ثم configure-runtime وverify-runtime؛ تحقق الجزء: pdm run test -k ShiftWorkflowTests -k ShiftHttpTests، ثم pdm run test-browser -k CashShiftBrowserTests. لا تعطيل لصندوق ذي وردية غير مغلقة.

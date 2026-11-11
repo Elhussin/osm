@@ -115,6 +115,8 @@ def change_register(actor_id, *, register_id, action, expected_version, operatio
         active = action == "activate"
         if register.active == active:
             raise ValidationError("حالة الصندوق مطابقة بالفعل.")
+        if not active and register.shifts.exclude(state="closed").exists():
+            raise ValidationError("لا يمكن تعطيل صندوق له وردية غير مغلقة أو تسليم معلق.")
         if active:
             _cash_account(register.cash_account.code)
         register.active = active

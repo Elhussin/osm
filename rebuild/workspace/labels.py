@@ -14,6 +14,7 @@ ACTION_LABELS = {
     "stock.read": "عرض المخزون", "stock.reserve": "حجز المخزون", "stock.transfer": "تحويل المخزون", "insurance.read": "عرض ملفات التأمين", "insurance.prepare": "إعداد طلبات التأمين", "insurance.submit": "إرسال طلبات التأمين", "reports.read": "عرض التقارير", "data.export": "تصدير البيانات",
 }
 EVENT_LABELS = {
+    "sales.shift.opened": "فتح وردية", "sales.shift.handover_requested": "طلب تسليم عهدة", "sales.shift.handover_accepted": "قبول استلام عهدة", "sales.shift.handover_cancelled": "إلغاء تسليم عهدة", "sales.shift.handover_rejected": "رفض استلام عهدة", "sales.shift.count_submitted": "تسجيل جرد الإغلاق", "sales.shift.variance_approved": "اعتماد فرق الجرد",
     "sales.register.created": "إنشاء صندوق بيع", "sales.register.renamed": "تغيير اسم صندوق", "sales.register.activated": "تفعيل صندوق بيع", "sales.register.disabled": "تعطيل صندوق بيع",
     "finance.draft_created": "إنشاء مسودة قيد", "finance.draft_revised": "حفظ إصدار قيد", "finance.draft_cancelled": "إلغاء مسودة قيد", "finance.journal_posted": "ترحيل قيد محاسبي", "finance.journal_reversed": "عكس قيد محاسبي", "finance.period_voided": "إلغاء فترة غير مستخدمة",
     "finance.account_created": "إنشاء حساب محاسبي", "finance.account_renamed": "تغيير اسم حساب", "finance.account_activated": "تفعيل حساب", "finance.account_disabled": "تعطيل حساب",

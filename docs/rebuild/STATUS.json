@@ -259,7 +259,8 @@
       ],
       "evidence": [
         "T051",
-        "T052"
+        "T052",
+        "T054"
       ],
       "steps": [
         {
@@ -274,12 +275,15 @@
           "verified_code_commit": "06e88e7b037e4d0059fa96e52caadb695dcfa1a1"
         },
         {
-          "status": "pending",
+          "status": "in_progress",
           "title": "Register shifts, custody, handover and cash counts",
           "depends_on_steps": [
             "R10-M01"
           ],
-          "id": "R10-M02"
+          "id": "R10-M02",
+          "evidence": [
+            "T054"
+          ]
         },
         {
           "status": "pending",
