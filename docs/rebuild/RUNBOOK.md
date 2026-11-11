@@ -163,3 +163,6 @@ Chromium معزول، والصور الصناعية في rebuild/.tools/ui-artif
 
 ## تقارير المحاسبة R09-M04
 مسارا /finance/reports/trial-balance/ و/finance/reports/ledger/ يحتاجان ledger.read مع وصول فرع صريح. اختر مدة وفرعًا أو كل الفروع المصرح بها؛ دفتر الحساب يحتاج رمز حساب ترحيل، ويشمل المعطل ذي التاريخ. المجاميع لكل الصفحات، وبحث الميزان يرشح الصفوف فقط. تعرض المطابقة فرق الرأس والأسطر دون إصلاح أو كتابة. لا قيد لمسودة أو ترحيل فوترة تلقائي، ولا إقرار ضريبي. تحقق موجه: pdm run test -k LedgerReportTests ثم pdm run test-browser -k LedgerReportBrowserTests، والمجموعة الكاملة قبل الإغلاق.
+
+## صناديق البيع R10-M01
+/sales/registers/ لإدارة الصناديق. يلزم company.manage وledger.read وledger.post مع payment.read ووصول الفرع؛ حساب نقدي مستقل أصل مدين نشط ومن نوع ترحيل. الرمز والفرع والحساب ثابتة؛ الاسم والحالة تتغير بتاريخ. لا فتح ورديات أو تحصيل من هذا الجزء. بعد الترحيل طبق configure-runtime ثم verify-runtime؛ تحقق الجزء: pdm run test -k CashRegisterTests، ثم pdm run test-browser -k CashRegisterBrowserTests. المجموعة الافتراضية تشمل sales_tests.

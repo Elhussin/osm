@@ -631,3 +631,26 @@ Command: git diff --check
 إغلاق توثيقي بعد تثبيت الكود المختبر؛ تسجل نتيجة فحوص الإغلاق التالية بعد تنفيذها، ولا تعاد مجموعة الأعمال بسبب الوثائق وحدها.
 
 نجحت فحوص إغلاق التوثيق: check-rebuild بكل حالات الحماية، وcheck-discovery مع781 ملف legacy و10 مواصفات قبول و6 حدود تصنيف، وgit diff --check دون أخطاء مسافات. حسم Q05 قرار متطلبات مستقبلي فقط، دون تغيير الكود المثبت على CI أو إضافة ورديات غير مختبرة.
+
+## T051 | passed
+Task: R10
+Date: 2026-11-11
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k CashRegisterTests
+
+نجحت12/12 خلال107.806 ثانية على PostgreSQL مستقل. تشمل رمزًا مطبعًا وفريدًا داخل الفرع وحسابًا مخصصًا لا يشارك حتى بعد التعطيل، ورفض حساب مجموعة/مصروف/أصل بطبيعة دائنة أو غير نشط أو ذي أب معطل، وإعادة فحص التفعيل، والتاريخ الثابت قبل/بعد، وعدم إنشاء قيود أو أرصدة. اختبرت إعادة الطلب المطابق وتعارض المحتوى والإصدار القديم والإجراءات والمدخلات غير الصالحة، وجمع company_admin وaccountant مع وصول الفرع، وسحب الوصول والدور حتى replay وsuperuser. HTTP يثبت نطاق الفرع والشركة والاختيارات والبحث و404 وCSRF وعدم تعديل الهوية بمدخلات مزورة. PostgreSQL يثبت الوحدانية والعملة والإصدار والرمز ومنح runtime الفعلية (إنشاء وتسمية مسموحان، وتعديل الهوية/حذف الصندوق/تغيير أو حذف العمليات ممنوع)، وغياب الجداول من public. اختبارات التنافس لمفتاح مشترك وتعديل إصدار واحد وتخصيص الحساب لصندوقين، وrollback كامل عند فشل التدقيق. ترحيل sales.0001 الإضافي يحفظ دليل الحسابات والفترة والقيود والأسطر السابقة؛ الرجوع عن ترحيل sales في اختبار معزول خال من الصناديق فقط، لا عملية تنظيف أو legacy.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser -k CashRegisterBrowserTests
+
+نجحت2/2 Chromium خلال28.749 ثانية مع PLAYWRIGHT_BROWSERS_PATH إلى .tools/browsers. سطح المكتب ينشئ ويسمي ويعرض التاريخ ويبحث ويرفض فرعًا محجوبًا وكاشيرًا غير مخول لإعداد الربط. هاتف390 دون JavaScript يرفض تخصيص الحساب مرتين ثم يحفظ بحساب بديل، ويعطل ويفعل مع ثلاث عمليات تاريخية، دون تجاوز عرض الجسم. راجعت register-desktop-history.png وregister-mobile-nojs.png الصناعيتين المستبعدتين؛ النماذج مناسبة والجداول داخل تمرير أفقي.14 حالة جديدة فريدة دون ادعاء تنفيذ الورديات أو التحصيل.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run migrations-check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run migrate-all
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run configure-runtime
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run verify-runtime
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 lock --check
+Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
+Command: pwsh -NoProfile -File scripts/check-discovery.ps1
+Command: git diff --check
+
+نجحت الإعدادات (0 مشكلات) والترحيلات (No changes detected) وlock؛ طبق sales.0001 على قاعدة التطوير المستقلة ثم حدثت المنح ونجح runtime. نجح فحص الخطة والحصر781 و10 مواصفات و6 حدود تصنيف وفحص المسافات. لا تبعيات جديدة أو تغيير lock أو قوالب أدوار أو ملفات legacy أو حذف أو نسخ أسرار/بيانات/وسائط. R10-M01 وR10 تبقيان in_progress إلى CI الكامل. التالي M02 للورديات والعهدة والتسليم والإغلاق، وحارس منع تعطيل صندوق ذي وردية يجب إثباته عند وجود النموذج في M02؛ غير منفذ هنا. M03–M07 وبوابات الضريبة/الفواتير والاتصال ما زالت مطلوبة؛ لا امتثال أو اتصال ZATCA/تأمين أو دمج main أو نشر إنتاج.

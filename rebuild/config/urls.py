@@ -10,8 +10,12 @@ from finance import views as finance
 from finance import setup_views as accounting
 from finance import journal_views as journals
 from finance import report_views as reports
+from sales import views as sales
 
 urlpatterns = [
+    path("sales/registers/", sales.registers, name="sales-registers"),
+    path("sales/registers/new/", sales.register_new, name="sales-register-new"),
+    path("sales/registers/<uuid:register_id>/", sales.register_detail, name="sales-register"),
     path("finance/reports/trial-balance/", reports.trial, name="finance-trial-balance"),
     path("finance/reports/ledger/", reports.ledger, name="finance-ledger"),
     path("finance/journals/", journals.journal_list, name="journal-drafts"),

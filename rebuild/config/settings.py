@@ -31,6 +31,7 @@ TENANT_APPS = (
     "catalog.apps.CatalogConfig",
     "inventory.apps.InventoryConfig",
     "finance.apps.FinanceConfig",
+    "sales.apps.SalesConfig",
 )
 INSTALLED_APPS = list(SHARED_APPS) + list(TENANT_APPS)
 TENANT_MODEL = "directory.Company"

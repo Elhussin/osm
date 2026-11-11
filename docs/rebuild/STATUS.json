@@ -252,11 +252,72 @@
     },
     {
       "id": "R10",
-      "status": "pending",
+      "status": "in_progress",
       "depends_on": [
         "R09"
       ],
-      "evidence": []
+      "evidence": [
+        "T051"
+      ],
+      "steps": [
+        {
+          "status": "in_progress",
+          "title": "Cash register configuration and dedicated cash account",
+          "id": "R10-M01",
+          "evidence": [
+            "T051"
+          ]
+        },
+        {
+          "status": "pending",
+          "title": "Register shifts, custody, handover and cash counts",
+          "depends_on_steps": [
+            "R10-M01"
+          ],
+          "id": "R10-M02"
+        },
+        {
+          "status": "pending",
+          "title": "Reviewed tax classification, amounts and invoice snapshots",
+          "depends_on_steps": [
+            "R10-M01"
+          ],
+          "id": "R10-M03"
+        },
+        {
+          "status": "pending",
+          "title": "Cash orders, prescription snapshots, pricing and reservation",
+          "depends_on_steps": [
+            "R10-M02",
+            "R10-M03"
+          ],
+          "id": "R10-M04"
+        },
+        {
+          "status": "pending",
+          "title": "Immutable invoices and atomic accounting posting",
+          "depends_on_steps": [
+            "R10-M04"
+          ],
+          "id": "R10-M05"
+        },
+        {
+          "status": "pending",
+          "title": "Payments, register reconciliation and receipts",
+          "depends_on_steps": [
+            "R10-M05"
+          ],
+          "id": "R10-M06"
+        },
+        {
+          "status": "pending",
+          "title": "Delivery, returns and complete cash-sale verification",
+          "depends_on_steps": [
+            "R10-M06"
+          ],
+          "id": "R10-M07"
+        }
+      ]
     },
     {
       "id": "R11",
@@ -299,5 +360,5 @@
       "evidence": []
     }
   ],
-  "next_step": "R10"
+  "next_step": "R10-M01"
 }
