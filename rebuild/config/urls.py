@@ -12,8 +12,14 @@ from finance import journal_views as journals
 from finance import report_views as reports
 from sales import views as sales
 from sales import shift_views as shifts
+from sales import tax_views as taxes
 
 urlpatterns = [
+    path("sales/taxes/", taxes.treatments, name="sales-treatments"),
+    path("sales/taxes/<uuid:variant_id>/", taxes.treatment_detail, name="sales-treatment"),
+    path("sales/quotes/", taxes.quote_list, name="sales-quotes"),
+    path("sales/quotes/new/", taxes.quote_new, name="sales-quote-new"),
+    path("sales/quotes/<uuid:quote_id>/", taxes.quote_detail, name="sales-quote"),
     path("sales/shifts/", shifts.shift_list, name="sales-shifts"),
     path("sales/shifts/new/", shifts.shift_new, name="sales-shift-new"),
     path("sales/shifts/<uuid:shift_id>/", shifts.shift_detail, name="sales-shift"),

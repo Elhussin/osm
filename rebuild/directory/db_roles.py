@@ -15,7 +15,7 @@ def grant_tenant_runtime(cursor, schema, role):
     cursor.execute("SELECT to_regclass(%s)", [schema + ".access_auditevent"])
     if cursor.fetchone()[0]:
         cursor.execute(sql.SQL("REVOKE UPDATE, DELETE ON TABLE {}.access_auditevent FROM {}").format(schema_id, role_id))
-    for table in ("clinical_prescriptionrevision", "clinical_examimage", "inventory_stockreceipt", "inventory_stockmovement", "inventory_reservationevent", "inventory_stockoperation", "inventory_stocklot", "finance_fiscalprofilerevision", "finance_setupoperation", "finance_journalrevision", "finance_journalentry", "finance_journalline", "finance_journaloperation", "sales_registeroperation", "sales_shiftevent"):
+    for table in ("clinical_prescriptionrevision", "clinical_examimage", "inventory_stockreceipt", "inventory_stockmovement", "inventory_reservationevent", "inventory_stockoperation", "inventory_stocklot", "finance_fiscalprofilerevision", "finance_setupoperation", "finance_journalrevision", "finance_journalentry", "finance_journalline", "finance_journaloperation", "sales_registeroperation", "sales_shiftevent", "sales_taxtreatmentrevision", "sales_taxquote"):
         cursor.execute("SELECT to_regclass(%s)", [schema + "." + table])
         if cursor.fetchone()[0]:
             cursor.execute(sql.SQL("REVOKE UPDATE, DELETE ON TABLE {}.{} FROM {}").format(schema_id, sql.Identifier(table), role_id))

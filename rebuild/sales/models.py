@@ -89,3 +89,49 @@ class ShiftEvent(models.Model):
 
     class Meta:
         constraints = [models.UniqueConstraint(fields=["shift", "version"], name="sales_shift_event_version"), models.CheckConstraint(condition=Q(version__gte=1, kind__in=["opened", "handover_requested", "handover_cancelled", "handover_rejected", "handover_accepted", "count_submitted", "variance_approved"]), name="sales_shift_event_kind")]
+
+
+class TaxTreatmentRevision(models.Model):
+    STATES = [("reviewed", "مراجع داخليًا"), ("blocked", "محظور لحين المراجعة")]
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    variant = models.ForeignKey("catalog.Variant", on_delete=models.PROTECT, related_name="tax_revisions")
+    version = models.PositiveIntegerField()
+    valid_from = models.DateField()
+    state = models.CharField(max_length=10, choices=STATES)
+    category = models.CharField(max_length=1, blank=True)
+    rate = models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    reason_code = models.CharField(max_length=32, blank=True)
+    reason_text = models.CharField(max_length=300, blank=True)
+    basis = models.CharField(max_length=500)
+    reason = models.CharField(max_length=300)
+    operation_key = models.UUIDField(unique=True)
+    payload_digest = models.CharField(max_length=64)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["variant", "version"], name="sales_tax_revision_version"),
+            models.CheckConstraint(condition=Q(version__gte=1, valid_from__gte="2020-07-01") & (Q(state="blocked", category="", rate__isnull=True, reason_code="", reason_text="") | (Q(state="reviewed", rate__isnull=False) & (Q(category="S", rate=15, reason_code="", reason_text="") | (Q(category__in=["Z", "E", "O"], rate=0) & ~Q(reason_code="") & ~Q(reason_text=""))))), name="sales_tax_revision_shape")]
+
+
+class TaxQuote(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    branch = models.ForeignKey("access.Branch", on_delete=models.PROTECT)
+    customer = models.ForeignKey("clinical.Customer", null=True, on_delete=models.PROTECT)
+    fiscal_profile = models.ForeignKey("finance.FiscalProfileRevision", on_delete=models.PROTECT)
+    as_of = models.DateField()
+    currency = models.CharField(max_length=3, default="SAR")
+    payload = models.JSONField()
+    net = models.DecimalField(max_digits=18, decimal_places=2)
+    vat = models.DecimalField(max_digits=18, decimal_places=2)
+    tax_inclusive = models.DecimalField(max_digits=18, decimal_places=2)
+    payable_rounding = models.DecimalField(max_digits=18, decimal_places=2)
+    payable = models.DecimalField(max_digits=18, decimal_places=2)
+    reason = models.CharField(max_length=300)
+    operation_key = models.UUIDField(unique=True)
+    payload_digest = models.CharField(max_length=64)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [models.CheckConstraint(condition=Q(currency="SAR", as_of__gte="2020-07-01", net__gte=0, vat__gte=0, tax_inclusive=F("net")+F("vat"), payable=F("tax_inclusive")+F("payable_rounding"), payable__gte=0, payable_rounding__gte="-0.01", payable_rounding__lte="0.01"), name="sales_tax_quote_totals")]

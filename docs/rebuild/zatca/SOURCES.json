@@ -2,7 +2,7 @@
   "checked_on": "2026-11-11",
   "source_page": "https://zatca.gov.sa/en/E-Invoicing/SystemsDevelopers/Pages/E-Invoice-specifications.aspx",
   "page_update_displayed": "2026-01-12",
-  "scope": "Public reference download provenance only. No tax classification approval, rule mapping, SDK execution, sandbox or compliance evidence.",
+  "scope": "Selected retail amount and category rules mapped in CALCULATION_RULES.md for M03. No product classification approval, complete XML validation, SDK execution, sandbox or compliance evidence.",
   "files": [
     {
       "id": "ZS06",
@@ -14,7 +14,7 @@
       "bytes": 1078080,
       "sha256": "5aa15ff95efb98d3696083c309470d116d7e93ea7e134cca63f9680bc112685e",
       "local_cache": "rebuild/.tools/zatca-reference/xml-standard-20230519.pdf",
-      "review_scope": "Official linked file downloaded; PDF signature and SHA256 verified; version and contents read. Business rules and examples remain to be mapped and tested in M03."
+      "review_scope": "Selected sections 9.2, 9.3, 9.6, 10, 11.2.4 and linked rule IDs reviewed by local text extraction, with page 16 formula table visually inspected. Selected official arithmetic examples mapped to unit tests; not a complete XML rule review. SHA256 unchanged."
     },
     {
       "id": "ZS07",
@@ -25,12 +25,12 @@
       "bytes": 179857,
       "sha256": "61148ff46d174e5b1f04471418c2c209192de668198b7ae1de781f7032e9f038",
       "local_cache": "rebuild/.tools/zatca-reference/data-dictionary-20230519.xlsx",
-      "review_scope": "Read-only bundled artifact-tool inspection of introduction version and column headers only. Business rows, examples, field mappings and rules have not been reviewed or tested. No export; source SHA256 unchanged.",
+      "review_scope": "Read-only bundled artifact-tool import and bounded values for Introduction and Data dictionary A1:AB153; selected amount, allowance, category and rate rows mapped in CALCULATION_RULES.md. No stamp drawing review, no export, no recalc; source SHA256 unchanged.",
       "document_date": "2023-05-19",
       "inspected_ranges": [
         "Introduction!A1:D10",
         "Introduction!B9:C14",
-        "Data dictionary!A1:AB3"
+        "Data dictionary!A1:AB153"
       ]
     }
   ]

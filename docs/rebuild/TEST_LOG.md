@@ -1,5 +1,41 @@
 # سجل الاختبارات
 
+## T056 | failed
+Task: R10
+Step: R10-M03
+Date: 2026-11-11
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k RetailAmountsTests
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k RetailAmountsTests -k RetailTaxTests
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k test_invalid_sources_dates_and_row_limits_leave_no_quote -k test_classification_http_append_and_forged_branch_rejected -k test_runtime_immutability_and_database_constraints
+
+المحاولة الأولى10 حالات/0.047s فشلت بخطأين: بيانات اختبار هللات كتبت .03/.04 بدل صيغة الإدخال الصريحة0.03/0.04. المحاولة التالية20 حالة/126.187s فشلت بخطأ توقيع grant_tenant_runtime في الاختبار وبعرض إجمالي بفاصل محلي مختلف عن تفاصيل البنود. صحح توقيع helper ووحّد عرض المبالغ المحفوظة. إعادة20 حالة نجحت126.233s (T057). إضافة3 حالات تحقق انتهت39.815s بخطأ اختبار واحد: تقييم queryset كسول بعد خروج طلب HTTP إلى public. صحح الاختبار لفحص خيارات HTML المرسومة، بدل استعلام خارج tenant_context. بقيت نتائج الفشل محفوظة، ولم تعتبر نجاحًا. الاختبار المتصفح اللاحق لهذا الأمر لم يبدأ بسبب exit غير صفر.
+
+## T057 | passed
+Task: R10
+Step: R10-M03
+Date: 2026-11-11
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k RetailAmountsTests -k RetailTaxTests
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k test_invalid_sources_dates_and_row_limits_leave_no_quote -k test_classification_http_append_and_forged_branch_rejected -k test_runtime_immutability_and_database_constraints
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test -k test_classification_http_append_and_forged_branch_rejected
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run test-browser -k RetailTaxBrowserTests
+
+20/20 Django خلال126.233s، ثم نجحت حالتا المدخلات والمنح من تشغيل3 حالات39.815s (فشله محفوظ T056)، وأعيدت حالة HTTP المصححة فنجحت1/1 خلال11.567s. الإجمالي22 حالة جديدة فريدة، تشمل10 حساب و12 PostgreSQL/HTTP. الدور المقيد نفذ إلحاق تصنيف وإنشاء معاينة فعلية؛ رفض تعديل/حذف السجلات، وقيود SQL رفضت الشكل والمجاميع المخالفة. ثبت غياب الجداول من public والعزل والتنافس والذرية والتكرار وسحب الصلاحيات حتى superuser، وحجب معاينة العميل بعد إزالة رابطه، وترحيل إضافي يحفظ الكتالوج، وثبات اللقطات وعدم ترحيل مخزون/دفتر.
+
+المتصفح2/2 خلال19.138s على Chromium المحلي، مع PLAYWRIGHT_BROWSERS_PATH إلى rebuild/.tools/browsers. سطح المكتب يحسب115 وخصم بند10% ثم خصم إجمالي11.50 إلى92 (80+12)، ويحفظ المعاينة بعد حظر تصنيف لاحق. الهاتف390 دون JavaScript يضيف بندًا دون فقد القيم ويحسب بندين وخصم إجمالي23 إلى184، دون تجاوز عرض body. راجعت صورتَي retail-tax-desktop.png وretail-tax-phone.png المحليتين المستبعدتين؛ الجدول داخل تمرير أفقي، والمجاميع والنصوص واضحة. لا أجهزة فعلية أو SDK أو XML أو بيئة هيئة من هذه الأدلة.
+
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run migrations-check
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run migrate-all
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run configure-runtime
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 run verify-runtime
+Command: pwsh -NoProfile -File rebuild/pdm.ps1 lock --check
+Command: git diff --check
+
+Command: pwsh -NoProfile -File scripts/check-rebuild.ps1
+Command: pwsh -NoProfile -File scripts/check-discovery.ps1
+
+نجحت الإعدادات وNo changes detected وlock والمسافات وفحص الخطة والحصر781 و10 مواصفات و6 حدود تصنيف؛ طبق sales.0004 على قاعدة التطوير المستقلة، ثم حدثت المنح ونجح runtime. الأسعار القديمة صافية دون تحويل بيانات. المصادر الرسمية بقيت SHA256 مطابقة بعد القراءة فقط. لا تغيير legacy أو تبعيات أو حذف أو أسرار. تبقى M03 in_progress إلى التحقق الشامل؛ حد دعم فرق التقريب ±0.01 موثق، لا ادعاء امتثال أو اتصال.
+
 لا توجد نتائج اختبارات للتطبيق الجديد بعد. نتائج فحص خطة العمل تسجل هنا بعد تشغيلها. فشل تشغيل Python المحلي لوحظ في 2026-11-09؛ لم تُشغّل اختبارات Django أو قاعدة البيانات.
 
 ## T000 | passed

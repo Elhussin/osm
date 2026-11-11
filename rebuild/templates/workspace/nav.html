@@ -6,6 +6,8 @@
 {% if can_ledger %}<a href="{% url 'finance-accounts' %}" {% if active_page == 'ledger' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-audit"/></svg>المحاسبة</a>{% endif %}
 {% if can_registers %}<a href="{% url 'sales-registers' %}" {% if active_page == 'registers' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-audit"/></svg>صناديق البيع</a>{% endif %}
 {% if can_shifts %}<a href="{% url 'sales-shifts' %}" {% if active_page == 'shifts' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-audit"/></svg>الورديات والعهدة</a>{% endif %}
+{% if can_taxes %}<a href="{% url 'sales-treatments' %}" {% if active_page == 'taxes' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-audit"/></svg>تصنيف الأصناف الضريبي</a>{% endif %}
+{% if can_quotes %}<a href="{% url 'sales-quotes' %}" {% if active_page == 'quotes' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-audit"/></svg>معاينات مبالغ البيع</a>{% endif %}
 {% if can_members %}<a href="{% url 'members' %}" {% if active_page == 'members' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-users"/></svg>الأعضاء</a>{% endif %}
 <a href="{% url 'account-branches' %}" {% if active_page == 'branches' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-branch"/></svg>الفروع والمستودعات</a>
 {% if can_roles %}<a href="{% url 'roles' %}" {% if active_page == 'roles' %}aria-current="page"{% endif %}><svg class="icon"><use href="#i-shield"/></svg>الأدوار والصلاحيات</a>{% endif %}
